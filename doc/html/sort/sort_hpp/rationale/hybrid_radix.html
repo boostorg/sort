@@ -41,9 +41,9 @@
           this makes worst-case behavior substantially worse than <span class="emphasis"><em>&#119926;(N*log(N))</em></span>.
         </p>
 <p>
-          By contrast, <code class="literal"><code class="computeroutput"><a class="link" href="../../../boost/sort/integer_sort_id260881.html" title="Function template integer_sort">integer_sort</a></code></code>,
-          <code class="literal"><code class="computeroutput"><a class="link" href="../../../boost/sort/float_sort_id260626.html" title="Function template float_sort">float_sort</a></code></code>,
-          and <code class="literal"><code class="computeroutput"><a class="link" href="../../../boost/sort/string_sort_id262230.html" title="Function template string_sort">string_sort</a></code></code>
+          By contrast, <code class="literal"><code class="computeroutput">integer_sort</code></code>,
+          <code class="literal"><code class="computeroutput">float_sort</code></code>,
+          and <code class="literal"><code class="computeroutput">string_sort</code></code>
           all check to see whether Radix-based or Comparison-based sorting have better
           worst-case runtime, and make the appropriate recursive call. Because Comparison-based
           sorting algorithms are efficient on small pieces, the tendency of MSD
@@ -82,8 +82,8 @@
 <p>
           All that said, there are places where LSD Radix Sort is the appropriate
           and fastest solution, so it would be appropriate to create a templated
-          LSD Radix Sort similar to <code class="literal"><code class="computeroutput"><a class="link" href="../../../boost/sort/integer_sort_id260881.html" title="Function template integer_sort">integer_sort</a></code></code>
-          and <code class="literal"><code class="computeroutput"><a class="link" href="../../../boost/sort/float_sort_id260626.html" title="Function template float_sort">float_sort</a></code></code>.
+          LSD Radix Sort similar to <code class="literal"><code class="computeroutput">integer_sort</code></code>
+          and <code class="literal"><code class="computeroutput">float_sort</code></code>.
           This would be most appropriate in cases where comparisons are extremely
           slow.
         </p>

@@ -2,6 +2,7 @@
 <library-reference id="boost_sort_c___reference"><title>Boost.Sort C++ Reference</title><header name="boost/sort/spreadsort/float_sort.hpp">
 <namespace name="boost">
 <namespace name="sort">
+<namespace name="spreadsort">
 <function name="float_mem_cast"><type>Cast_type</type><template>
           <template-type-parameter name="Data_type"><purpose><para>Floating-point IEEE 754/IEC559 type. </para></purpose></template-type-parameter>
           <template-type-parameter name="Cast_type"><purpose><para>Integer type (same size) to which to cast.</para></purpose></template-type-parameter>
@@ -55,10 +56,12 @@ spreadsort(vec.begin(), vec.end());
 
 </namespace>
 </namespace>
+</namespace>
 </header>
 <header name="boost/sort/spreadsort/integer_sort.hpp">
 <namespace name="boost">
 <namespace name="sort">
+<namespace name="spreadsort">
 
 
 
@@ -149,10 +152,12 @@ Some performance plots of runtime vs. n and log(range) are provided:<sbr/>
 
 </namespace>
 </namespace>
+</namespace>
 </header>
 <header name="boost/sort/spreadsort/spreadsort.hpp">
 <namespace name="boost">
 <namespace name="sort">
+<namespace name="spreadsort">
 
 
 
@@ -202,10 +207,12 @@ Some performance plots of runtime vs. n and log(range) are provided:<sbr/>
 
 </namespace>
 </namespace>
+</namespace>
 </header>
 <header name="boost/sort/spreadsort/string_sort.hpp">
 <namespace name="boost">
 <namespace name="sort">
+<namespace name="spreadsort">
 
 
 
@@ -394,6 +401,7 @@ Some performance plots of runtime vs. n and log(range) are provided:<sbr/>
 <para>* K is the log of the range in bits (32 for 32-bit integers using their full range), </para>
 <para>* S is a constant called max_splits, defaulting to 11 (except for strings where it is the log of the character size). </para>
 </para></description><requires><para>[<computeroutput>first</computeroutput>, <computeroutput>last</computeroutput>) is a valid range. </para></requires><requires><para><computeroutput>RandomAccessIter</computeroutput> <computeroutput>value_type</computeroutput> is mutable. </para></requires><requires><para><computeroutput>RandomAccessIter</computeroutput> <computeroutput>value_type</computeroutput> is <ulink url="http://en.cppreference.com/w/cpp/concept/LessThanComparable">LessThanComparable</ulink> </para></requires><postconditions><para>The elements in the range [<computeroutput>first</computeroutput>, <computeroutput>last</computeroutput>) are sorted in ascending order.</para></postconditions><returns><para><computeroutput>void</computeroutput>.</para></returns><throws><simpara><classname>std::exception</classname> Propagates exceptions if any of the element comparisons, the element swaps (or moves), the right shift, subtraction of right-shifted elements, functors, or any operations on iterators throw.</simpara></throws></function>
+</namespace>
 </namespace>
 </namespace>
 </header>

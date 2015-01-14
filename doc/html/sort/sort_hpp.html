@@ -47,27 +47,27 @@
 <a name="sort.sort_hpp.header_spreadsort"></a><a class="link" href="sort_hpp.html#sort.sort_hpp.header_spreadsort" title="Header &lt;boost/sort/spreadsort/spreadsort.hpp&gt;">Header <code class="computeroutput"><span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">sort</span><span class="special">/</span><span class="identifier">spreadsort</span><span class="special">/</span><span class="identifier">spreadsort</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code></a>
 </h3></div></div></div>
 <p>
-        <code class="literal"><code class="computeroutput"><a class="link" href="../boost/sort/spreadsort_id261821.html" title="Function template spreadsort">spreadsort</a></code></code>
+        <code class="literal"><code class="computeroutput">spreadsort</code></code>
         checks whether the data-type provided is an integer, castable float, string,
         or wstring.
       </p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
-            If data-type is an integer, <code class="literal"><code class="computeroutput"><a class="link" href="../boost/sort/integer_sort_id260881.html" title="Function template integer_sort">integer_sort</a></code></code>
+            If data-type is an integer, <code class="literal"><code class="computeroutput">integer_sort</code></code>
             is used.
           </li>
 <li class="listitem">
-            If data-type is a float, <code class="literal"><code class="computeroutput"><a class="link" href="../boost/sort/float_sort_id260626.html" title="Function template float_sort">float_sort</a></code></code>
+            If data-type is a float, <code class="literal"><code class="computeroutput">float_sort</code></code>
             is used.
           </li>
 <li class="listitem">
-            If data-type is a string or wstring, <code class="literal"><code class="computeroutput"><a class="link" href="../boost/sort/string_sort_id262230.html" title="Function template string_sort">string_sort</a></code></code>
+            If data-type is a string or wstring, <code class="literal"><code class="computeroutput">string_sort</code></code>
             is used.
           </li>
 <li class="listitem">
-            Sorting other data-types requires picking between <code class="literal"><code class="computeroutput"><a class="link" href="../boost/sort/integer_sort_id260881.html" title="Function template integer_sort">integer_sort</a></code></code>,
-            <code class="literal"><code class="computeroutput"><a class="link" href="../boost/sort/float_sort_id260626.html" title="Function template float_sort">float_sort</a></code></code>
-            and <code class="literal"><code class="computeroutput"><a class="link" href="../boost/sort/string_sort_id262230.html" title="Function template string_sort">string_sort</a></code></code>
+            Sorting other data-types requires picking between <code class="literal"><code class="computeroutput">integer_sort</code></code>,
+            <code class="literal"><code class="computeroutput">float_sort</code></code>
+            and <code class="literal"><code class="computeroutput">string_sort</code></code>
             directly, as <a href="http://en.wikipedia.org/wiki/Spreadsort" target="_top">spreadsort</a>
             won't accept types that don't have the appropriate type traits.
           </li>
@@ -88,7 +88,7 @@
         <span class="phrase"><a name="sort.sort_hpp.header_spreadsort.rationale"></a></span><a class="link" href="sort_hpp.html#sort.sort_hpp.header_spreadsort.rationale">Rationale:</a>
       </h6>
 <p>
-        <code class="literal"><code class="computeroutput"><a class="link" href="../boost/sort/spreadsort_id261821.html" title="Function template spreadsort">spreadsort</a></code></code>
+        <code class="literal"><code class="computeroutput">spreadsort</code></code>
         function provides a wrapper that calls the fastest sorting algorithm available
         for a data-type, enabling faster generic programming.
       </p>

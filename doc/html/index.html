@@ -61,7 +61,7 @@
 </dl></dd>
 </dl></dd>
 <dt><span class="section"><a href="sort/definitions.html">Definitions</a></span></dt>
-<dt><span class="section"><a href="sort/faq.html">Frequently asked Questions</a></span></dt>
+<dt><span class="section"><a href="sort/faq.html">Frequently Asked Questions</a></span></dt>
 <dt><span class="section"><a href="sort/acks.html">Acknowledgements</a></span></dt>
 <dt><span class="section"><a href="sort/bibliog.html">Bibliography</a></span></dt>
 <dt><span class="section"><a href="sort/history.html">History</a></span></dt>
@@ -120,7 +120,7 @@
 <p>
         These algorithms are encoded in a generic fashion and accept functors, enabling
         them to sort any object that can be processed like these basic data types.
-        In the case of <code class="literal"><code class="computeroutput"><a class="link" href="boost/sort/string_sort_id262230.html" title="Function template string_sort">string_sort</a></code></code>,
+        In the case of <code class="literal"><code class="computeroutput">string_sort</code></code>,
         this includes anything with a defined strict-weak-ordering that <a href="http://en.cppreference.com/w/cpp/algorithm/sort" target="_top">std::sort</a>
         can sort, but writing efficient functors for some complex key types may not
         be worth the additional effort relative to just using <a href="http://en.cppreference.com/w/cpp/algorithm/sort" target="_top">std::sort</a>,
@@ -134,7 +134,7 @@
         that on real data it can perform substantially better than on random data.
         Conceptually, <a href="http://en.wikipedia.org/wiki/Spreadsort" target="_top">spreadsort</a>
         can sort any data for which an absolute ordering can be determined, and
-        <code class="literal"><code class="computeroutput"><a class="link" href="boost/sort/string_sort_id262230.html" title="Function template string_sort">string_sort</a></code></code>
+        <code class="literal"><code class="computeroutput">string_sort</code></code>
         is sufficiently flexible that this should be possible.
       </p>
 <p>
@@ -196,9 +196,9 @@
         </p></td></tr>
 </table></div>
 <p>
-        Each of <code class="literal"><code class="computeroutput"><a class="link" href="boost/sort/integer_sort_id260881.html" title="Function template integer_sort">integer_sort</a></code></code>,
-        <code class="literal"><code class="computeroutput"><a class="link" href="boost/sort/float_sort_id260626.html" title="Function template float_sort">float_sort</a></code></code>,
-        and <code class="literal"><code class="computeroutput"><a class="link" href="boost/sort/string_sort_id262230.html" title="Function template string_sort">string_sort</a></code></code>
+        Each of <code class="literal"><code class="computeroutput">integer_sort</code></code>,
+        <code class="literal"><code class="computeroutput">float_sort</code></code>,
+        and <code class="literal"><code class="computeroutput">string_sort</code></code>
         have 3 main versions: The base version, which takes a first iterator and
         a last iterator, just like <a href="http://en.cppreference.com/w/cpp/algorithm/sort" target="_top">std::sort</a>:
       </p>
@@ -212,7 +212,7 @@
         right.
       </p>
 <p>
-        For <code class="literal"><code class="computeroutput"><a class="link" href="boost/sort/string_sort_id262230.html" title="Function template string_sort">string_sort</a></code></code>
+        For <code class="literal"><code class="computeroutput">string_sort</code></code>
         this variant is slightly different; it needs a bracket functor equivalent
         to <code class="computeroutput"><span class="keyword">operator</span></code>[], taking a number
         corresponding to the character offset, along with a second <code class="computeroutput"><span class="identifier">getlength</span></code> functor to get the length of
@@ -305,15 +305,15 @@
 </ul></div>
 <p>
         This results in substantially improved performance for large <span class="emphasis"><em>N</em></span>;
-        <code class="literal"><code class="computeroutput"><a class="link" href="boost/sort/integer_sort_id260881.html" title="Function template integer_sort">integer_sort</a></code></code>
+        <code class="literal"><code class="computeroutput">integer_sort</code></code>
         tends to be 50% to 2X faster than <a href="http://en.cppreference.com/w/cpp/algorithm/sort" target="_top">std::sort</a>,
-        while <code class="literal"><code class="computeroutput"><a class="link" href="boost/sort/float_sort_id260626.html" title="Function template float_sort">float_sort</a></code></code>
+        while <code class="literal"><code class="computeroutput">float_sort</code></code>
         and _string_sort are roughly 2X faster than <a href="http://en.cppreference.com/w/cpp/algorithm/sort" target="_top">std::sort</a>.
       </p>
 <p>
-        Performance graphs are provided for <code class="literal"><code class="computeroutput"><a class="link" href="boost/sort/integer_sort_id260881.html" title="Function template integer_sort">integer_sort</a></code></code>,
-        <code class="literal"><code class="computeroutput"><a class="link" href="boost/sort/float_sort_id260626.html" title="Function template float_sort">float_sort</a></code></code>,
-        and <code class="literal"><code class="computeroutput"><a class="link" href="boost/sort/string_sort_id262230.html" title="Function template string_sort">string_sort</a></code></code>
+        Performance graphs are provided for <code class="literal"><code class="computeroutput">integer_sort</code></code>,
+        <code class="literal"><code class="computeroutput">float_sort</code></code>,
+        and <code class="literal"><code class="computeroutput">string_sort</code></code>
         in their description.
       </p>
 <p>
@@ -339,9 +339,9 @@
         </p></td></tr>
 </table></div>
 <p>
-        <code class="literal"><code class="computeroutput"><a class="link" href="boost/sort/integer_sort_id260881.html" title="Function template integer_sort">integer_sort</a></code></code>
+        <code class="literal"><code class="computeroutput">integer_sort</code></code>
         starts to become faster than <a href="http://en.cppreference.com/w/cpp/algorithm/sort" target="_top">std::sort</a>
-        at about 1000 integers (4000 bytes), and <code class="literal"><code class="computeroutput"><a class="link" href="boost/sort/string_sort_id262230.html" title="Function template string_sort">string_sort</a></code></code>
+        at about 1000 integers (4000 bytes), and <code class="literal"><code class="computeroutput">string_sort</code></code>
         becomes faster than <a href="http://en.cppreference.com/w/cpp/algorithm/sort" target="_top">std::sort</a>
         at slightly fewer bytes (as few as 30 strings).
       </p>
@@ -357,8 +357,8 @@
         </p></td></tr>
 </table></div>
 <p>
-        <code class="literal"><code class="computeroutput"><a class="link" href="boost/sort/float_sort_id260626.html" title="Function template float_sort">float_sort</a></code></code>
-        times are very similar to <code class="literal"><code class="computeroutput"><a class="link" href="boost/sort/integer_sort_id260881.html" title="Function template integer_sort">integer_sort</a></code></code>
+        <code class="literal"><code class="computeroutput">float_sort</code></code>
+        times are very similar to <code class="literal"><code class="computeroutput">integer_sort</code></code>
         times.
       </p>
 <p>
@@ -386,7 +386,7 @@
       </p>
 <p>
         <span class="emphasis"><em>&#119926;(N)</em></span> integer-type comparisons (even for _float_sort and
-        <code class="literal"><code class="computeroutput"><a class="link" href="boost/sort/string_sort_id262230.html" title="Function template string_sort">string_sort</a></code></code>)
+        <code class="literal"><code class="computeroutput">string_sort</code></code>)
       </p>
 <p>
         <span class="emphasis"><em>&#119926;(N)</em></span> swaps
@@ -427,7 +427,7 @@
         corner-case where if <span class="emphasis"><em>K &lt; S<sub>min</sub></em></span> and <span class="emphasis"><em>n &gt;=
         2^K</em></span>, then the data can be sorted in a single radix-based iteration
         with an <span class="emphasis"><em>S = K</em></span> (this bucketsorting special case is by
-        default only applied to <code class="literal"><code class="computeroutput"><a class="link" href="boost/sort/float_sort_id260626.html" title="Function template float_sort">float_sort</a></code></code>).
+        default only applied to <code class="literal"><code class="computeroutput">float_sort</code></code>).
         So for the final recursion, worst-case performance is:
       </p>
 <p>
@@ -549,12 +549,12 @@
         either evenly distributed or highly clustered.
       </p>
 <p>
-        This analysis was for <code class="literal"><code class="computeroutput"><a class="link" href="boost/sort/integer_sort_id260881.html" title="Function template integer_sort">integer_sort</a></code></code>
-        and <code class="literal"><code class="computeroutput"><a class="link" href="boost/sort/float_sort_id260626.html" title="Function template float_sort">float_sort</a></code></code>.
-        <code class="literal"><code class="computeroutput"><a class="link" href="boost/sort/string_sort_id262230.html" title="Function template string_sort">string_sort</a></code></code>
+        This analysis was for <code class="literal"><code class="computeroutput">integer_sort</code></code>
+        and <code class="literal"><code class="computeroutput">float_sort</code></code>.
+        <code class="literal"><code class="computeroutput">string_sort</code></code>
         differs in that <span class="emphasis"><em>S<sub>min</sub> = S<sub>max</sub> = sizeof(Char_type) * 8</em></span>,
         <span class="emphasis"><em>lbs</em></span> is 0, and that <a href="http://en.cppreference.com/w/cpp/algorithm/sort" target="_top">std::sort</a>'s
-        comparison is not a constant-time operation, so strictly speaking <code class="literal"><code class="computeroutput"><a class="link" href="boost/sort/string_sort_id262230.html" title="Function template string_sort">string_sort</a></code></code> runtime
+        comparison is not a constant-time operation, so strictly speaking <code class="literal"><code class="computeroutput">string_sort</code></code> runtime
         is
       </p>
 <p>
@@ -577,11 +577,11 @@
 <a name="sort.overview.tuning"></a><a class="link" href="index.html#sort.overview.tuning" title="Tuning">Tuning</a>
 </h3></div></div></div>
 <p>
-        <code class="literal"><code class="computeroutput"><a class="link" href="boost/sort/integer_sort_id260881.html" title="Function template integer_sort">integer_sort</a></code></code>
-        and <code class="literal"><code class="computeroutput"><a class="link" href="boost/sort/float_sort_id260626.html" title="Function template float_sort">float_sort</a></code></code>
+        <code class="literal"><code class="computeroutput">integer_sort</code></code>
+        and <code class="literal"><code class="computeroutput">float_sort</code></code>
         have tuning constants that control how the radix-sorting portion of those
-        algorithms work. The ideal constant values for <code class="literal"><code class="computeroutput"><a class="link" href="boost/sort/integer_sort_id260881.html" title="Function template integer_sort">integer_sort</a></code></code>
-        and <code class="literal"><code class="computeroutput"><a class="link" href="boost/sort/float_sort_id260626.html" title="Function template float_sort">float_sort</a></code></code>
+        algorithms work. The ideal constant values for <code class="literal"><code class="computeroutput">integer_sort</code></code>
+        and <code class="literal"><code class="computeroutput">float_sort</code></code>
         vary depending on the platform, compiler, and data being sorted. By far the
         most important constant is <span class="emphasis"><em>max_splits</em></span>, which defines
         how many pieces the radix-sorting portion splits the data into per iteration.
@@ -652,7 +652,7 @@
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
-<td align="left"><p><small>Last revised: January 13, 2015 at 12:13:36 GMT</small></p></td>
+<td align="left"><p><small>Last revised: January 14, 2015 at 14:46:21 GMT</small></p></td>
 <td align="right"><div class="copyright-footer"></div></td>
 </tr></table>
 <hr>
