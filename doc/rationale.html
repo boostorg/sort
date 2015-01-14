@@ -1,0 +1,212 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+  <meta http-equiv="Content-Language" content="en-us">
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="../../../boost.css">
+
+  <title>Boost Sort library - Rationale</title>
+</head>
+
+<body link="#0000FF" vlink="#800080">
+  <table border="0" cellpadding="7" cellspacing="0" width="100%" summary=
+  "header">
+    <tr>
+      <td valign="top" width="300">
+        <h3><a href="../../../index.htm"><img height="86" width="277" alt=
+        "C++ Boost" src="../../../boost.png" border="0"></a></h3>
+      </td>
+
+      <td valign="top">
+        <h1 align="center">Boost Sort library</h1>
+
+        <h2 align="center">Rationale</h2>
+      </td>
+    </tr>
+  </table>
+  <div class="spirit-nav">
+<a accesskey="p" href="constants.html"><img src="../../../doc/html/images/prev.png" alt="Prev"/></a>
+<a accesskey="u" href="index.html"><img src="../../../doc/html/images/up.png" alt="Up"/></a>
+<a accesskey="h" href="index.html"><img src="../../../doc/html/images/home.png" alt="Home"/></a>
+<a accesskey="n" href="definitions.html"><img src="../../../doc/html/images/next.png" alt="Next"/></a>
+</div>
+  <hr/>
+
+  <dl class="index">
+    <dt><a href="#radix">Radix Sorting</a></dt>
+
+    <dt><a href="#hybrid">Hybrid Radix</a></dt>
+
+    <dt><a href="#sort">why spreadsort?</a></dt>
+
+    <dt><a href="#unstable">Unstable Sorting</a></dt>
+    
+    <dt><a href="#x86">Unused x86 optimization</a></dt>
+    
+    <dt><a href="#x86">Lookup table</a></dt>
+  </dl>
+
+  <h2><a name="radix" id="radix"></a>Radix Sorting</h2>
+
+  <p>Radix-based sorting allows the data to be divided up into more than 2 pieces per iteration, 
+	   and for cache-friendly versions, it normally cuts the data up into around a thousand pieces per iteration.
+	   This allows many fewer iterations to be used to complete sorting the data, 
+	   enabling performance superior to the <img src="equation/introsort.png" alt="O(N*log(N))" /> Comparison-based sorting limit.</p>
+	   
+  <h2><a name="hybrid" id="hybrid"></a>Hybrid Radix</h2>
+  <p>There a two primary types of radix-based sorting:  
+</p><p><b>Most-significant-digit Radix sorting</b> (MSD) divides the data recursively based upon the top-most unsorted bits.
+		This approach is efficient for even distributions that divide nicely, 
+		and can be done in-place (limited additional memory used).  
+		There is substantial constant overhead for each iteration to deal with the splitting structure.
+		The algorithms provided here use MSD <a href=bibliography.html#radix>Radix Sort</a> for their radix-sorting portion.
+		The main disadvantage of MSD Radix sorting is that when the data is cut up into small pieces, 
+		the overhead for additional recursive calls starts to dominate runtime, 
+		and this makes worst-case behavior substantially worse than <img src="equation/introsort.png" alt="O(N*log(N))" />.
+</p><p> By contrast, <a href="integer_sort.html">integer_sort</a>, <a href="float_sort.html">float_sort</a>, and <a href="string_sort.html">string_sort</a> all check to see whether Radix-based 
+		or Comparison-based sorting have better worst-case runtime, and make the appropriate recursive call.
+		Because Comparison-based sorting algorithms are efficient on small pieces, 
+		the tendency of MSD radix sorts to cut the problem up small is turned into an advantage by
+		these hybrid sorts.  
+		It is hard to conceive of a common usage case where pure MSD <a href=bibliography.html#radix>Radix Sort</a> would have any significant
+		advantage over hybrid algorithms.
+</p><p><b>Least-significant-digit Radix sorting</b> (LSD) sorts based upon the least-significant bits first.
+		This requires a complete copy of the data being sorted, using substantial additional memory.
+		The main advantage of LSD <a href=bibliography.html#radix>Radix Sort</a> is that aside from some constant overhead and the memory allocation,
+		it uses a fixed amount of time per element to sort, regardless of distribution or size of the list.
+		This amount of time is proportional to the length of the radix.
+		The other advantage of LSD <a href=bibliography.html#radix>Radix Sort</a> is that it is a stable sorting algorithm, 
+		so elements with the same key will retain their original order.
+</p><p> One disadvantage is that LSD <a href=bibliography.html#radix>Radix Sort</a> uses the same amount of time to sort "easy" sorting problems
+		as "hard" sorting problems, 
+		and this time spent may end up being greater than an efficient <img src="equation/introsort.png" alt="O(N*log(N))" /> algorithm such
+		as <a href="bibliography.html#introsort">introsort</a> spends sorting "hard" problems on large data sets, 
+		depending on the length of the datatype, and relative speed of comparisons, 
+		memory allocation, and random accesses.
+</p><p> The other main disadvantage of LSD <a href=bibliography.html#radix>Radix Sort</a> is its memory overhead.  
+		It's only faster for large data sets, but large data sets use significant memory,
+		which LSD <a href=bibliography.html#radix>Radix Sort</a> needs to duplicate.
+		LSD <a href=bibliography.html#radix>Radix Sort</a> doesn't make sense for items of variable length, such as strings; 
+		it could be implemented by starting at the end of the longest element, 
+		but would be extremely inefficient.
+		All that said, there are places where LSD <a href=bibliography.html#radix>Radix Sort</a> is the appropriate and fastest solution,
+		so it would be appropriate to create a templated LSD <a href=bibliography.html#radix>Radix Sort</a> similar to <a href="integer_sort.html">integer_sort</a> and <a href="float_sort.html">float_sort</a>.
+		This would be most appropriate in cases where comparisons are extremely slow.
+</p>
+
+  <h2><a name="sort" id="spreadsort"></a>why spreadsort?</h2>
+  <p>The <a href="http://en.wikipedia.org/wiki/Spreadsort">Spreadsort</a> algorithm used in this library is designed to provide best possible worst-case performance, 
+		while still being cache-friendly.  
+		It provides the better of <img src="equation/worst.png" alt="O(N*log(K/S + S))" /> and <img src="equation/introsort.png" alt="O(N*log(N))" /> worst-case time,
+		where K is the log of the range.
+		The log of the range is normally the length in bits of the data type; 32 for a 32-bit integer.
+</p><p><b>flash_sort</b> (another hybrid algorithm), by comparison is O(N) for evenly distributed lists.
+		The problem is, flash_sort is merely an MSD <a href=bibliography.html#radix>Radix Sort</a> combined with O(N*N) insertion sort to deal
+		with small subsets where the MSD <a href=bibliography.html#radix>Radix Sort</a> is inefficient, so it is inefficient with chunks of
+		data around the size at which it switches to insertion_sort, and ends up operating as an
+		enhanced MSD <a href=bibliography.html#radix>Radix Sort</a>.  For uneven distributions this makes it especially inefficient.
+</p><p> <a href="integer_sort.html">integer_sort</a> and <a href="float_sort.html">float_sort</a> use <a href="bibliography.html#introsort">introsort</a> instead, 
+		which provides <img src="equation/introsort.png" alt="O(N*log(N))" /> performance for these medium-sized pieces.
+		Also, flash_sort's O(N) performance for even distributions comes at the cost of cache misses,
+		which on modern architectures are extremely expensive, and in testing on modern systems
+		ends up being slower than cutting up the data in multiple, cache-friendly steps.
+		Also worth noting is that on most modern computers, 
+		log(available RAM)/log(L1 cache size) is around 3,
+		where a cache miss takes more than 3 times as long as an in-cache random-access, 
+		and the size of <a href="constants.html#max_splits">max_splits</a> is tuned to the size of the cache.
+		On a computer where cache misses aren't this expensive, 
+		<a href="constants.html#max_splits">max_splits</a> could be increased to a large value, or eliminated entirely,
+		and <a href="integer_sort.html">integer_sort</a>/<a href="float_sort.html">float_sort</a> would have the same O(N) performance on even distributions.
+</p><p> <a href="bibliography.html#alr">Adaptive Left Radix</a> (ALR) is similar to flash_sort, but more cache-friendly.  
+        It still uses insertion_sort.  Because ALR uses O(N*N) insertion_sort, it isn't efficient to
+        use the comparison-based fallback sort on large lists, and if the data is clustered in small chunks
+        just over the fallback size with a few outliers, radix-based sorting iterates many times doing little sorting
+        with high overhead.  Asymptotically, ALR is still <img src="equation/worst.png" alt="O(N*log(K/S + S))" />, but with a very small s
+        (about 2 in the worst case), which compares unfavorably with the 11 default value of <a href="constants.html#max_splits">max_splits</a>
+        for <a href="http://en.wikipedia.org/wiki/Spreadsort">Spreadsort</a>.  
+</p><p> <a href="bibliography.html#alr">ALR</a> also does not have the <img src="equation/introsort.png" alt="O(N*log(N))" /> fallback, so for small lists 
+        that are not evenly distributed it is extremely inefficient.  
+        See the <a href="../example/alrbreaker.cpp">alrbreaker</a> and <a href="../example/binaryalrbreaker.cpp">binaryalrbreaker</a> testcases for examples; 
+        either replace the call to sort with a call to ALR and update the
+        ALR_THRESHOLD at the top, or as a quick comparison make get_max_count return ALR_THRESHOLD (20
+        by default based upon the paper).  
+        These small tests take 4-10 times as long with ALR as std::sort in the author's testing,
+        depending on the test system, 
+        because they are trying to sort a highly uneven distribution.  
+        Normal <a href="http://en.wikipedia.org/wiki/Spreadsort">Spreadsort</a> does much better with them, because get_max_count is designed around minimizing
+        worst-case runtime.
+</p><p> <b>burst_sort</b> is an efficient hybrid algorithm for strings that uses substantial additional memory.  
+		<a href="string_sort.html">string_sort</a> uses minimal additional memory by comparison.  
+		Speed comparisons between the two haven't been made, 
+		but the better memory efficiency makes <a href="string_sort.html">string_sort</a> more general.
+</p><p> <b>postal_sort</b> and <a href="string_sort.html">string_sort</a> are similar.  A direct performance comparison would be welcome,
+		but an efficient version of postal_sort was not found in a search for source.
+</p><p> <a href="string_sort.html">string_sort</a> is most similar to the <a href="bibliography.html#american_flag_sort">American Flag Sort</a> algorithm.
+	    The main difference is that it doesn't bother trying to optimize how empty buckets/piles
+	    are handled, instead just checking to see if all characters at the current index are equal.
+	    Other differences are using std::sort as the fallback algorithm, 
+	    and a larger fallback size (256 vs. 16), which makes empty pile handling less important.
+</p><p> Another difference is not applying the stack-size restriction.
+	    Because of the equality check in <a href="string_sort.html">string_sort</a>, it would take m*m memory worth
+	    of strings to force <a href="string_sort.html">string_sort</a> to create a stack of depth m.
+	    This problem isn't a realistic one on modern systems with multi-megabyte stacksize
+	    limits, where main memory would be exhausted holding the long strings necessary to
+	    exceed the stacksize limit.
+	    <a href="string_sort.html">string_sort</a> can be thought of as modernizing <a href="bibliography.html#american_flag_sort">American Flag Sort</a> 
+	    to take advantage of <a href="bibliography.html#introsort">introsort</a> as a fallback algorithm.  
+	    In the author's testing, <a href="bibliography.html#american_flag_sort">American Flag Sort</a> (on std::strings) 
+      had comparable runtime to <a href="bibliography.html#introsort">introsort</a>, but making a hybrid of the two allows reduced overhead and
+	    substantially superior performance.
+</p>
+
+  <h2><a name="unstable" id="unstable"></a>Unstable sorting</h2>
+
+  <p>Making a <a href=bibliography.html#radix>Radix Sort</a> stable requires the usage of an external copy of the data.
+		A stable hybrid algorithm also requires a stable comparison-based algorithm,
+		and these are generally slow.
+		LSD <a href=bibliography.html#radix><a href=bibliography.html#radix>Radix Sort</a></a> uses an external copy of the data, and provides stability, 
+		along with likely being faster (than a stable hybrid sort), 
+		so that's probably a better way to go for integers and floats.
+		It might make sense to make a stable version of <a href="string_sort.html">string_sort</a> using external memory,
+		but for simplicity this has been left out for now.</p>
+
+  <h2><a name="x86" id="x86"></a>Unused x86 optimization</h2>
+<p>Though the ideal <a href="constants.html#max_splits">max_splits</a> for n < 1 million (or so) on x86 seems to be substantially larger,
+enabling a roughly 15% speedup for such tests, this optimization isn't general, 
+and doesn't apply for n > 1 million.  
+        A too large <a href="constants.html#max_splits">max_splits</a> can cause sort to take more than twice as long,
+        so it should be set on the low end of the reasonable range, where it is right now.
+  <h2><a name="lookup" id="lookup"></a>Lookup table</h2>
+  <p>The ideal way to optimize the constants would be to have a carefully tuned lookup table instead
+       of the get_max_count function, but 4 tuning variables is simpler,
+       get_max_count enforces worst-case performance minimization rules, and
+       such a lookup table would be difficult to optimize for cross-platform performance.
+</p><p>Alternatively, get_max_count could be used to generate a static lookup table.  
+This hasn't been done due to concerns about cross-platform compatibility and flexibility.</p>
+  
+  <hr/>
+  <div class="spirit-nav">
+<a accesskey="p" href="constants.html"><img src="../../../doc/html/images/prev.png" alt="Prev"/></a>
+<a accesskey="u" href="index.html"><img src="../../../doc/html/images/up.png" alt="Up"/></a>
+<a accesskey="h" href="index.html"><img src="../../../doc/html/images/home.png" alt="Home"/></a>
+<a accesskey="n" href="definitions.html"><img src="../../../doc/html/images/next.png" alt="Next"/></a>
+</div>
+
+  <p><a href="http://validator.w3.org/check?uri=referer"><img border="0" src=
+  "http://www.w3.org/Icons/valid-html401" alt="Valid HTML 4.01 Transitional"
+  height="31" width="88"></a></p>
+
+  <p>Revised 
+  <!--webbot bot="Timestamp" s-type="EDITED" s-format="%d %B, %Y" startspan -->04
+  December, 2006<!--webbot bot="Timestamp" endspan i-checksum="38514" --></p>
+
+  <p><i>Copyright &copy; 2009 <a href=
+  "mailto:spreadsort@gmail.com">Steven Ross</a></i></p>
+
+  <p><i>Distributed under the Boost Software License, Version 1.0. (See
+  accompanying file <a href="../../../LICENSE_1_0.txt">LICENSE_1_0.txt</a> or
+  copy at <a href=
+  "http://www.boost.org/LICENSE_1_0.txt">http://www.boost.org/LICENSE_1_0.txt</a>)</i></p>
+</body>
+</html>

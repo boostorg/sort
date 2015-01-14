@@ -1,0 +1,328 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+  <meta http-equiv="Content-Language" content="en-us">
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="../../../boost.css">
+
+  <title>Boost Sort library - Overview</title>
+</head>
+
+<body link="#0000FF" vlink="#800080">
+  <table border="0" cellpadding="7" cellspacing="0" width="100%" summary=
+  "header">
+    <tr>
+      <td valign="top" width="300">
+        <h3><a href="../../../index.htm"><img height="86" width="277" alt=
+        "C++ Boost" src="../../../boost.png" border="0"></a></h3>
+      </td>
+
+      <td valign="top">
+        <h1 align="center">Boost Sort library</h1>
+
+        <h2 align="center">Overview</h2>
+      </td>
+    </tr>
+  </table>
+  <div class="spirit-nav">
+<a accesskey="p" href="index.html"><img src="../../../doc/html/images/prev.png" alt="Prev"></a>
+<a accesskey="u" href="index.html"><img src="../../../doc/html/images/up.png" alt="Up"></a>
+<a accesskey="h" href="index.html"><img src="../../../doc/html/images/home.png" alt="Home"></a>
+<a accesskey="n" href="sort.html"><img src="../../../doc/html/images/next.png" alt="Next"></a>
+</div>
+
+  <hr>
+
+  <dl class="index">
+    <dt><a href="#introduction">Introduction</a></dt>
+
+    <dt><a href="#overloading">Overloading</a></dt>
+
+    <dt><a href="#performance">Performance</a></dt>
+
+    <dt><a href="#tuning">Tuning and Testing</a></dt>
+  </dl>
+
+  <h2><a name="introduction" id="introduction"></a>Introduction</h2>  
+  <p>
+        The Boost Sort library provides a generic implementation of high-speed sorting algorithms 
+		that outperform those in the C++ standard in both average and worst case performance when there are over 1000 elements in the list to sort.  They fall back to std::sort on small data sets.
+		These algorithms only work on random access iterators.  
+		They are hybrids using both <a href="http://en.wikipedia.org/wiki/Radix_sort">radix</a> and <a href="http://en.wikipedia.org/wiki/Comparison_sort">comparison-based</a> sorting, 
+		specialized to sorting common data types, such as integers, floats, and strings.
+		These algorithms are encoded in a generic fashion and accept functors, 
+		enabling them to sort any object that can be processed like these basic data types.  In the case of string_sort, this includes anything with a defined strict weak ordering that std::sort can sort, but writing efficient functors for some complex key types may not be worth the additional effort relative to just using std::sort, depending on how important speed is to your application.
+		Sample usages are available in the samples directory.
+</p><p>
+		Unlike many radix-based algorithms,  the underlying <a href="http://en.wikipedia.org/wiki/Spreadsort">Spreadsort</a> algorithm is designed around 
+		worst-case performance.  It performs better on chunky data (where it is not widely distributed), 
+		so that on real data it can perform substantially better than on random data.
+		Conceptually, <a href="http://en.wikipedia.org/wiki/Spreadsort">Spreadsort</a> can sort any data for which an absolute ordering can be determined, and string_sort is sufficiently flexible that this should be possible. 
+		Situations where <a href="http://en.wikipedia.org/wiki/Spreadsort">Spreadsort</a> is fastest relative to std::sort:
+</p><p> 1. Large number of elements to sort (N >= 10000)
+</p><p> 2. Slow comparison function (such as floating point numbers on x86 processors or strings)
+</p><p> 3. Large data elements (such as key + data sorted on a key)
+</p><p> 4. Completely sorted data.  Spreadsort has an optimization to quit early in this case. 
+</p><p> Situations where <a href="http://en.wikipedia.org/wiki/Spreadsort">Spreadsort</a> is slower than std::sort:
+</p><p> 1. Data sorted in reverse order.  Both std::sort and Spreadsort are faster on reverse-ordered data than randomized data, but std::sort speeds up more in this special case.
+</p><p> 2. Very small amounts of data (< 1000 elements).  For this reason there is a fallback in Spreadsort to std::sort if the input size is less than 1000, so performance is identical for small amounts of data in practice.   
+        These functions are defined in namespace <code class="computeroutput">boost</code>.
+    </p>
+
+  <h2><a name="overloading" id="overloading"></a>Overloading</h2>
+
+  <p>
+    Each of <a href="integer_sort.html">integer_sort</a>, <a href="float_sort.html">float_sort</a>, and <a href="string_sort.html">string_sort</a> have 3 main versions:
+<p></p> The base version, which takes a first iterator and a last iterator, just like std::sort:
+<p></p> <a href="integer_sort.html">integer_sort</a>(array.begin(), array.end());
+<p></p> The version with an overridden shift functor, 
+        providing flexibility in case the >> already does something other than a bitshift.
+        The rightshift functor takes two args, first the data type, 
+        and second a natural number of bits to shift right.
+        For <a href="string_sort.html">string_sort</a> this variant is slightly different; 
+        it needs a bracket functor equivalent to [], taking a number corresponding to the character offset,
+        along with a second getlength functor to get the length of the string in characters.
+        In all cases, this operator must return an integer type that compares with the "<" operator to
+        provide the intended order (integers can be negated to reverse their order).
+        In other words: rightshift(A, n) &lt; rightshift(B, n) -&gt; A &lt; B
+<p></p> <a href="integer_sort.html">integer_sort</a>(array.begin(), array.end(), rightshift());
+<p></p> And the version with a comparison functor for maximum flexibility.
+        This functor must provide the same sorting order as the integers returned by the rightshift:
+        rightshift(A, n) &lt; rightshift(B, n) -&gt; compare(A, B)
+<p></p> <a href="integer_sort.html">integer_sort</a>(array.begin(), array.end(), negrightshift(), std::greater&lt;Data_type&gt;());
+    </p>
+
+  <h2><a name="performance" id="performance"></a>Performance</h2>
+  <p>
+        The <a href="http://en.wikipedia.org/wiki/Spreadsort">Spreadsort</a> algorithm is a hybrid algorithm; when the number of elements being sorted is
+        below a certain number, comparison-based sorting is used.  Above it, radix sorting
+        is used.  The radix-based algorithm will thus cut up the problem into small pieces,
+        and either completely sort the data based upon its radix if the data is clustered,
+        or finish sorting the cut-down pieces with comparison-based sorting.
+</p><p> The <a href="http://en.wikipedia.org/wiki/Spreadsort">Spreadsort</a> algorithm dynamically chooses either comparison-based or radix-based sorting
+        when recursing, whichever provides better worst-case performance.
+        This way worst-case performance is guaranteed to be the better of <img src="equation/introsort.png" alt="O(N*log(N))" /> comparisons and 
+        <img src="equation/worst.png" alt="O(N*log(K/S + S))" /> operations where N is the number of elements being sorted, 
+        K is the length in bits of the key, and S is a constant.  
+        This results in substantially improved performance for large N; <a href="integer_sort.html">integer_sort</a> tends
+        to be 50% to 2X faster than std::sort, 
+        while <a href="float_sort.html">float_sort</a> and <a href="string_sort.html">string_sort</a> are roughly 2X faster than std::sort.  
+</p><p> Performance graphs are provided for <a href="integer_sort.html">integer_sort</a>, <a href="float_sort.html">float_sort</a>, 
+        and <a href="string_sort.html">string_sort</a> in their description.
+        Runtime Performance comparisons and graphs were made on a Core 2 Duo laptop running 
+        Windows Vista 64 with MSVC 8.0, 
+        and an old G4 laptop running Mac OSX with gcc.  bjam was used to control compilation.
+        </p><p>Direct performance comparisons on a newer x86 system running Ubuntu, with the fallback to std::sort at lower input sizes disabled are below.  Note that the fallback to std::sort for smaller input sizes prevents the worse performance seen on the left sides of the first two graphs.  integer_sort starts to become faster than std::sort at about 1000 integers (4000 bytes), and string_sort becomes faster than std::sort at slightly fewer bytes (as few as 30 strings).  Note also that the 4-threaded graph has 4 threads doing separate sorts simultaneously, not splitting up a single sort, as a test for thread cache collision and other multi-threaded performance issues.  float_sort times are very similar to integer_sort times. <br>
+  <img src="single_threaded.png">
+  <img src="4_threaded.png">
+  <img src="entropy.png">
+  <img src="bits_per_byte.png">
+
+</p><p>
+        Histogramming with a fixed maximum number of splits is used because it reduces the 
+        number of cache misses, thus improving performance relative to the approach described in 
+        detail in the <a href="bibliography.html#spreadsort">Original SpreadSort Publication</a>.
+        The importance of cache-friendly histogramming is described in the paper on 
+        <a href="bibliography.html#alr">Adaptive Left Radix</a>, 
+        though without the worst-case handling described below.
+</p><p> The time taken per radix iteration is:
+</p><p> O(N) iterations over the data
+</p><p> O(N) integer-type comparisons (even for <a href="float_sort.html">float_sort</a> and <a href="string_sort.html">string_sort</a>)
+</p><p> O(N) swaps
+</p><p> <img src="equation/bins.png" alt="O(2^S)" /> bin operations
+</p><p> To obtain O(N) worst-case performance per iteration, 
+        the restriction <img src="equation/bin_limit.png" alt="S <= log(N)" /> is applied, 
+        and <img src="equation/bins.png" alt="O(2^S)" /> becomes O(N).
+        For each such iteration, the number of unsorted bits log(range) (referred to as K) 
+        per element is reduced by S.
+        As S decreases depending upon the amount of elements being sorted, 
+        it can drop from a maximum of <img src="equation/s_max.png" alt="S_max" /> to the minimum of <img src="equation/s_min.png" alt="S_min" />.
+</p><p> Assumption: std::sort is assumed to be <img src="equation/introsort.png" alt="O(N*log(N))" />.  
+        As <a href="bibliography.html#introsort">introsort</a> exists and is commonly used, 
+        if you have a quibble with this please
+        take it up with the implementor of your std::sort; you're welcome to replace the
+        recursive calls to std::sort to calls to <a href="bibliography.html#introsort">introsort</a> 
+        if your std::sort library call is poorly implemented.  
+        <a href="bibliography.html#introsort">Introsort</a> is not included with this algorithm for simplicity
+        and because the implementor of the std::sort call is assumed to know what they're doing.
+</p><p> To maintain a minimum value for S (<img src="equation/s_min.png" alt="S_min" />), 
+        comparison-based sorting has to be used
+        to sort when <img src="equation/min_n_orig.png" alt="n <= log(meanbinsize)" />, 
+        where <a href="constants.html#int_log_mean_bin_size">log(meanbinsize)</a> (lbs) is a small
+        constant, usually between 0 and 4, used to minimize bin overhead per element. 
+        There is a small corner-case where if <img src="equation/lt_smin.png" alt="K < S_min" /> and 
+        <img src="equation/gte_2k.png" alt="n >= 2^K" />, 
+        then the data can be sorted in a single radix-based iteration with an S = K
+        (this bucketsorting special case is by default only applied to <a href="float_sort.html">float_sort</a>).
+        So for the final recursion, worst-case performance is:
+        1 radix-based iteration if <img src="equation/lte_smin.png" alt="K <= S_min" />, or
+        <img src="equation/smin_lbs.png" alt="S_min + lbs" /> comparison-based iterations if 
+        <img src="equation/gt_smin.png" alt="K > S_min" /> but 
+        <img src="equation/min_n.png" alt="n <= 2^(S_min + lbs)" />.
+        So for the final iteration, worst-case runtime is 
+        <img src="equation/min_comparison.png" alt="O(N*(S_min + lbs))" />.
+        if <img src="equation/gt_smin.png" alt="K > S_min" /> and 
+        <img alt="N > 2^(S_min + lbs)" src="equation/n_gt_smin.png" />, 
+        then more than 1 radix recursion will be required.
+</p><p> For the second to last iteration, <img alt="K <= S_min * 2 + 1" src="equation/x2plus1.png" /> can be handled,
+        (if the data is divided into <img alt="2^(S_min + 1)" src="equation/smin1.png" /> pieces) 
+        or if <img alt="N < 2^(S_min + lbs + 1)" src="equation/sminlbs1.png" />, 
+        then it is faster to fallback to std::sort.
+        In the case of a radix-based sort plus recursion, 
+        it will take <img alt="O(N*(S_min + lbs)) + O(N) = O(N*(S_min + lbs + 1))" src="equation/worst1.png" /> 
+        worst-case time,
+        as <img alt="K_remaining = K_start - (S_min + 1)" src="equation/k_remaining.png" />, 
+        and <img alt="K_start <= S_min * 2 + 1" src="equation/k_start.png" />.
+        Alternatively, comparison-based sorting is used if 
+        <img alt="N < 2^(S_min + lbs + 1)" src="equation/sminlbs1.png" />,
+        which will take <img alt="O(N*(S_min + lbs + 1))" src="equation/min1_comparison.png" /> time.  
+        So either way <img alt="O(N*(S_min + lbs + 1))" src="equation/min1_comparison.png" /> 
+        is the worst-case time for the second 
+        to last iteration, which occurs if <img alt="K <= S_min * 2 + 1" src="equation/k1.png" /> 
+        or <img alt="N < 2^(S_min + lbs + 1)" src="equation/sminlbs1.png" />.
+</p><p> This continues as long as <img alt="S_min <= S <= S_max" src="equation/srange.png" />, so that for
+        <img alt="K_m <= K_(m-1) + S_min + m" src="equation/kincr.png" />
+        where m is the maximum number of iterations after this one has finished,
+        or where <img alt="N < 2^(S_min + lbs + m)" src="equation/nincr.png" />, 
+        then the worst-case runtime is <img alt="O(N*(S_min + lbs + m))" src="equation/incr_compare.png" />.
+</p><p> <img alt="K_m" src="equation/km.png" /> at <img alt="m <= (S_max - S_min)" src="equation/mrange.png" />
+        works out to:
+</p><p> <img alt="K_1 <= (S_min) + S_min + 1 <= 2S_min + 1" src="equation/k_1.png" />
+</p><p> <img alt="K_2 <= (2S_min + 1) + S_min + 2" src="equation/k_2.png" />
+</p><p> as the sum from 0 to m is <img alt="m(m + 1)/2" src="equation/msum.png" />
+</p><p> <img alt="K_m <= (m + 1)S_min + m(m + 1)/2 <= (S_min + m/2)(m + 1)" src="equation/k_m.png" />
+</p><p> substituting in <img alt="S_max - S_min" src="equation/s_diff.png" /> for m
+</p><p> <img alt="K_(S_max - S_min) <= (S_min + (S_max - S_min)/2)*(S_max - S_min + 1)" src="equation/k_smax.png" />
+</p><p> <img alt="K_(S_max - S_min) <= (S_min + S_max) * (S_max - S_min + 1)/2" src="equation/k_smax_final.png" />
+</p><p> since this involves <img alt="S_max - S_min + 1" src="equation/s_max_iters.png" /> iterations, 
+        this works out to dividing K into an average 
+        <img alt="(S_min + S_max)/2" src="equation/smean.png" /> pieces per iteration.
+        To finish the problem from this point takes 
+        <img alt="O(N * (S_max - S_min))" src="equation/radix_iters.png" /> for m 
+        iterations, plus the worst-case of <img src="equation/min_comparison.png" alt="O(N*(S_min + lbs))" /> 
+        for the last iteration, for a total of 
+        <img alt="O(N *(S_max + lbs))" src="equation/smax_total_iters.png" /> time.
+</p><p> When <img alt="m > S_max - S_min" src="equation/bigm.png" />, 
+        the problem is divided into <img src="equation/s_max.png" alt="S_max" /> pieces per iteration,
+        or std::sort is called if <img alt="N < 2^(m + S_min + lbs)" src="equation/fallback.png" />.  
+        For this range:
+</p><p> <img alt="K_m <= K_(m - 1) + S_max" src="equation/ktop.png" />
+        Providing runtime of 
+        <img alt="O(N *((K - K_(S_max - S_min))/S_max + S_max + lbs))" src="equation/iter_combined.png" /> 
+        if recursive,
+        or <img alt="O(N * log(2^(m + S_min + lbs)))" src="equation/compare_combined.png" /> if comparison-based,
+</p><p> which simplifies to <img alt="O(N * (m + S_min + lbs))" src="equation/compare_simplified.png" />, 
+        which substitutes to
+        <img alt="O(N * ((m - (S_max - S_min)) + S_max + lbs))" src="equation/comp_sub.png" />,
+</p><p> which given that 
+        <img alt="m - (S_max - S_min) <= (K - K_(S_max - S_min))/S_max" src="equation/m_limit.png" />
+        (otherwise a lesser number of radix-based iterations would be used)
+</p><p> also comes out to 
+        <img alt="O(N *((K - K_(S_max - S_min))/S_max + S_max + lbs))" src="equation/compare_asymptote.png" />.
+</p><p> Asymptotically, for large N and large K, this simplifies to:
+        <img alt="O(N * (K/S_max + S_max + lbs))" src="equation/asymptote.png" />, 
+        simplifying out the constants related to the <img alt="S_max - S_min" src="equation/s_diff.png" /> range.
+        Providing an additional <img alt="O(N * (S_max + lbs))" src="equation/lsd_offset.png" /> 
+        runtime on top of the <img alt="O(N * (K/S))" src="equation/lsd.png" /> performance
+        of LSD <a href=bibliography.html#radix>Radix Sort</a>, but without the O(N) memory overhead.
+        For simplicity, because lbs is a small constant (0 can be used, and performs reasonably), 
+        it is ignored when summarizing the performance in further discussions.
+        By checking whether comparison-based sorting is better, 
+        <a href="http://en.wikipedia.org/wiki/Spreadsort">Spreadsort</a> is also <img src="equation/introsort.png" alt="O(N*log(N))" />,
+        whichever is better, and unlike LSD <a href=bibliography.html#radix>Radix Sort</a>, 
+        can perform much better than the worst-case
+        if the data is either evenly distributed or highly clustered.
+</p><p> This analysis was for <a href= "integer_sort.html" />integer_sort</a> and 
+        <a href="float_sort.html">float_sort</a>.  
+        <a href="string_sort.html">string_sort</a> differs in that S_min = S_max = sizeof(Char_type) * 8, 
+        lbs is 0, and that std::sort's comparison is not
+        a constant-time operation, so strictly speaking string_sort runtime is 
+        <img alt="O(N * (K/S_max + (S_max comparisons)))" src="equation/string_sort.png" />.  
+        Worst-case, this ends up being O(N * K) (where K is the mean string length in bytes), 
+        as described for <a href="bibliography.html#american_flag_sort">American Flag Sort</a>, 
+        which is better than
+        the O(N * K * log(N)) worst-case for comparison-based sorting.
+    </p>
+
+  <h2><a name="tuning" id="tuning"></a>Tuning and Testing</h2>
+<p>
+		<a href="integer_sort.html">integer_sort</a> and <a href="float_sort.html">float_sort</a> 
+		have tuning constants that control how the radix-sorting portion
+		of those algorithms work.
+		The ideal <a href="constants.html">constant values</a> for 
+		<a href="integer_sort.html">integer_sort</a> and <a href="float_sort.html">float_sort</a> 
+		vary depending on the platform, compiler, and data being sorted.  
+		By far the most important constant is <a href="constants.html#max_splits">max_splits</a>, 
+		which defines how many pieces the radix-sorting portion splits the data into per iteration.  
+</p><p> The ideal value of <a href="constants.html#max_splits">max_splits</a> depends upon the size of the L1 processor cache, 
+		and is between 10 and 13 on many systems.  A default value of 11 is used.
+        For mostly-sorted data, a much larger value is better, as swaps (and thus cache misses) are
+        rare, but this hurts runtime severely for unsorted data, so is not recommended.
+</p><p> On some x86 systems when the total number of elements being sorted is small (
+        less than 1 million or so), the ideal 
+        <a href="constants.html#max_splits">max_splits</a> can be substantially larger, such as 17.  
+        This is suspected to be because all the data fits into the L2 cache, 
+        and misses from L1 cache to L2 cache do not impact performance as severely as misses to 
+        main memory.
+        Modifying <a href="constants.html">tuning constants</a> other than 
+        <a href="constants.html#max_splits">max_splits</a> is not recommended, as the performance 
+        improvement for changing other constants is usually minor.
+</p><p> 
+        If you can afford to let it run for a day, and have at least 1GB of free memory, 
+        the perl command: "./tune.pl -large -tune" (UNIX) or "perl tune.pl -large -tune -windows" (Windows)
+        can be used to automatically tune <a href="constants.html">these constants</a>.
+        This should be run from the libs/sort/sort directory inside the boost home directory.
+		This will work to identify the ideal constants.hpp settings for your system, 
+		testing on various distributions in a 20 million element (80MB) file, 
+		and additionally verifies that all sorting routines sort correctly across various data 
+		distributions.  
+		Alternatively, you can test with the file size you're most concerned with 
+		"./tune.pl number -tune" (UNIX) or "perl tune.pl number -tune -windows" (Windows).
+		Substitute the number of elements you want to test with for "number".
+		Otherwise, just use the options it comes with, they're decent.
+		With default settings "./tune.pl -tune" (UNIX) "perl tune.pl -tune -windows" (Windows),
+		the script will take hours to run (less than a day), 
+		but may not pick the correct <a href="constants.html#max_splits">max_splits</a> if it is over 10.
+		Alternatively, you can add the -small option to make it take just a few minutes,
+		tuning for smaller vector sizes (one hundred thousand elements), 
+		but the resulting constants may not be good for large files 
+		(see above note about <a href="constants.html#max_splits">max_splits</a> on Windows).
+</p><p> The tuning script can also be used just to verify that sorting works correctly on your system, 
+        and see how much of a speedup it gets, by omiting the "-tune" option.  
+        This runs at the end of tuning runs.
+        Default args will take about an hour to run and give accurate results on decent-sized test vectors.
+        "./tune.pl -small" (UNIX) "perl tune.pl -small -windows" (Windows) is a faster option,
+        that tests on smaller vectors and isn't as accurate.
+</p><p> If any differences are encountered during tuning, please call tune.pl with -debug &gt; log_file_name.
+    If the resulting log file contains compilation or permissions issues, it is likely an issue with your
+    setup.  If some other type of error is encountered (or result differences), please send them
+    to the library author at spreadsort@gmail.com.  
+    Including the zipped input.txt that was being used is also helpful.
+    </p>
+
+  <hr>
+  <div class="spirit-nav">
+<a accesskey="p" href="index.html"><img src="../../../doc/html/images/prev.png" alt="Prev"></a>
+<a accesskey="u" href="index.html"><img src="../../../doc/html/images/up.png" alt="Up"></a>
+<a accesskey="h" href="index.html"><img src="../../../doc/html/images/home.png" alt="Home"></a>
+<a accesskey="n" href="sort.html"><img src="../../../doc/html/images/next.png" alt="Next"></a>
+</div>
+
+  <p><a href="http://validator.w3.org/check?uri=referer"><img border="0" src=
+  "http://www.w3.org/Icons/valid-html401" alt="Valid HTML 4.01 Transitional"
+  height="31" width="88"></a></p>
+
+  <p>Revised 
+  <!--webbot bot="Timestamp" s-type="EDITED" s-format="%d %B, %Y" startspan -->04
+  December, 2006<!--webbot bot="Timestamp" endspan i-checksum="38514" --></p>
+
+  <p><i>Copyright &copy; 2009 <a href=
+  "mailto:spreadsort@gmail.com">Steven Ross</a></i></p>
+
+  <p><i>Distributed under the Boost Software License, Version 1.0. (See
+  accompanying file <a href="../../../LICENSE_1_0.txt">LICENSE_1_0.txt</a> or
+  copy at <a href=
+  "http://www.boost.org/LICENSE_1_0.txt">http://www.boost.org/LICENSE_1_0.txt</a>)</i></p>
+</body>
+</html>

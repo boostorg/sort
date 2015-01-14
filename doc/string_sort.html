@@ -1,0 +1,342 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+  <meta http-equiv="Content-Language" content="en-us">
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="../../../boost.css">
+
+  <title>Boost Sort library - Header &lt;boost/sort/spreadsort/string_sort.hpp&gt;</title>
+</head>
+
+<body link="#0000FF" vlink="#800080">
+  <table border="0" cellpadding="7" cellspacing="0" width="100%" summary=
+  "header">
+    <tr>
+      <td valign="top" width="300">
+        <h3><a href="../../../index.htm"><img height="86" width="277" alt=
+        "C++ Boost" src="../../../boost.png" border="0"></a></h3>
+      </td>
+
+      <td valign="top">
+        <h1 align="center">Boost Sort library</h1>
+
+        <h2 align="center">Header &lt;boost/sort/spreadsort/string_sort.hpp&gt;</h2>
+      </td>
+    </tr>
+  </table>
+  
+  <div class="spirit-nav">
+<a accesskey="p" href="float_sort.html"><img src="../../../doc/html/images/prev.png" alt="Prev"/></a>
+<a accesskey="u" href="index.html"><img src="../../../doc/html/images/up.png" alt="Up"/></a>
+<a accesskey="h" href="index.html"><img src="../../../doc/html/images/home.png" alt="Home"/></a>
+<a accesskey="n" href="constants.html"><img src="../../../doc/html/images/next.png" alt="Next"/></a>
+</div>
+  <hr/>
+
+  <h2>Contents</h2>
+
+  <dl class="page-index">
+    <dt><a href="#introduction">Introduction</a></dt>
+
+    <dt><a href="#functions">Functions</a></dt>
+
+    <dd>
+      <dl class="page-index">
+         <dt><a href="#string_sort-spec">string_sort</a></dt>
+      </dl>
+    </dd>
+
+    <dt><a href="#examples">Examples</a></dt>
+  </dl>
+  <hr>
+
+  <h2><a name="introduction" id="introduction"></a>Introduction</h2>
+     <p>string_sort is a hybrid radix-based/comparison-based algorithm that sorts strings of characters (or arrays of binary data) in ascending order.
+		The simplest version (no functors) sorts strings of items that can cast to an unsigned data type 
+		(such as an unsigned char), have a &lt; operator, have a size function, and have a data() function that returns a pointer to an array of characters, such as a std::string.
+		The functor version can sort any data type that has a strict weak ordering, via templating, but requires 
+		definitions of a get_char (acts like x[offset] on a string or a byte array), 
+		get_length (returns length of the string being sorted), and a comparison functor.  
+		Individual characters returned by get_char must support the != operator and have an unsigned 
+		value that defines their lexicographical order.  
+		This algorithm is not efficient for character types larger than 2 bytes each, and is optimized 
+		for one-byte character strings.  
+		For this reason, std::sort will be called instead if the character type is of size > 2.
+		string_sort has a special optimization for identical substrings.  
+		This adds some overhead on random data, but identical substrings are common in real strings.
+		reverse_string_sort sorts strings in reverse (decending) order, but is otherwise identical.    string_sort is sufficiently flexible that it should sort any data type that std::sort can, assuming the user provides appropriate functors that index into a key.
+</p><p><a href="../graph/windows_string_sort.htm">Windows/x86 Performance Graph</a>
+</p><p><a href="../graph/osx_string_sort.htm">OSX/G4 Performance Graph</a> </p>
+  <h2><a name="functions" id="functions"></a>Functions</h2>
+               <dt><a href="#string_sort-spec">string_sort</a></dt>
+  <pre>
+<a name="string_sort-spec" id="string_sort-spec">
+</a>template <class RandomAccessIter, class Unsigned_char_type>
+  inline void string_sort(RandomAccessIter first, RandomAccessIter last,
+                          Unsigned_char_type unused);
+
+  template <class RandomAccessIter>
+  inline void string_sort(RandomAccessIter first, RandomAccessIter last);
+
+  template <class RandomAccessIter, class Compare, class Unsigned_char_type>
+  inline void reverse_string_sort(RandomAccessIter first, 
+                RandomAccessIter last, Compare comp, Unsigned_char_type unused);
+
+  template <class RandomAccessIter, class Compare>
+  inline void reverse_string_sort(RandomAccessIter first, 
+                                  RandomAccessIter last, Compare comp);
+
+  template <class RandomAccessIter, class Get_char, class Get_length>
+  inline void string_sort(RandomAccessIter first, RandomAccessIter last,
+                          Get_char getchar, Get_length length);
+
+  template <class RandomAccessIter, class Get_char, class Get_length, 
+            class Compare>
+  inline void string_sort(RandomAccessIter first, RandomAccessIter last,
+                          Get_char getchar, Get_length length, Compare comp);
+
+  template <class RandomAccessIter, class Get_char, class Get_length, 
+            class Compare>
+  inline void reverse_string_sort(RandomAccessIter first, 
+    RandomAccessIter last, Get_char getchar, Get_length length, Compare comp);
+</pre>
+
+  <dl class="string_sort-semantics">
+        <dt><b>Requires:</b> 
+For the first version of string_sort, the one that takes three arguments:
+<UL>
+<LI>
+<tt>[first, last)</tt> is a valid range.
+<LI>
+<tt>RandomAccessIterator</tt> is a Random Access Iterator.
+<LI>
+<tt>RandomAccessIterator</tt> is mutable.
+<LI>
+<tt>RandomAccessIterator</tt>'s value type is LessThan Comparable.
+<LI>
+<tt>RandomAccessIterator</tt>'s value type supports <tt>.size()</tt>, 
+which returns the integer length of the value type.
+<LI>
+<tt>RandomAccessIterator</tt>'s value type supports the [] operator, 
+which returns an integer data type that is castable to and the same size as <tt>Unsigned_char_type</tt>.
+Given that the leading n - 1 characters are the same for a and b, 
+(<tt>Unsigned_char_type</tt>)a[n] &lt; (<tt>Unsigned_char_type</tt>)b[n] -&gt; a &lt; b.
+</UL>
+For the second version of string_sort, the one that takes two arguments:
+<UL>
+<LI>
+<tt>[first, last)</tt> is a valid range.
+<LI>
+<tt>RandomAccessIterator</tt> is a Random Access Iterator.
+<LI>
+<tt>RandomAccessIterator</tt> is mutable.
+<LI>
+<tt>RandomAccessIterator</tt>'s value type is LessThan Comparable.
+<LI>
+<tt>RandomAccessIterator</tt>'s value type supports <tt>.size()</tt>, 
+which returns the integer length of the value type.
+<LI>
+<tt>RandomAccessIterator</tt>'s value type supports the [] operator, 
+which returns an integer data type that is castable to and the same size as an unsigned char.
+Given that the leading n - 1 characters are the same for a and b, (unsigned char)a[n] &lt; (unsigned char)b[n] -&gt; a &lt; b.
+</UL>
+For the first version of reverse_string_sort, the one that takes three arguments:
+<UL>
+<LI>
+<tt>[first, last)</tt> is a valid range.
+<LI>
+<tt>RandomAccessIterator</tt> is a Random Access Iterator.
+<LI>
+<tt>RandomAccessIterator</tt> is mutable.
+<LI>
+<tt>Compare</tt> provides a Strict Weak Ordering.
+<LI>
+<tt>RandomAccessIterator</tt>'s value type is convertible to
+   <tt>Compares</tt>'s argument type.
+<LI>
+<tt>RandomAccessIterator</tt>'s value type supports <tt>.size()</tt>, 
+which returns the integer length of the value type.
+<LI>
+<tt>RandomAccessIterator</tt>'s value type supports the [] operator, 
+which returns an integer data type that is castable to and the same size as an unsigned char.
+Given that the leading n - 1 characters are the same for a and b, 
+(unsigned char)a[n] &gt; (unsigned char)b[n] -&gt; <tt>Compare</tt>(a, b).
+</UL>
+For the second version of reverse_string_sort, the one that takes four arguments:
+<UL>
+<LI>
+<tt>[first, last)</tt> is a valid range.
+<LI>
+<tt>RandomAccessIterator</tt> is a Random Access Iterator.
+<LI>
+<tt>RandomAccessIterator</tt> is mutable.
+<LI>
+<tt>Compare</tt> provides a Strict Weak Ordering.
+<LI>
+<tt>RandomAccessIterator</tt>'s value type is convertible to
+   <tt>Compares</tt>'s argument type.
+<LI>
+<tt>RandomAccessIterator</tt>'s value type supports <tt>.size()</tt>, 
+which returns the integer length of the value type.
+<LI>
+<tt>RandomAccessIterator</tt>'s value type supports the [] operator, 
+which returns an integer data type that is castable to and the same size as <tt>Unsigned_char_type</tt>.
+Given that the leading n - 1 characters are the same for a and b, 
+(<tt>Unsigned_char_type</tt>)a[n] &gt; (<tt>Unsigned_char_type</tt>)b[n] -&gt; <tt>Compare</tt>(a, b).
+</UL>
+For the third version of string_sort, the one that takes four arguments:
+<UL>
+<LI>
+<tt>[first, last)</tt> is a valid range.
+<LI>
+<tt>RandomAccessIterator</tt> is a Random Access Iterator.
+<LI>
+<tt>RandomAccessIterator</tt> is mutable.
+<LI>
+<tt>RandomAccessIterator</tt>'s value type is LessThan Comparable.
+<LI>
+<tt>Get_length</tt> called on the <tt>RandomAccessIterator</tt>'s value type 
+returns the integer length in characters of the value type.
+<LI>
+<tt>Get_char</tt> called with the <tt>RandomAccessIterator</tt>'s value type 
+as the first argument and a size_t as the second argument returns the
+corresponding unsigned character, such that <tt>Get_char</tt>(a, n) corresponds to a[n].
+Given that the leading n - 1 characters are the same for a and b, 
+<tt>Get_char(a,n)</tt> &lt; <tt>Get_char(b,n)</tt> -&gt; a &lt; b.
+</UL>
+For the fourth version of string_sort, the one that takes five arguments:
+<UL>
+<LI>
+<tt>[first, last)</tt> is a valid range.
+<LI>
+<tt>RandomAccessIterator</tt> is a Random Access Iterator.
+<LI>
+<tt>RandomAccessIterator</tt> is mutable.
+<LI>
+<tt>Compare</tt> provides a Strict Weak Ordering.
+<LI>
+<tt>RandomAccessIterator</tt>'s value type is convertible to
+   <tt>Compares</tt>'s argument type.
+<LI>
+<tt>Get_length</tt> called on the <tt>RandomAccessIterator</tt>'s value type 
+returns the integer length in characters of the value type.
+<LI>
+<tt>Get_char</tt> called with the <tt>RandomAccessIterator</tt>'s value type 
+as the first argument and a size_t as the second argument returns the
+corresponding unsigned character, such that <tt>Get_char</tt>(a, n) corresponds to a[n].
+Given that the leading n - 1 characters are the same for a and b, 
+<tt>Get_char(a,n)</tt> &lt; <tt>Get_char(b,n)</tt> -&gt; <tt>Compare</tt>(a, b).
+</UL>
+For the third version of reverse_string_sort, the one that takes five arguments:
+<UL>
+<LI>
+<tt>[first, last)</tt> is a valid range.
+<LI>
+<tt>RandomAccessIterator</tt> is a Random Access Iterator.
+<LI>
+<tt>RandomAccessIterator</tt> is mutable.
+<LI>
+<tt>Compare</tt> provides a Strict Weak Ordering.
+<LI>
+<tt>RandomAccessIterator</tt>'s value type is convertible to
+   <tt>Compares</tt>'s argument type.
+<LI>
+<tt>Get_length</tt> called on the <tt>RandomAccessIterator</tt>'s value type 
+returns the integer length in characters of the value type.
+<LI>
+<tt>Get_char</tt> called with the <tt>RandomAccessIterator</tt>'s value type 
+as the first argument and a size_t as the second argument returns the
+corresponding unsigned character, such that <tt>Get_char</tt>(a, n) corresponds to a[n].
+Given that the leading n - 1 characters are the same for a and b, 
+<tt>Get_char(a,n)</tt> &gt; <tt>Get_char(b,n)</tt> -&gt; <tt>Compare</tt>(a, b).
+</UL>
+</dt>
+    <dt><b>Postconditions:</b> The elements in the range <tt>[first, last)</tt> are sorted in ascending order.</dt>
+
+    <dt><b>Complexity:</b>
+O(N * mean_string_length) character comparisons worst-case performance, 
+where <tt>N</tt> is <tt>last - first</tt>.
+</dt>
+
+    <dt><b>Exceptions:</b>
+Throws if any of the element comparisons, the element
+swaps (or moves), one of the functors, subtraction of the characters obtained through get_char, 
+or the operations on iterators throws.  Throwing an 
+exception may cause data loss.  This will also throw if a small vector (worst case size proportional to the square root of the number of input bytes) resize throws, in which case there will be no data loss.  Note that invalid arguments cause undefined behavior.
+</dt>
+    <dt><b>Rationale:</b><p>This provides a general-case string-sorting algorithm that
+    takes asymptotically less time than is possible for a pure comparison-based algorithm.</p>
+    <p><b>Why use recursion for string_sort instead of a stack, 
+    like <a href="bibliography.html#american_flag_sort">American Flag Sort</a>?</b></p>
+    <p>Because recursion is simpler, more readable, and has comparable performance.
+        The stacksize limitation is not a serious issue on common modern systems.</p></dt>
+  </dl>
+
+  <h2><a name="examples" id="examples"></a>Examples</h2>
+
+  <p><a href="../example/stringsample.cpp">Simple string sorting</a>
+</p><p><a href="../example/wstringsample.cpp">Wide-character string sorting</a>
+</p><p><a href="../example/charstringsample.cpp">Sorting a structure on a string key</a>
+</p><p><a href="../example/reversestringsample.cpp">Sorting in reverse order</a>
+</p><p><a href="../example/reversestringfunctorsample.cpp">Sorting in reverse order with functors</a>
+</p><p><a href="../example/stringfunctorsample.cpp">Sorting with functors</a>
+</p><p><a href="../example/caseinsensitive.cpp">Case-insensitive sorting</a>
+</p><p><a href="../example/generalizedstruct.cpp">Generalized sorting with multiple keys and key types</a>
+</p>
+<pre>vector&lt;string&gt; vec;
+vec.push_back("c");
+vec.push_back("ab");
+vec.push_back("a");
+string_sort(vec.begin(), vec.end());
+//The sorted vector contains "a ab c"</pre>
+        
+<p>     <b>Reverse order:</b></p>
+<pre>struct greaterthan { 
+    bool operator()(const DATATYPE &x, const DATATYPE &y) const 
+    { return x &gt; y; } 
+};
+reverse_string_sort(vec.begin(), vec.end(), std::greater&lt;string&gt;());
+//The sorted vector contains "c ab a"
+</pre> 
+<p> <b>Structure:</b></p>
+<pre>struct data_type {
+	string a;
+	inline bool operator<(const data_type &y) const { return a &lt; y.a;}
+};
+vector&lt;data_type&gt; vec;
+
+struct bracket {
+	unsigned char operator()(const data_type &x, size_t offset) const { return x.a[offset]; }
+};
+struct getsize {
+	size_t operator()(const data_type &x) const{ return x.a.size(); }
+};
+
+string_sort(vec.begin(), vec.end(), bracket(), getsize());
+</pre>
+  <hr/>
+  <div class="spirit-nav">
+<a accesskey="p" href="float_sort.html"><img src="../../../doc/html/images/prev.png" alt="Prev"/></a>
+<a accesskey="u" href="index.html"><img src="../../../doc/html/images/up.png" alt="Up"/></a>
+<a accesskey="h" href="index.html"><img src="../../../doc/html/images/home.png" alt="Home"/></a>
+<a accesskey="n" href="constants.html"><img src="../../../doc/html/images/next.png" alt="Next"/></a>
+</div>
+
+  <p><a href="http://validator.w3.org/check?uri=referer"><img border="0" src=
+  "http://www.w3.org/Icons/valid-html401" alt="Valid HTML 4.01 Transitional"
+  height="31" width="88"></a></p>
+
+  <p>Revised 
+  <!--webbot bot="Timestamp" s-type="EDITED" s-format="%d %B, %Y" startspan -->04
+  December, 2006<!--webbot bot="Timestamp" endspan i-checksum="38514" --></p>
+
+  <p><i>Copyright &copy; 2009 <a href=
+  "mailto:spreadsort@gmail.com">Steven Ross</a></i></p>
+
+  <p><i>Distributed under the Boost Software License, Version 1.0. (See
+  accompanying file <a href="../../../LICENSE_1_0.txt">LICENSE_1_0.txt</a> or
+  copy at <a href=
+  "http://www.boost.org/LICENSE_1_0.txt">http://www.boost.org/LICENSE_1_0.txt</a>)</i></p>
+</body>
+</html>

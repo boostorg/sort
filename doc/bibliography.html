@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+  <meta http-equiv="Content-Language" content="en-us">
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="../../../boost.css">
+
+  <title>Boost Sort library - Bibliography</title>
+</head>
+
+<body link="#0000FF" vlink="#800080">
+  <table border="0" cellpadding="7" cellspacing="0" width="100%" summary=
+  "header">
+    <tr>
+      <td valign="top" width="300">
+        <h3><a href="../../../index.htm"><img height="86" width="277" alt=
+        "C++ Boost" src="../../../boost.png" border="0"></a></h3>
+      </td>
+
+      <td valign="top">
+        <h1 align="center">Boost Sort library</h1>
+
+        <h2 align="center">Bibliography</h2>
+      </td>
+    </tr>
+  </table>
+  <div class="spirit-nav">
+<a accesskey="p" href="acknowledgments.html"><img src="../../../doc/html/images/prev.png" alt="Prev"/></a>
+<a accesskey="u" href="index.html"><img src="../../../doc/html/images/up.png" alt="Up"/></a>
+<a accesskey="h" href="index.html"><img src="../../../doc/html/images/home.png" alt="Home"/></a>
+</div>
+  <hr/>
+  <h2><a name="radix" id="radix"></a>Radix Sort</h2>
+  <p>A type of algorithm that sorts based upon distribution instead of by comparison.  Wikipedia has an article about <a href="http://en.wikipedia.org/wiki/Radix_sort">Radix Sorting</a>.  
+     A more detailed description of various Radix Sorting algorithms is provided here:</p>
+     <p>Donald Knuth. The Art of Computer Programming, Volume 3: Sorting and Searching, 
+     Second Edition. Addison-Wesley, 1998. ISBN 0-201-89685-0. 
+     Section 5.2.5: Sorting by Distribution, pp.168-179.</p>
+  <h2><a name="introsort" id="introsort"></a>Introsort</h2>
+  <p>A high-speed comparison-based sorting algorithm that takes O(N * log(N)) time.
+  <a href="http://www.cs.rpi.edu/~musser/gp/introsort.ps">paper</a></p>
+  <h2><a name="american_flag_sort" id="american_flag_sort"></a>American Flag Sort</h2>
+  <p>A high-speed hybrid string sorting algorithm that string_sort is partially based upon.
+  <a href="mcilroy.ps">paper</a></p>
+  <h2><a name="alr" id="alr"></a>Adaptive Left Radix</h2>
+  <p>A hybrid cache-friendly integer sorting algorithm with comparable speed on random data 
+  to integer_sort, but does not have the optimizations for worst-case performance, 
+  causing it to perform poorly on certain types of unevenly distributed data.
+  <a href="Maus11_2002.pdf">paper</a></p>
+  <h2><a name="spreadsort" id="spreadsort"></a>Original Spreadsort</h2>
+  <p>The algorithm that integer_sort was originally based on.  integer_sort uses a smaller number of key bits at a time for better cache efficiency than the method described in the <a href="original_spreadsort06_2002.pdf">paper</a>.  The importance of cache efficiency grew as CPU clock speeds increased while main memory latency stagnated.</p>
+  <hr/>
+  <div class="spirit-nav">
+<a accesskey="p" href="acknowledgments.html"><img src="../../../doc/html/images/prev.png" alt="Prev"/></a>
+<a accesskey="u" href="index.html"><img src="../../../doc/html/images/up.png" alt="Up"/></a>
+<a accesskey="h" href="index.html"><img src="../../../doc/html/images/home.png" alt="Home"/></a>
+</div>
+
+  <p><a href="http://validator.w3.org/check?uri=referer"><img border="0" src=
+  "http://www.w3.org/Icons/valid-html401" alt="Valid HTML 4.01 Transitional"
+  height="31" width="88"></a></p>
+
+  <p>Revised 
+  <!--webbot bot="Timestamp" s-type="EDITED" s-format="%d %B, %Y" startspan -->04
+  December, 2006<!--webbot bot="Timestamp" endspan i-checksum="38514" --></p>
+
+  <p><i>Copyright &copy; 2009 <a href=
+  "mailto:spreadsort@gmail.com">Steven Ross</a></i></p>
+
+  <p><i>Distributed under the Boost Software License, Version 1.0. (See
+  accompanying file <a href="../../../LICENSE_1_0.txt">LICENSE_1_0.txt</a> or
+  copy at <a href=
+  "http://www.boost.org/LICENSE_1_0.txt">http://www.boost.org/LICENSE_1_0.txt</a>)</i></p>
+</body>
+</html>
