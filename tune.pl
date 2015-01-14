@@ -199,8 +199,8 @@ sub WriteConstants {
     print CONSTANTS "//    (See accompanying file LICENSE_1_0.txt or copy at\n";
     print CONSTANTS "//          http://www.boost.org/LICENSE_1_0.txt)\n\n";
     print CONSTANTS "//  See http://www.boost.org/libs/sort for library home page.\n";
-    print CONSTANTS "#ifndef BOOST_SORT_DETAIL_CONSTANTS\n";
-    print CONSTANTS "#define BOOST_SORT_DETAIL_CONSTANTS\n";
+    print CONSTANTS "#ifndef BOOST_SORT_SPREADSORT_DETAIL_CONSTANTS\n";
+    print CONSTANTS "#define BOOST_SORT_SPREADSORT_DETAIL_CONSTANTS\n";
     print CONSTANTS "namespace boost {\n";
     print CONSTANTS "namespace sort {\n";
     print CONSTANTS "namespace spreadsort {\n";
