@@ -184,7 +184,7 @@ sub PerfTest {
 # Write an updated constants file as part of tuning.
 sub WriteConstants {
     # deleting the file
-    $const_file = 'include/sort/spreadsort/detail/constants.hpp';
+    $const_file = 'include/boost/sort/spreadsort/detail/constants.hpp';
     @cannot = grep {not unlink} $const_file;
     print "$0: could not unlink @cannot\n" if @cannot;
 
