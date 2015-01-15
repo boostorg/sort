@@ -59,7 +59,6 @@ namespace spreadsort {
 
   /*!
     \brief @c float_sort with casting to the appropriate size.
-    \tparam RandomAccessIter <a href="http://www.cplusplus.com/reference/iterator/RandomAccessIterator/">Random access iterator</a>
 
     \param[in] first Iterator pointer to first element.
     \param[in] last Iterator pointing to one beyond the end of data.
@@ -93,12 +92,10 @@ Some performance plots of runtime vs. n and log(range) are provided:\n
 
   /*!
     \brief Floating-point sort algorithm using random access iterators with just right-shift functor.
-    \tparam RandomAccessIter <a href="http://www.cplusplus.com/reference/iterator/RandomAccessIterator/">Random access iterator</a>
-    \tparam Right_shift Functor for right-shift by parameter @c shift bits.
 
     \param[in] first Iterator pointer to first element.
     \param[in] last Iterator pointing to one beyond the end of data.
-    \param[in] rshift Number of bits to right-shift (using functor).
+    \param[in] shift Functor that returns the result of shifting the value_type right a specified number of bits.
 
   */
   template <class RandomAccessIter, class Right_shift>
@@ -115,14 +112,10 @@ Some performance plots of runtime vs. n and log(range) are provided:\n
   /*!
    \brief Float sort algorithm using random access iterators with both right-shift and user-defined comparison operator.
 
-   \tparam RandomAccessIter <a href="http://www.cplusplus.com/reference/iterator/RandomAccessIterator/">Random access iterator</a>
-   \tparam Right_shift functor for right-shift by parameter @c shift bits.
-   \tparam Comp To provide @c operator< for user-defined comparison.
-
    \param[in] first Iterator pointer to first element.
    \param[in] last Iterator pointing to one beyond the end of data.
-   \param[in] rshift Number of bits to right-shift (using functor).
-   \param[in] comp comparison functor.
+   \param[in] shift Functor that returns the result of shifting the value_type right a specified number of bits.
+   \param[in] comp A binary functor that returns whether the first element passed to it should go before the second in order.
   */
 
   template <class RandomAccessIter, class Right_shift, class Compare>

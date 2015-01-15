@@ -39,7 +39,6 @@ namespace spreadsort {
     \details If the data type provided is an integer, @c integer_sort is used.
     \note Sorting other data types requires picking between @c integer_sort, @c float_sort and @c string_sort directly,
     as @c spreadsort won't accept types that don't have the appropriate @c type_traits.
-    \tparam RandomAccessIter <a href="http://www.cplusplus.com/reference/iterator/RandomAccessIterator/">Random access iterator</a>
     \param[in] first Iterator pointer to first element.
     \param[in] last Iterator pointing to one beyond the end of data.
 
@@ -66,7 +65,6 @@ namespace spreadsort {
     \note Sorting other data types requires picking between @c integer_sort, @c float_sort and @c string_sort directly,
     as @c spreadsort won't accept types that don't have the appropriate @c type_traits.
 
-    \tparam RandomAccessIter <a href="http://www.cplusplus.com/reference/iterator/RandomAccessIterator/">Random access iterator</a>
     \param[in] first Iterator pointer to first element.
     \param[in] last Iterator pointing to one beyond the end of data.
 
@@ -95,7 +93,6 @@ namespace spreadsort {
     \note Sorting other data types requires picking between @c integer_sort, @c float_sort and @c string_sort directly,
     as @c spreadsort won't accept types that don't have the appropriate @c type_traits.
 
-    \tparam RandomAccessIter <a href="http://www.cplusplus.com/reference/iterator/RandomAccessIterator/">Random access iterator</a>
     \param[in] first Iterator pointer to first element.
     \param[in] last Iterator pointing to one beyond the end of data.
 

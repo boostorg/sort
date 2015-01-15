@@ -69,12 +69,13 @@ int main(int argc, const char ** argv) {
     clock_t start, end;
     double elapsed;
     start = clock();
-    if (stdSort)
-      //std::sort(&(array[0]), &(array[0]) + uCount);
+    if (stdSort) {
       std::sort(array.begin(), array.end());
-    else
-      //string_sort(&(array[0]), &(array[0]) + uCount);
+    } else {
+//[bracket_1
       string_sort(array.begin(), array.end(), bracket(), getsize());
+//] [/bracket_1]
+    }
     end = clock();
     elapsed = static_cast<double>(end - start);
     std::ofstream ofile;

@@ -46,8 +46,6 @@ Some performance plots of runtime vs. n and log(range) are provided:\n
    \n
    <a href="../../doc/graph/osx_integer_sort.htm"> osx_integer_sort</a>
 
-
-   \tparam RandomAccessIter <a href="http://www.cplusplus.com/reference/iterator/RandomAccessIterator/">Random access iterator</a>
    \param[in] first Iterator pointer to first element.
    \param[in] last Iterator pointing to one beyond the end of data.
 
@@ -97,20 +95,13 @@ Some performance plots of runtime vs. n and log(range) are provided:\n
    \n
    <a href="../../doc/graph/osx_integer_sort.htm"> osx_integer_sort</a>
 
-   \tparam RandomAccessIter <a href="http://www.cplusplus.com/reference/iterator/RandomAccessIterator/">Random access iterator</a>
-   \tparam Right_shift functor for right-shift by parameter @c shift bits.
-   \tparam Comp To provide @c operator< for user-defined comparison.
-
    \param[in] first Iterator pointer to first element.
    \param[in] last Iterator pointing to one beyond the end of data.
-   \param[in] shift Number of bits to right-shift (using functor).
-   \param[in] comp comparison functor.
+   \param[in] shift Functor that returns the result of shifting the value_type right a specified number of bits.
+   \param[in] comp A binary functor that returns whether the first element passed to it should go before the second in order.
 
    \pre [@c first, @c last) is a valid range.
    \pre @c RandomAccessIter @c value_type is mutable.
-   \pre @c RandomAccessIter @c value_type is <a href="http://en.cppreference.com/w/cpp/concept/LessThanComparable">LessThanComparable</a>
-   \pre @c RandomAccessIter @c value_type supports the @c operator>>,
-   which returns an integer-type right-shifted a specified number of bits.
    \post The elements in the range [@c first, @c last) are sorted in ascending order.
 
    \return @c void.
@@ -154,18 +145,13 @@ Some performance plots of runtime vs. n and log(range) are provided:\n
   * <a href="../../doc/graph/windows_integer_sort.htm"> windows_integer_sort</a>\n
   * <a href="../../doc/graph/osx_integer_sort.htm"> osx_integer_sort</a>
 
-   \tparam RandomAccessIter <a href="http://www.cplusplus.com/reference/iterator/RandomAccessIterator/">Random access iterator</a>
-   \tparam Right_shift functor for right-shift by parameter @c shift bits.
-
    \param[in] first Iterator pointer to first element.
    \param[in] last Iterator pointing to one beyond the end of data.
-   \param[in] shift Number of bits to right-shift (using functor).
+   \param[in] A functor that returns the result of shifting the value_type right a specified number of bits.
 
    \pre [@c first, @c last) is a valid range.
    \pre @c RandomAccessIter @c value_type is mutable.
    \pre @c RandomAccessIter @c value_type is <a href="http://en.cppreference.com/w/cpp/concept/LessThanComparable">LessThanComparable</a>
-   \pre @c RandomAccessIter @c value_type supports the @c operator>>,
-   which returns an integer-type right-shifted a specified number of bits.
    \post The elements in the range [@c first, @c last) are sorted in ascending order.
 
    \throws std::exception Propagates exceptions if any of the element comparisons, the element swaps (or moves),

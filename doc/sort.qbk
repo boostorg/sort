@@ -43,10 +43,10 @@
 
 [/ Links to functions for use in text]
 [/TODO change these for spreadsort namespace change]
-[def __integer_sort [^[funcref boost::sort::integer_sort  integer_sort]]]
-[def __float_sort [^[funcref boost::sort::float_sort  float_sort]]]
-[def __string_sort [^[funcref boost::sort::string_sort  string_sort]]]
-[def __spread_sort [^[funcref boost::sort::spreadsort  spreadsort]]] [/Note diff from Wiki link __spreadsort]
+[def __integer_sort [^[funcref boost::sort::spreadsort::integer_sort  integer_sort]]]
+[def __float_sort [^[funcref boost::sort::spreadsort::float_sort  float_sort]]]
+[def __string_sort [^[funcref boost::sort::spreadsort::string_sort  string_sort]]]
+[def __spreadsort [^[funcref boost::sort::spreadsort::spreadsort  spreadsort]]] [/Note diff from Wiki link __spreadsort]
 [def __std_sort [@http://en.cppreference.com/w/cpp/algorithm/sort std::sort]]
 
 [section:overview Overview]
@@ -114,6 +114,8 @@ Each of __integer_sort, __float_sort, and __string_sort have 3 main versions:
 The base version, which takes a first iterator and a last iterator, just like __std_sort:
 
    integer_sort(array.begin(), array.end());
+   float_sort(array.begin(), array.end());
+   string_sort(array.begin(), array.end());
 
 The version with an overridden shift functor, providing flexibility
 in case the `operator>>` already does something other than a bitshift.
@@ -133,8 +135,9 @@ In other words:
    rightshift(A, n) < rightshift(B, n) -> A < B
 
 [rightshift_1]
+[bracket_1]
 
-See [@../../example/rightshiftsample.cpp  rightshiftsample.cpp] for a worked example.
+See [@../../example/rightshiftsample.cpp  rightshiftsample.cpp] for a working example of integer sorting with a rightshift functor.
 
 And a version with a comparison functor for maximum flexibility.
 This functor must provide the same sorting order as the integers returned by the rightshift:
@@ -151,13 +154,11 @@ Examples of functors are:
 
 [getsize_functor]
 
-and this is used thus:
+and these functors are used thus:
 
 [stringsort_functors_call]
 
-See [@../../example/stringfunctorsample.cpp  stringfunctorsample.cpp] for a worked example of a string with functor example.
-
-TODO I find this above confusing (and may be confused - haven't stopped to think carefully) - I think you need links to all the examples and use snippets here.
+See [@../../example/stringfunctorsample.cpp  stringfunctorsample.cpp] for a working example of sorting strings with all functors.
 
 [endsect] [/section:overloading Overloading]
 
@@ -392,7 +393,7 @@ If you can afford to let it run for a day, and have at least 1GB of free memory,
 the perl command: `./tune.pl -large -tune` (UNIX)
 or `perl tune.pl -large -tune -windows` (Windows)
 can be used to automatically tune these constants.
-This should be run from the `libs/sort/sort directory` inside the boost home directory.
+This should be run from the `libs/sort directory` inside the boost home directory.
 This will work to identify the `ideal constants.hpp` settings for your system,
 testing on various distributions in a 20 million element (80MB) file,
 and additionally verifies that all sorting routines sort correctly
@@ -431,7 +432,7 @@ Including the zipped `input.txt` that was being used is also helpful.
 
 [section:header_spreadsort Header `<boost/sort/spreadsort/spreadsort.hpp>`]
 
-__spread_sort checks whether the data-type provided is an integer,
+__spreadsort checks whether the data-type provided is an integer,
 castable float, string, or wstring.
 
 * If data-type is an integer, __integer_sort is used.
@@ -449,18 +450,16 @@ See __overloading section.
 
 [h5 Rationale:]
 
-__spread_sort function provides a wrapper that calls the fastest sorting algorithm
+__spreadsort function provides a wrapper that calls the fastest sorting algorithm
 available for a data-type, enabling faster generic programming.
 
 [endsect] [/section:header_spreadsort Header `<boost/sort/spreadsort/spreadsort.hpp>`]
 
 [section:spreadsort_examples Spreadsort Examples]
 
-[/TODO you could provide anotated links to all your examples like this:]
-
 See [@../../example/ example] folder for all examples.
 
-See [@../../example/sample.cpp  sample.cpp] for a simple worked example.
+See [@../../example/sample.cpp  sample.cpp] for a simple working example.
 
 For an example of 64-bit integer sorting, see [@../../example/int64.cpp  int64.cpp].
 
@@ -472,7 +471,7 @@ and calls the sort
 
 [int64bit_2]
 
-See [@../../example/rightshiftsample.cpp  rightshiftsample.cpp] for a worked example of using rightshift, using a user-defined functor:
+See [@../../example/rightshiftsample.cpp  rightshiftsample.cpp] for a working example of using rightshift, using a user-defined functor:
 
 [rightshift_int_functor]
 
@@ -504,7 +503,7 @@ Comparison lessthan `operator<` functor:
 
 [endsect] [/section:spreadsort_examples Spreadsort Examples]
 
-[section:integer_sort Integer Spreadsort]
+[section:integer_sort Integer Sort]
 
 __integer_sort is a fast templated in-place hybrid radix/comparison algorithm,
 which in testing tends to be roughly 50% to 2X faster than
@@ -517,8 +516,6 @@ slow radix-based iterations + 11 fast comparison-based iterations).
 
 Some performance plots of runtime vs. n and log2(range) are provided below:
 
-[/ IMO these were in the wrong place in directory structure at modular-boost\libs\sort\graph\osx_float_sort_files]
-
 [@../../doc/graph/windows_integer_sort.htm Windows Integer Sort]
 
 [@../../doc/graph/osx_integer_sort.htm  OSX integer Sort]
@@ -528,9 +525,50 @@ Some performance plots of runtime vs. n and log2(range) are provided below:
 [@../../example/keyplusdatasample.cpp Key plus data sample.]
 ...  TODO
 
-[endsect] [/section:integer_sort Integer Integer Sort]
+[endsect] [/section:integersort_examples Integer Sort Examples]
 
-[endsect] [/section:sort_hpp Spreadsort]
+[endsect] [/section:integer_sort Integer Sort]
+
+[section:float_sort Float Sort]
+
+__float_sort is a fast templated in-place hybrid radix/comparison algorithm much like __integer_sort, but sorts IEEE floating-point numbers (positive, zero, NaN, and negative) into ascending order by casting them to integers.  This works because positive IEEE floating-point numbers sort like integers with the same bits, and negative IEEE floating-point numbers sort in the reverse order of integers with the same bits.  float_sort is roughly 2X as fast as std::sort.
+
+-0.0 vs. 0.0 and NaN are given definitive ordered positions by the radix-based portion of this algorithm, where comparison-based sorting does not guarantee their relative position.  The included tests avoid creating NaN and -0.0 so that results match std::sort, which is not consistent in how it handles these numbers, as they compare as equal to numbers with different values.
+
+float_sort checks the size of the data type and whether it is castable, picking
+ an integer type to cast to, if a casting functor isn't provided by the user.
+
+float_mem_cast casts IEEE floating-point numbers (positive, zero, NaN, and negative) into integers.  This is an essential utility for creating a custom rightshift functor for float_sort, when one is needed.  Only IEEE floating-point numbers of the same size as the integer type being cast to should be used in this specialized method call.
+Worst-case performance is ['[bigo](N * (log2(range)/s + s))],
+so __float_sort is asymptotically faster than pure comparison-based algorithms.
+['s] is ['max_splits], which defaults to 11,
+so its worst-case with default settings for 32-bit integers is ['[bigo](N * ((32/11)]
+slow radix-based iterations + 11 fast comparison-based iterations).
+
+Some performance plots of runtime vs. n and log2(range) are provided below:
+
+[@../../doc/graph/windows_float_sort.htm Windows Float Sort]
+
+[@../../doc/graph/osx_float_sort.htm  OSX Float Sort]
+
+[endsect] [/section:float_sort Float Sort]
+
+[section:string_sort String Sort]
+__string_sort is a hybrid radix-based/comparison-based algorithm that sorts strings of characters (or arrays of binary data) in ascending order.
+
+The simplest version (no functors) sorts strings of items that can cast to an unsigned data type (such as an unsigned char), have a &lt; operator, have a size function, and have a data() function that returns a pointer to an array of characters, such as a std::string. The functor version can sort any data type that has a strict weak ordering, via templating, but requires definitions of a get_char (acts like x[offset] on a string or a byte array), get_length (returns length of the string being sorted), and a comparison functor.  Individual characters returned by get_char must support the != operator and have an unsigned value that defines their lexicographical order.  
+
+This algorithm is not efficient for character types larger than 2 bytes each, and is optimized for one-byte character strings.  For this reason, __std_sort will be called instead if the character type is of size > 2.
+
+__string_sort has a special optimization for identical substrings.  This adds some overhead on random data, but identical substrings are common in real strings.
+
+reverse_string_sort sorts strings in reverse (decending) order, but is otherwise identical.    __string_sort is sufficiently flexible that it should sort any data type that __std_sort can, assuming the user provides appropriate functors that index into a key.
+
+[@../../doc/graph/windows_string_sort.htm Windows String Sort]
+
+[@../../doc/graph/osx_string_sort.htm  OSX String Sort]
+
+[endsect] [/section:string_sort String Sort]
 
 [section:rationale Rationale]
 
@@ -616,7 +654,7 @@ performance for even distributions comes at the cost of cache misses,
 which on modern architectures are extremely expensive, and in testing
 on modern systems ends up being slower than cutting up the data in multiple,
 cache-friendly steps. Also worth noting is that on most modern computers,
-`log(available RAM)/log2(L1 cache size)` is around 3,
+`log2(available RAM)/log2(L1 cache size)` is around 3,
 where a cache miss takes more than 3 times as long as an in-cache random-access,
 and the size of ['max_splits] is tuned to the size of the cache.
 On a computer where cache misses aren't this expensive, ['max_splits]
@@ -777,13 +815,12 @@ A high-speed comparison-based sorting algorithm that takes ['[bigo](N * log(N))]
 See __introsort and
 Musser, David R. (1997). "Introspective Sorting and Selection Algorithms",
 Software: Practice and Experience (Wiley) 27 (8), pp 983-993,
-available at [@http://www.cs.rpi.edu/~musser/gp/introsort.ps  Musser Introsoft].
+available at [@http://www.cs.rpi.edu/~musser/gp/introsort.ps  Musser Introsort].
 
-[h4 America Flag Sort]
+[h4 American Flag Sort]
 
 A high-speed hybrid string sorting algorithm that __string_sort is partially based
-upon.  See __american_flag and Peter M. McIlroy, Keith Bostic, M. Douglas McIlroy. Engineering Radix Sort,  Computing Systems 1993 at
-[@../../doc/mcilroy.ps  Engineering Radix sort, Peter M McIlroy and Keith Bostic].
+upon.  See __american_flag and Peter M. McIlroy, Keith Bostic, M. Douglas McIlroy. Engineering Radix Sort,  Computing Systems 1993.
 
 [h4 Adaptive Left Radix (ARL)]
 

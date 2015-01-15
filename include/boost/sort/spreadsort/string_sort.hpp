@@ -45,7 +45,7 @@ Some performance plots of runtime vs. n and log(range) are provided:\n
    \tparam Unsigned_char_type  Unsigned character type used for string.
    \param[in] first Iterator pointer to first element.
    \param[in] last Iterator pointing to one beyond the end of data.
-   \param[in] unused Unused ???
+   \param[in] unused value with the same type as the result of the [] operator, defining the Unsigned_char_type.  The actual value is unused.
 
    \pre [@c first, @c last) is a valid range.
    \pre @c RandomAccessIter @c value_type is mutable.
@@ -97,7 +97,6 @@ Some performance plots of runtime vs. n and log(range) are provided:\n
    \n
    <a href="../../doc/graph/osx_string_sort.htm"> osx_string_sort</a>
 
-   \tparam RandomAccessIter <a href="http://www.cplusplus.com/reference/iterator/RandomAccessIterator/">Random access iterator</a>
    \param[in] first Iterator pointer to first element.
    \param[in] last Iterator pointing to one beyond the end of data.
 
@@ -149,13 +148,13 @@ Some performance plots of runtime vs. n and log(range) are provided:\n
 
 
    \tparam RandomAccessIter <a href="http://www.cplusplus.com/reference/iterator/RandomAccessIterator/">Random access iterator</a>
-   \tparam Comp To provide @c operator< for user-defined comparison.
+   \tparam Comp Functor type to use for comparison.
    \tparam Unsigned_char_type Unsigned character type used for string.
 
    \param[in] first Iterator pointer to first element.
    \param[in] last Iterator pointing to one beyond the end of data.
-   \param[in] comp comparison functor.
-   \param[in] unused Unused ???
+   \param[in] comp A binary functor that returns whether the first element passed to it should go before the second in order.
+   \param[in] unused value with the same type as the result of the [] operator, defining the Unsigned_char_type.  The actual value is unused.
 
    \pre [@c first, @c last) is a valid range.
    \pre @c RandomAccessIter @c value_type is mutable.
@@ -208,13 +207,9 @@ Some performance plots of runtime vs. n and log(range) are provided:\n
    \n
    <a href="../../doc/graph/osx_integer_sort.htm"> osx_integer_sort</a>
 
-
-   \tparam RandomAccessIter <a href="http://www.cplusplus.com/reference/iterator/RandomAccessIterator/">Random access iterator</a>
-   \tparam Comp To provide @c operator< for user-defined comparison.
-
    \param[in] first Iterator pointer to first element.
    \param[in] last Iterator pointing to one beyond the end of data.
-   \param[in] comp Comparison functor.
+   \param[in] comp A binary functor that returns whether the first element passed to it should go before the second in order.
 
    \pre [@c first, @c last) is a valid range.
    \pre @c RandomAccessIter @c value_type is mutable.
@@ -264,14 +259,9 @@ Some performance plots of runtime vs. n and log(range) are provided:\n
    \n
    <a href="../../doc/graph/osx_integer_sort.htm"> osx_integer_sort</a>
 
-
-   \tparam RandomAccessIter <a href="http://www.cplusplus.com/reference/iterator/RandomAccessIterator/">Random access iterator</a>
-   \tparam Get_char Bracket functor equivalent to @c operator[], taking a number corresponding to the character offset..
-   \tparam Get_length Functor to get the length of the string in characters.  TODO Check this and below and other places!!!
-
    \param[in] first Iterator pointer to first element.
    \param[in] last Iterator pointing to one beyond the end of data.
-   \param[in] getchar Number corresponding to the character offset from bracket functor equivalent to @c operator[].
+   \param[in] getchar Bracket functor equivalent to @c operator[], taking a number corresponding to the character offset.
    \param[in] length Functor to get the length of the string in characters.
 
    \pre [@c first, @c last) is a valid range.
@@ -335,17 +325,11 @@ Some performance plots of runtime vs. n and log(range) are provided:\n
    <a href="../../doc/graph/osx_integer_sort.htm"> osx_integer_sort</a>
 
 
-   \tparam RandomAccessIter <a href="http://www.cplusplus.com/reference/iterator/RandomAccessIterator/">Random access iterator</a>
-   \tparam Get_char ???.
-   \tparam Get_length ??? TODO
-   \tparam Comp To provide @c operator< for user-defined comparison.
-
-
    \param[in] first Iterator pointer to first element.
    \param[in] last Iterator pointing to one beyond the end of data.
-   \param[in] comp comparison functor.
-   \param[in] getchar ???
-   \param[in] length ???
+   \param[in] getchar Bracket functor equivalent to @c operator[], taking a number corresponding to the character offset.
+   \param[in] length Functor to get the length of the string in characters.
+   \param[in] comp A binary functor that returns whether the first element passed to it should go before the second in order.
 
 
    \pre [@c first, @c last) is a valid range.
@@ -408,17 +392,11 @@ Some performance plots of runtime vs. n and log(range) are provided:\n
    <a href="../../doc/graph/osx_integer_sort.htm"> osx_integer_sort</a>
 
 
-   \tparam RandomAccessIter <a href="http://www.cplusplus.com/reference/iterator/RandomAccessIterator/">Random access iterator</a>
-   \tparam Get_char ???.
-   \tparam Get_length ??? TODO
-   \tparam Comp To provide @c operator< for user-defined comparison.
-
-
    \param[in] first Iterator pointer to first element.
    \param[in] last Iterator pointing to one beyond the end of data.
-   \param[in] comp comparison functor.
-   \param[in] getchar ???
-   \param[in] length ???
+   \param[in] getchar Bracket functor equivalent to @c operator[], taking a number corresponding to the character offset.
+   \param[in] length Functor to get the length of the string in characters.
+   \param[in] comp A binary functor that returns whether the first element passed to it should go before the second in order.
 
 
    \pre [@c first, @c last) is a valid range.
