@@ -1,4 +1,4 @@
-// spreadsort string sorting example.
+// Example of sorting structs with a string key and indexing functors.
 //
 //  Copyright Steven Ross 2009-2014.
 //

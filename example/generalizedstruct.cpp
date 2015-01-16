@@ -1,4 +1,5 @@
-// This example shows how to sort complex multiple part keys using Spreadsort.
+// This example shows how to sort structs using complex multiple part keys using
+// string_sort.
 //
 //  Copyright Steven Ross 2009-2014.
 //
@@ -21,6 +22,7 @@
 using std::string;
 using namespace boost::sort::spreadsort;
 
+//[generalized_functors
 struct DATA_TYPE {
   time_t birth;
   float net_worth;
@@ -111,6 +113,7 @@ struct getsize {
       x.last_name.size();
   }
 };
+//] [/generalized_functors]
 
 //Pass in an argument to test std::sort
 int main(int argc, const char ** argv) {
@@ -155,18 +158,22 @@ int main(int argc, const char ** argv) {
     clock_t start, end;
     double elapsed;
     start = clock();
-    if (stdSort)
+    if (stdSort) {
       std::sort(array.begin(), array.end(), lessthan());
-    else
+    } else {
+//[generalized_functors_call
       string_sort(array.begin(), array.end(), bracket(), getsize(), lessthan());
+//] [/generalized_functors_call]
+    }
     end = clock();
     elapsed = static_cast<double>(end - start);
-    if (stdSort)
+    if (stdSort) {
       outfile.open("standard_sort_out.txt", std::ios_base::out |
                    std::ios_base::binary | std::ios_base::trunc);
-    else
+    } else {
       outfile.open("boost_sort_out.txt", std::ios_base::out |
                    std::ios_base::binary | std::ios_base::trunc);
+    }
     if (outfile.good()) {
       for (unsigned u = 0; u < array.size(); ++u)
         outfile << array[u].birth << " " << array[u].net_worth << " "
@@ -176,9 +183,10 @@ int main(int argc, const char ** argv) {
     total += elapsed;
     array.clear();
   }
-  if (stdSort)
+  if (stdSort) {
     printf("std::sort elapsed time %f\n", total / CLOCKS_PER_SEC);
-  else
+  } else {
     printf("spreadsort elapsed time %f\n", total / CLOCKS_PER_SEC);
+  }
   return 0;
 }

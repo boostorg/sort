@@ -1,4 +1,4 @@
-// string_sort functor sorting example
+// Example of sorting a struct using a case-insensitive string key.
 //
 //  Copyright Steven Ross 2009-2014.
 //
