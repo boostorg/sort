@@ -21,11 +21,13 @@
 [/ Must be first included file!]
 
 [/Files containing quickbook snippets]
+[import ../example/charstringsample.cpp]
 [import ../example/stringfunctorsample.cpp]
 [import ../example/reverseintsample.cpp]
 [import ../example/rightshiftsample.cpp]
 [import ../example/int64.cpp]
 [import ../example/floatfunctorsample.cpp]
+[import ../example/generalizedstruct.cpp]
 
 [import html4_symbols.qbk] [/ Provides various useful squiggles.]
 
@@ -42,7 +44,6 @@
 [def __strictweakordering [@http://en.wikipedia.org/wiki/Weak_ordering#Strict_weak_orderings strict weak ordering]]
 
 [/ Links to functions for use in text]
-[/TODO change these for spreadsort namespace change]
 [def __integer_sort [^[funcref boost::sort::spreadsort::integer_sort  integer_sort]]]
 [def __float_sort [^[funcref boost::sort::spreadsort::float_sort  float_sort]]]
 [def __string_sort [^[funcref boost::sort::spreadsort::string_sort  string_sort]]]
@@ -453,8 +454,6 @@ See __overloading section.
 __spreadsort function provides a wrapper that calls the fastest sorting algorithm
 available for a data-type, enabling faster generic programming.
 
-[endsect] [/section:header_spreadsort Header `<boost/sort/spreadsort/spreadsort.hpp>`]
-
 [section:spreadsort_examples Spreadsort Examples]
 
 See [@../../example/ example] folder for all examples.
@@ -471,10 +470,6 @@ and calls the sort
 
 [int64bit_2]
 
-See [@../../example/rightshiftsample.cpp  rightshiftsample.cpp] for a working example of using rightshift, using a user-defined functor:
-
-[rightshift_int_functor]
-
 For a simple example sorting `float`s,
 
 	vector<float> vec;
@@ -487,21 +482,9 @@ For a simple example sorting `float`s,
 
 See also [@../../example/floatsample.cpp  floatsample.cpp] which checks for abnormal values.
 
-While [@../../example/floatfunctorsample.cpp floatfunctorsample.cpp] shows use of sorting float-point types with functors.
-
-[float_functor_types]
-
-[float_functor_datatypes]
-
-Right-shift functor:
-
-[float_functor_rightshift]
-
-Comparison lessthan `operator<` functor:
-
-[float_functor_lessthan]
-
 [endsect] [/section:spreadsort_examples Spreadsort Examples]
+
+[endsect] [/section:header_spreadsort Header `<boost/sort/spreadsort/spreadsort.hpp>`]
 
 [section:integer_sort Integer Sort]
 
@@ -522,8 +505,17 @@ Some performance plots of runtime vs. n and log2(range) are provided below:
 
 [section:integersort_examples Integer Sort Examples]
 
-[@../../example/keyplusdatasample.cpp Key plus data sample.]
-...  TODO
+See [@../../example/rightshiftsample.cpp  rightshiftsample.cpp] for a working example of using rightshift, using a user-defined functor:
+
+[rightshift_int_functor]
+
+Other examples:
+
+[@../../example/keyplusdatasample.cpp Sort structs using an integer key.]
+
+[@../../example/reverseintsample.cpp Sort integers in reverse order.]
+
+[@../../example/mostlysorted.cpp Simple sorting of integers; this case is a performance test for integers that are already mostly sorted.]
 
 [endsect] [/section:integersort_examples Integer Sort Examples]
 
@@ -551,6 +543,30 @@ Some performance plots of runtime vs. n and log2(range) are provided below:
 
 [@../../doc/graph/osx_float_sort.htm  OSX Float Sort]
 
+[section:floatsort_examples Float Sort Examples]
+
+See [@../../example/floatfunctorsample.cpp floatfunctorsample.cpp] for a working example of how to sort structs with a float key:
+
+[float_functor_types]
+
+[float_functor_datatypes]
+
+Right-shift functor:
+
+[float_functor_rightshift]
+
+Comparison lessthan `operator<` functor:
+
+[float_functor_lessthan]
+
+Other examples:
+
+[@../../example/double.cpp Sort doubles.]
+
+[@../../example/shiftfloatsample.cpp Sort floats using a rightshift functor.]
+
+[endsect] [/section:floatsort_examples Float Sort Examples]
+
 [endsect] [/section:float_sort Float Sort]
 
 [section:string_sort String Sort]
@@ -567,6 +583,45 @@ reverse_string_sort sorts strings in reverse (decending) order, but is otherwise
 [@../../doc/graph/windows_string_sort.htm Windows String Sort]
 
 [@../../doc/graph/osx_string_sort.htm  OSX String Sort]
+
+
+
+[section:stringsort_examples String Sort Examples]
+
+See [@../../example/stringfunctorsample.cpp stringfunctorsample.cpp] for an example of how to sort structs using a string key and all functors:
+
+[lessthan_functor]
+
+[bracket_functor]
+
+[getsize_functor]
+
+and these functors are used thus:
+
+[stringsort_functors_call]
+
+
+See [@../../example/generalizedstruct.cpp generalizedstruct.cpp] for a working example of a generalized approach to sort structs by a sequence of integer, float, and multiple string keys using string_sort:
+
+[generalized_functors]
+
+[generalized_functors_call]
+
+Other examples:
+
+[@../../example/stringsample.cpp String sort.]
+
+[@../../example/reversestringsample.cpp Reverse string sort.]
+
+[@../../example/wstringsample.cpp Wide character string sort.]
+
+[@../../example/caseinsensitive.cpp Case insensitive string sort.]
+
+[@../../example/charstringsample.cpp Sort structs using a string key and indexing functors.]
+
+[@../../example/reversestringfunctorsample.cpp Sort structs using a string keynd all functors  in reverse order.]
+
+[endsect] [/section:stringsort_examples String Sort Examples]
 
 [endsect] [/section:string_sort String Sort]
 
