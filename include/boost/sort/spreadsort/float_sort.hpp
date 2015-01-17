@@ -95,7 +95,7 @@ Some performance plots of runtime vs. n and log(range) are provided:\n
 
     \param[in] first Iterator pointer to first element.
     \param[in] last Iterator pointing to one beyond the end of data.
-    \param[in] shift Functor that returns the result of shifting the value_type right a specified number of bits.
+    \param[in] rshift Functor that returns the result of shifting the value_type right a specified number of bits.
 
   */
   template <class RandomAccessIter, class Right_shift>
@@ -114,7 +114,7 @@ Some performance plots of runtime vs. n and log(range) are provided:\n
 
    \param[in] first Iterator pointer to first element.
    \param[in] last Iterator pointing to one beyond the end of data.
-   \param[in] shift Functor that returns the result of shifting the value_type right a specified number of bits.
+   \param[in] rshift Functor that returns the result of shifting the value_type right a specified number of bits.
    \param[in] comp A binary functor that returns whether the first element passed to it should go before the second in order.
   */
 
