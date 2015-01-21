@@ -10,7 +10,7 @@
 import testing ;
 
 {
-  test-suite "sort"
+  test-suite "sort":
     : [ run integer_sort_test.cpp
        : : : : integer_sort ]   
   [ run float_sort_test.cpp
