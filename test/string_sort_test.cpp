@@ -134,53 +134,6 @@ void string_test()
   BOOST_CHECK(test_vec == sorted_vec);  
 }
 
-void wstring_test()
-{
-  // Prepare inputs
-  vector<wstring> base_vec;
-  const unsigned max_length = 32;
-  srand(1);
-  //Generating semirandom numbers
-  for (unsigned u = 0; u < input_count; ++u) {
-    unsigned length = rand() % max_length;
-    wstring result;
-    for (unsigned u = 0; u < length; ++u) {
-      wchar_t val = ((rand() % 256) << 8) + rand() % 256;
-      result.push_back(val);
-    }
-    base_vec.push_back(result);
-  }
-  vector<wstring> sorted_vec = base_vec;
-  vector<wstring> test_vec = base_vec;
-  std::sort(sorted_vec.begin(), sorted_vec.end());
-  //Testing basic call
-  unsigned wchar_t unused = '\0';
-  string_sort(test_vec.begin(), test_vec.end(), unused);
-  BOOST_CHECK(test_vec == sorted_vec);
-  //Testing boost::sort::spreadsort wrapper
-  boost::sort::spreadsort::spreadsort(test_vec.begin(), test_vec.end());
-  BOOST_CHECK(test_vec == sorted_vec);
-  //Character functors
-  test_vec = base_vec;
-  string_sort(test_vec.begin(), test_vec.end(), wbracket(), wget_size());
-  BOOST_CHECK(test_vec == sorted_vec);
-  //All functors
-  test_vec = base_vec;
-  string_sort(test_vec.begin(), test_vec.end(), wbracket(), wget_size(),
-              less<wstring>());
-  BOOST_CHECK(test_vec == sorted_vec);
-  //reverse order
-  std::sort(sorted_vec.begin(), sorted_vec.end(), greater<wstring>());
-  reverse_string_sort(test_vec.begin(), test_vec.end(), greater<wstring>(), 
-                      unused);
-  BOOST_CHECK(test_vec == sorted_vec);
-  //reverse order with functors
-  test_vec = base_vec;
-  reverse_string_sort(test_vec.begin(), test_vec.end(), wbracket(), wget_size(),
-                      greater<wstring>());
-  BOOST_CHECK(test_vec == sorted_vec);  
-}
-
 // Verify that 0, 1, and input_count empty strings all sort correctly.
 void corner_test() {
   vector<string> test_vec;
@@ -202,7 +155,6 @@ int test_main( int, char*[] )
   update_offset_test();
   offset_comparison_test();
   string_test();
-  wstring_test();
   corner_test();
   return 0;
 }

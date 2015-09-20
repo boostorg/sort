@@ -117,7 +117,7 @@ namespace spreadsort {
     \brief  Generic @c spreadsort variant detecting string element type so call to @c string_sort for @c std::wstrings.
     \details If the data type provided is a wstring, @c string_sort is used.
     \note Sorting other data types requires picking between @c integer_sort, @c float_sort and @c string_sort directly,
-    as @c spreadsort won't accept types that don't have the appropriate @c type_traits.
+    as @c spreadsort won't accept types that don't have the appropriate @c type_traits.  Also, 2-byte wide-characters are the limit above which string_sort is inefficient, so on platforms with wider characters, this will not accept wstrings.
 
     \param[in] first Iterator pointer to first element.
     \param[in] last Iterator pointing to one beyond the end of data.
@@ -132,10 +132,11 @@ namespace spreadsort {
   template <class RandomAccessIter>
   inline typename boost::enable_if_c<
     is_same<typename std::iterator_traits<RandomAccessIter>::value_type,
-            typename std::wstring>::value, void >::type
+            typename std::wstring>::value &&
+    sizeof(wchar_t) == 2, void >::type
   spreadsort(RandomAccessIter first, RandomAccessIter last)
   {
-    unsigned wchar_t unused = '\0';
+    boost::uint16_t unused = 0;
     string_sort(first, last, unused);
   }
 } // namespace spreadsort
