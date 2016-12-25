@@ -1,10 +1,13 @@
 /*
-  Copyright (c) 2011 Fuji, Goro (gfx) <gfuji@cpan.org>.
+  Copyright (c) Fuji, Goro (gfx) <gfuji@cpan.org>, 2011
   Copyright (c) Alexander Zaitsev <zamazan4ik@gmail.com>, 2016
   Distributed under the Boost Software License, Version 1.0. (See
   accompanying file LICENSE_1_0.txt or copy at
   http://www.boost.org/LICENSE_1_0.txt)
   See http://www.boost.org/ for latest version.
+
+  Ported from:
+    https://github.com/gfx/cpp-TimSort/blob/master/timsort.hpp
 */
 
 #ifndef BOOST_SORT_TIMSORT_HPP
@@ -29,13 +32,13 @@ namespace boost { namespace sort
  * Same as std::stable_sort(first, last).
  */
 template<typename RandomAccessIterator>
-inline void timsort(const RandomAccessIterator first, const RandomAccessIterator last);
+void timsort(const RandomAccessIterator first, const RandomAccessIterator last);
 
 /**
  * Same as std::stable_sort(first, last, c).
  */
 template<typename RandomAccessIterator, typename LessFunction>
-inline void timsort(const RandomAccessIterator first, const RandomAccessIterator last, LessFunction compare);
+void timsort(const RandomAccessIterator first, const RandomAccessIterator last, LessFunction compare);
 
 // ---------------------------------------
 // Implementation
@@ -439,8 +442,8 @@ class TimSort
         // outer:
         while (true)
         {
-            int count1 = 0;
-            int count2 = 0;
+            diff_t count1 = 0;
+            diff_t count2 = 0;
 
             bool break_outer = false;
             do
@@ -573,8 +576,8 @@ class TimSort
         // outer:
         while (true)
         {
-            int count1 = 0;
-            int count2 = 0;
+            diff_t count2 = 0;
+            diff_t count1 = 0;
 
             bool break_outer = false;
             do
@@ -693,26 +696,26 @@ class TimSort
 };
 
 template<typename RandomAccessIterator>
-inline void timsort(const RandomAccessIterator first, const RandomAccessIterator last)
+void timsort(const RandomAccessIterator first, const RandomAccessIterator last)
 {
     typedef typename std::iterator_traits<RandomAccessIterator>::value_type value_type;
     timsort(first, last, std::less<value_type>());
 }
 
 template<typename RandomAccessIterator, typename LessFunction>
-inline void timsort(const RandomAccessIterator first, const RandomAccessIterator last, LessFunction compare)
+void timsort(const RandomAccessIterator first, const RandomAccessIterator last, LessFunction compare)
 {
     TimSort<RandomAccessIterator, LessFunction>::sort(first, last, compare);
 }
 
 template<typename Range>
-inline void timsort(Range& range)
+void timsort(Range& range)
 {
     timsort(boost::begin(range), boost::end(range));
 }
 
 template<typename Range, typename LessFunction>
-inline void timsort(Range& range, LessFunction compare)
+void timsort(Range& range, LessFunction compare)
 {
     timsort(boost::begin(range), boost::end(range), compare);
 }
