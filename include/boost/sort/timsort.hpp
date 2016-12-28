@@ -35,14 +35,11 @@ template<typename RandomAccessIterator>
 void timsort(const RandomAccessIterator first, const RandomAccessIterator last);
 
 /**
- * Same as std::stable_sort(first, last, c).
+ * Same as std::stable_sort(first, last, compare).
  */
 template<typename RandomAccessIterator, typename LessFunction>
 void timsort(const RandomAccessIterator first, const RandomAccessIterator last, LessFunction compare);
 
-// ---------------------------------------
-// Implementation
-// ---------------------------------------
 
 template<typename Value, typename LessFunction>
 class Compare
@@ -88,6 +85,8 @@ private:
     func_type less_;
 };
 
+
+//Implementation
 template<typename RandomAccessIterator, typename LessFunction>
 class TimSort
 {
@@ -695,6 +694,37 @@ class TimSort
     friend void timsort(IterT first, IterT last, LessT c);
 };
 
+
+/*! \brief Timsort algorithm using random access iterators.
+
+  \details Timsort was designed to take advantage of partial orderings that already exist in most real-world data.
+  Timsort operates by finding runs, subsequences of at least two elements that are either non-descending
+  (each element is equal to or greater than its predecessor) or strictly descending
+  (each element is lower than its predecessor). If it is descending, it must be strictly descending,
+  since descending runs are later reversed by a simple swap of elements from both ends converging in the middle.
+  After obtaining such a run in the given array, Timsort processes it, and then searches for the next run.
+
+   \param[in] first Iterator pointer to first element.
+   \param[in] last Iterator pointing to one beyond the end of data.
+
+   \pre [@c first, @c last) is a valid range.
+   \pre @c RandomAccessIter @c value_type is mutable.
+   \pre @c RandomAccessIter @c value_type is <a href="http://en.cppreference.com/w/cpp/concept/LessThanComparable">LessThanComparable</a>
+   \post The elements in the range [@c first, @c last) are sorted in ascending order.
+
+   \return @c void.
+
+   \throws std::exception Propagates exceptions if any of the element comparisons, the element swaps (or moves),
+   functors, or any operations on iterators throw.
+
+   \warning Throwing an exception may cause data loss.
+   \warning Invalid arguments cause undefined behaviour.
+
+   \remark O(N*log(N)) </em>operations worst-case, where:
+   \remark  *  N is @c last - @c first,
+
+*/
+
 template<typename RandomAccessIterator>
 void timsort(const RandomAccessIterator first, const RandomAccessIterator last)
 {
@@ -702,17 +732,107 @@ void timsort(const RandomAccessIterator first, const RandomAccessIterator last)
     timsort(first, last, std::less<value_type>());
 }
 
+/*! \brief Timsort algorithm using random access iterators.
+
+  \details Timsort was designed to take advantage of partial orderings that already exist in most real-world data.
+  Timsort operates by finding runs, subsequences of at least two elements that are either non-descending
+  (each element is equal to or greater than its predecessor) or strictly descending
+  (each element is lower than its predecessor). If it is descending, it must be strictly descending,
+  since descending runs are later reversed by a simple swap of elements from both ends converging in the middle.
+  After obtaining such a run in the given array, Timsort processes it, and then searches for the next run.
+
+   \param[in] first Iterator pointer to first element.
+   \param[in] last Iterator pointing to one beyond the end of data.
+   \param[in] compare A binary functor that returns whether the first element passed to it should go before the second in order.
+
+   \pre [@c first, @c last) is a valid range.
+   \pre @c RandomAccessIter @c value_type is mutable.
+   \pre @c RandomAccessIter @c value_type is <a href="http://en.cppreference.com/w/cpp/concept/LessThanComparable">LessThanComparable</a>
+   \post The elements in the range [@c first, @c last) are sorted in ascending order.
+
+   \return @c void.
+
+   \throws std::exception Propagates exceptions if any of the element comparisons, the element swaps (or moves),
+   functors, or any operations on iterators throw.
+
+   \warning Throwing an exception may cause data loss.
+   \warning Invalid arguments cause undefined behaviour.
+
+   \remark O(N*log(N)) </em>operations worst-case, where:
+   \remark  *  N is @c last - @c first,
+
+*/
+
 template<typename RandomAccessIterator, typename LessFunction>
 void timsort(const RandomAccessIterator first, const RandomAccessIterator last, LessFunction compare)
 {
     TimSort<RandomAccessIterator, LessFunction>::sort(first, last, compare);
 }
 
+/*! \brief Timsort algorithm using random access iterators.
+
+  \details Timsort was designed to take advantage of partial orderings that already exist in most real-world data.
+  Timsort operates by finding runs, subsequences of at least two elements that are either non-descending
+  (each element is equal to or greater than its predecessor) or strictly descending
+  (each element is lower than its predecessor). If it is descending, it must be strictly descending,
+  since descending runs are later reversed by a simple swap of elements from both ends converging in the middle.
+  After obtaining such a run in the given array, Timsort processes it, and then searches for the next run.
+
+   \param[in] range Range [first, last) for sorting.
+
+   \pre [@c first, @c last) is a valid range.
+   \pre @c RandomAccessIter @c value_type is mutable.
+   \pre @c RandomAccessIter @c value_type is <a href="http://en.cppreference.com/w/cpp/concept/LessThanComparable">LessThanComparable</a>
+   \post The elements in the range [@c first, @c last) are sorted in ascending order.
+
+   \return @c void.
+
+   \throws std::exception Propagates exceptions if any of the element comparisons, the element swaps (or moves),
+   functors, or any operations on iterators throw.
+
+   \warning Throwing an exception may cause data loss.
+   \warning Invalid arguments cause undefined behaviour.
+
+   \remark O(N*log(N)) </em>operations worst-case, where:
+   \remark  *  N is @c last - @c first,
+
+*/
+
 template<typename Range>
 void timsort(Range& range)
 {
     timsort(boost::begin(range), boost::end(range));
 }
+
+/*! \brief Timsort algorithm using random access iterators.
+
+  \details Timsort was designed to take advantage of partial orderings that already exist in most real-world data.
+  Timsort operates by finding runs, subsequences of at least two elements that are either non-descending
+  (each element is equal to or greater than its predecessor) or strictly descending
+  (each element is lower than its predecessor). If it is descending, it must be strictly descending,
+  since descending runs are later reversed by a simple swap of elements from both ends converging in the middle.
+  After obtaining such a run in the given array, Timsort processes it, and then searches for the next run.
+
+   \param[in] range Range [first, last) for sorting.
+   \param[in] compare A binary functor that returns whether the first element passed to it should go before the second in order.
+
+   \pre [@c first, @c last) is a valid range.
+   \pre @c RandomAccessIter @c value_type is mutable.
+   \pre @c RandomAccessIter @c value_type is <a href="http://en.cppreference.com/w/cpp/concept/LessThanComparable">LessThanComparable</a>
+   \post The elements in the range [@c first, @c last) are sorted in ascending order.
+
+   \return @c void.
+
+   \throws std::exception Propagates exceptions if any of the element comparisons, the element swaps (or moves),
+   functors, or any operations on iterators throw.
+
+   \warning Throwing an exception may cause data loss.
+   \warning Invalid arguments cause undefined behaviour.
+
+   \remark O(N*log(N)) </em>operations worst-case, where:
+   \remark  *  N is @c last - @c first,
+
+*/
 
 template<typename Range, typename LessFunction>
 void timsort(Range& range, LessFunction compare)
