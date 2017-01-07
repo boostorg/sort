@@ -35,10 +35,8 @@ namespace spreadsort {
 which in testing tends to be roughly 50% to 2X faster than @c std::sort for large tests (>=100kB).\n
 \par
 Worst-case performance is <em>  O(N * (lg(range)/s + s)) </em>,
-so @c integer_sort is asymptotically faster
-than pure comparison-based algorithms. @c s is @c max_splits, which defaults to 11,
-so its worst-case with default settings for 32-bit integers is
-<em> O(N * ((32/11) </em> slow radix-based iterations fast comparison-based iterations).\n\n
+so @c string_sort is asymptotically faster
+than pure comparison-based algorithms. \n\n
 Some performance plots of runtime vs. n and log(range) are provided:\n
 <a href="../../doc/graph/windows_string_sort.htm"> windows_string_sort</a>\n
 <a href="../../doc/graph/osx_string_sort.htm"> osx_string_sort</a>
@@ -90,10 +88,8 @@ Some performance plots of runtime vs. n and log(range) are provided:\n
 which in testing tends to be roughly 50% to 2X faster than @c std::sort for large tests (>=100kB).\n
 \par
 Worst-case performance is <em>  O(N * (lg(range)/s + s)) </em>,
-so @c integer_sort is asymptotically faster
-than pure comparison-based algorithms. @c s is @c max_splits, which defaults to 11,
-so its worst-case with default settings for 32-bit integers is
-<em> O(N * ((32/11) </em> slow radix-based iterations fast comparison-based iterations).\n\n
+so @c string_sort is asymptotically faster
+than pure comparison-based algorithms. \n\n
 Some performance plots of runtime vs. n and log(range) are provided:\n
 <a href="../../doc/graph/windows_string_sort.htm"> windows_string_sort</a>\n
 <a href="../../doc/graph/osx_string_sort.htm"> osx_string_sort</a>
@@ -133,10 +129,8 @@ inline void string_sort(Range& range, Unsigned_char_type unused)
   \details @c string_sort is a fast templated in-place hybrid radix/comparison algorithm,
 which in testing tends to be roughly 50% to 2X faster than @c std::sort for large tests (>=100kB).\n
 Worst-case performance is <em>  O(N * (lg(range)/s + s)) </em>,
-so @c integer_sort is asymptotically faster
-than pure comparison-based algorithms. @c s is @c max_splits, which defaults to 11,
-so its worst-case with default settings for 32-bit integers is
-<em> O(N * ((32/11) </em> slow radix-based iterations fast comparison-based iterations).\n\n
+so @c string_sort is asymptotically faster
+than pure comparison-based algorithms. \n\n
 Some performance plots of runtime vs. n and log(range) are provided:\n
    <a href="../../doc/graph/windows_string_sort.htm"> windows_string_sort</a>
    \n
@@ -180,10 +174,8 @@ Some performance plots of runtime vs. n and log(range) are provided:\n
   \details @c string_sort is a fast templated in-place hybrid radix/comparison algorithm,
 which in testing tends to be roughly 50% to 2X faster than @c std::sort for large tests (>=100kB).\n
 Worst-case performance is <em>  O(N * (lg(range)/s + s)) </em>,
-so @c integer_sort is asymptotically faster
-than pure comparison-based algorithms. @c s is @c max_splits, which defaults to 11,
-so its worst-case with default settings for 32-bit integers is
-<em> O(N * ((32/11) </em> slow radix-based iterations fast comparison-based iterations).\n\n
+so @c string_sort is asymptotically faster
+than pure comparison-based algorithms. \n\n
 Some performance plots of runtime vs. n and log(range) are provided:\n
    <a href="../../doc/graph/windows_string_sort.htm"> windows_string_sort</a>
    \n
@@ -223,10 +215,8 @@ inline void string_sort(Range& range)
 which in testing tends to be roughly 50% to 2X faster than @c std::sort for large tests (>=100kB).\n
 \par
 Worst-case performance is <em>  O(N * (lg(range)/s + s)) </em>,
-so @c integer_sort is asymptotically faster
-than pure comparison-based algorithms. @c s is @c max_splits, which defaults to 11,
-so its worst-case with default settings for 32-bit integers is
-<em> O(N * ((32/11) </em> slow radix-based iterations fast comparison-based iterations).\n\n
+so @c string_sort is asymptotically faster
+than pure comparison-based algorithms. \n\n
 Some performance plots of runtime vs. n and log(range) are provided:\n
 <a href="../../doc/graph/windows_string_sort.htm"> windows_string_sort</a>\n
 <a href="../../doc/graph/osx_string_sort.htm"> osx_string_sort</a>
@@ -282,10 +272,8 @@ Some performance plots of runtime vs. n and log(range) are provided:\n
   \details @c string_sort is a fast templated in-place hybrid radix/comparison algorithm,
 which in testing tends to be roughly 50% to 2X faster than @c std::sort for large tests (>=100kB).\n
 Worst-case performance is <em>  O(N * (lg(range)/s + s)) </em>,
-so @c integer_sort is asymptotically faster
-than pure comparison-based algorithms. @c s is @c max_splits, which defaults to 11,
-so its worst-case with default settings for 32-bit integers is
-<em> O(N * ((32/11) </em> slow radix-based iterations fast comparison-based iterations).\n\n
+so @c string_sort is asymptotically faster
+than pure comparison-based algorithms. \n\n
 Some performance plots of runtime vs. n and log(range) are provided:\n
    <a href="../../doc/graph/windows_integer_sort.htm"> windows_integer_sort</a>
    \n
@@ -332,10 +320,8 @@ inline void reverse_string_sort(Range& range, Compare comp, Unsigned_char_type u
 which in testing tends to be roughly 50% to 2X faster than @c std::sort for large tests (>=100kB).\n
 \par
 Worst-case performance is <em>  O(N * (lg(range)/s + s)) </em>,
-so @c integer_sort is asymptotically faster
-than pure comparison-based algorithms. @c s is @c max_splits, which defaults to 11,
-so its worst-case with default settings for 32-bit integers is
-<em> O(N * ((32/11) </em> slow radix-based iterations fast comparison-based iterations).\n\n
+so @c string_sort is asymptotically faster
+than pure comparison-based algorithms.\n\n
 Some performance plots of runtime vs. n and log(range) are provided:\n
 <a href="../../doc/graph/windows_string_sort.htm"> windows_string_sort</a>\n
 <a href="../../doc/graph/osx_string_sort.htm"> osx_string_sort</a>
@@ -383,10 +369,8 @@ Some performance plots of runtime vs. n and log(range) are provided:\n
 which in testing tends to be roughly 50% to 2X faster than @c std::sort for large tests (>=100kB).\n
 \par
 Worst-case performance is <em>  O(N * (lg(range)/s + s)) </em>,
-so @c integer_sort is asymptotically faster
-than pure comparison-based algorithms. @c s is @c max_splits, which defaults to 11,
-so its worst-case with default settings for 32-bit integers is
-<em> O(N * ((32/11) </em> slow radix-based iterations fast comparison-based iterations).\n\n
+so @c string_sort is asymptotically faster
+than pure comparison-based algorithms. \n\n
 Some performance plots of runtime vs. n and log(range) are provided:\n
 <a href="../../doc/graph/windows_string_sort.htm"> windows_string_sort</a>\n
 <a href="../../doc/graph/osx_string_sort.htm"> osx_string_sort</a>
@@ -427,10 +411,8 @@ inline void reverse_string_sort(Range& range, Compare comp)
 which in testing tends to be roughly 50% to 2X faster than @c std::sort for large tests (>=100kB).\n
 \par
 Worst-case performance is <em>  O(N * (lg(range)/s + s)) </em>,
-so @c integer_sort is asymptotically faster
-than pure comparison-based algorithms. @c s is @c max_splits, which defaults to 11,
-so its worst-case with default settings for 32-bit integers is
-<em> O(N * ((32/11) </em> slow radix-based iterations fast comparison-based iterations).\n\n
+so @c string_sort is asymptotically faster
+than pure comparison-based algorithms. \n\n
 Some performance plots of runtime vs. n and log(range) are provided:\n
 <a href="../../doc/graph/windows_string_sort.htm"> windows_string_sort</a>\n
 <a href="../../doc/graph/osx_string_sort.htm"> osx_string_sort</a>
@@ -490,10 +472,8 @@ Some performance plots of runtime vs. n and log(range) are provided:\n
 which in testing tends to be roughly 50% to 2X faster than @c std::sort for large tests (>=100kB).\n
 \par
 Worst-case performance is <em>  O(N * (lg(range)/s + s)) </em>,
-so @c integer_sort is asymptotically faster
-than pure comparison-based algorithms. @c s is @c max_splits, which defaults to 11,
-so its worst-case with default settings for 32-bit integers is
-<em> O(N * ((32/11) </em> slow radix-based iterations fast comparison-based iterations).\n\n
+so @c string_sort is asymptotically faster
+than pure comparison-based algorithms. \n\n
 Some performance plots of runtime vs. n and log(range) are provided:\n
 <a href="../../doc/graph/windows_string_sort.htm"> windows_string_sort</a>\n
 <a href="../../doc/graph/osx_string_sort.htm"> osx_string_sort</a>
@@ -537,10 +517,8 @@ inline void string_sort(Range& range, Get_char getchar, Get_length length)
 which in testing tends to be roughly 50% to 2X faster than @c std::sort for large tests (>=100kB).\n
 \par
 Worst-case performance is <em>  O(N * (lg(range)/s + s)) </em>,
-so @c integer_sort is asymptotically faster
-than pure comparison-based algorithms. @c s is @c max_splits, which defaults to 11,
-so its worst-case with default settings for 32-bit integers is
-<em> O(N * ((32/11) </em> slow radix-based iterations fast comparison-based iterations).\n\n
+so @c string_sort is asymptotically faster
+than pure comparison-based algorithms. \n\n
 Some performance plots of runtime vs. n and log(range) are provided:\n
 <a href="../../doc/graph/windows_string_sort.htm"> windows_string_sort</a>\n
 <a href="../../doc/graph/osx_string_sort.htm"> osx_string_sort</a>
@@ -603,10 +581,8 @@ Some performance plots of runtime vs. n and log(range) are provided:\n
 which in testing tends to be roughly 50% to 2X faster than @c std::sort for large tests (>=100kB).\n
 \par
 Worst-case performance is <em>  O(N * (lg(range)/s + s)) </em>,
-so @c integer_sort is asymptotically faster
-than pure comparison-based algorithms. @c s is @c max_splits, which defaults to 11,
-so its worst-case with default settings for 32-bit integers is
-<em> O(N * ((32/11) </em> slow radix-based iterations fast comparison-based iterations).\n\n
+so @c string_sort is asymptotically faster
+than pure comparison-based algorithms. \n\n
 Some performance plots of runtime vs. n and log(range) are provided:\n
 <a href="../../doc/graph/windows_string_sort.htm"> windows_string_sort</a>\n
 <a href="../../doc/graph/osx_string_sort.htm"> osx_string_sort</a>
@@ -653,10 +629,8 @@ inline void string_sort(Range& range,
 which in testing tends to be roughly 50% to 2X faster than @c std::sort for large tests (>=100kB).\n
 \par
 Worst-case performance is <em>  O(N * (lg(range)/s + s)) </em>,
-so @c integer_sort is asymptotically faster
-than pure comparison-based algorithms. @c s is @c max_splits, which defaults to 11,
-so its worst-case with default settings for 32-bit integers is
-<em> O(N * ((32/11) </em> slow radix-based iterations fast comparison-based iterations).\n\n
+so @c string_sort is asymptotically faster
+than pure comparison-based algorithms. \n\n
 Some performance plots of runtime vs. n and log(range) are provided:\n
 <a href="../../doc/graph/windows_string_sort.htm"> windows_string_sort</a>\n
 <a href="../../doc/graph/osx_string_sort.htm"> osx_string_sort</a>
@@ -721,10 +695,8 @@ Some performance plots of runtime vs. n and log(range) are provided:\n
 which in testing tends to be roughly 50% to 2X faster than @c std::sort for large tests (>=100kB).\n
 \par
 Worst-case performance is <em>  O(N * (lg(range)/s + s)) </em>,
-so @c integer_sort is asymptotically faster
-than pure comparison-based algorithms. @c s is @c max_splits, which defaults to 11,
-so its worst-case with default settings for 32-bit integers is
-<em> O(N * ((32/11) </em> slow radix-based iterations fast comparison-based iterations).\n\n
+so @c string_sort is asymptotically faster
+than pure comparison-based algorithms. \n\n
 Some performance plots of runtime vs. n and log(range) are provided:\n
 <a href="../../doc/graph/windows_string_sort.htm"> windows_string_sort</a>\n
 <a href="../../doc/graph/osx_string_sort.htm"> osx_string_sort</a>

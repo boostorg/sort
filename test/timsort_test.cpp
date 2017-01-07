@@ -50,18 +50,13 @@ rand_32(bool sign = true) {
 void stable_test()
 {
     vector<A> base_vec;
-    base_vec.push_back(A(1,2));
-    base_vec.push_back(A(1,3));
+    for(size_t i = 0; i < 1000; ++i)
+    {
+      base_vec.push_back(A(rand() % 6, rand() % 11));
+    }
 
     vector<A> test_vec = base_vec;
     vector<A> sorted_vec = base_vec;
-    stable_sort(sorted_vec.begin(), sorted_vec.end());
-    timsort(test_vec);
-    BOOST_CHECK(test_vec == sorted_vec);
-
-    base_vec.push_back(A(1,2));
-    test_vec = base_vec;
-    sorted_vec = base_vec;
     stable_sort(sorted_vec.begin(), sorted_vec.end());
     timsort(test_vec);
     BOOST_CHECK(test_vec == sorted_vec);
@@ -92,9 +87,10 @@ void random_test()
     timsort(test_vec.begin(), test_vec.end(), less<int>());
     BOOST_CHECK(test_vec == sorted_vec);
     //reverse order
-    std::sort(sorted_vec.begin(), sorted_vec.end(), greater<int>());
-    timsort(test_vec.begin(), test_vec.end(), greater<int>());
-    BOOST_CHECK(test_vec == sorted_vec);
+    test_vec = base_vec;
+    std::sort(test_vec.begin(), test_vec.end(), greater<int>());
+    timsort(test_vec.begin(), test_vec.end());
+    BOOST_CHECK(test_vec == base_vec);
 }
 
 

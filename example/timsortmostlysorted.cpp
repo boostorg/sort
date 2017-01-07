@@ -41,7 +41,7 @@ int main(int argc, const char ** argv) {
         else
             loopCount = atoi(argv[u]);
     }
-    //Sorts the data once, then times sorting of already-sorted data
+    //Sorts the data once, then times sorting of mostly-sorted data
     loopCount += 1;
     std::ifstream input("input.txt", std::ios_base::in | std::ios_base::binary);
     if (input.fail()) {
@@ -67,10 +67,8 @@ int main(int argc, const char ** argv) {
         double elapsed;
         start = clock();
         if (stdSort)
-            //std::sort(&(array[0]), &(array[0]) + uCount);
             std::sort(array.begin(), array.end());
         else
-            //integer_sort(&(array[0]), &(array[0]) + uCount);
             timsort(array.begin(), array.end());
         end = clock();
         elapsed = static_cast<double>(end - start) ;

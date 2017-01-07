@@ -37,18 +37,18 @@ void timsort(const RandomAccessIterator first, const RandomAccessIterator last);
 /**
  * Same as std::stable_sort(first, last, compare).
  */
-template<typename RandomAccessIterator, typename LessFunction>
-void timsort(const RandomAccessIterator first, const RandomAccessIterator last, LessFunction compare);
+template<typename RandomAccessIterator, typename Compare>
+void timsort(const RandomAccessIterator first, const RandomAccessIterator last, Compare compare);
 
 
-template<typename Value, typename LessFunction>
+template<typename Value, typename Compare>
 class Compare
 {
 public:
     typedef Value value_type;
-    typedef LessFunction func_type;
+    typedef Compare func_type;
 
-    Compare(LessFunction f) : less_(f)
+    Compare(Compare f) : less_(f)
     {
     }
 
@@ -87,14 +87,14 @@ private:
 
 
 //Implementation
-template<typename RandomAccessIterator, typename LessFunction>
+template<typename RandomAccessIterator, typename Compare>
 class TimSort
 {
     typedef RandomAccessIterator iter_t;
     typedef typename std::iterator_traits<iter_t>::value_type value_t;
     typedef typename std::iterator_traits<iter_t>::reference ref_t;
     typedef typename std::iterator_traits<iter_t>::difference_type diff_t;
-    typedef Compare<const value_t &, LessFunction> compare_t;
+    typedef Compare<const value_t &, Compare> compare_t;
 
     static const int MIN_MERGE = 32;
 
@@ -732,7 +732,7 @@ void timsort(const RandomAccessIterator first, const RandomAccessIterator last)
     timsort(first, last, std::less<value_type>());
 }
 
-/*! \brief Timsort algorithm using random access iterators.
+/*! \brief Timsort algorithm using random access iterators and a comparison functor.
 
   \details Timsort was designed to take advantage of partial orderings that already exist in most real-world data.
   Timsort operates by finding runs, subsequences of at least two elements that are either non-descending
@@ -763,13 +763,13 @@ void timsort(const RandomAccessIterator first, const RandomAccessIterator last)
 
 */
 
-template<typename RandomAccessIterator, typename LessFunction>
-void timsort(const RandomAccessIterator first, const RandomAccessIterator last, LessFunction compare)
+template<typename RandomAccessIterator, typename Compare>
+void timsort(const RandomAccessIterator first, const RandomAccessIterator last, Compare compare)
 {
-    TimSort<RandomAccessIterator, LessFunction>::sort(first, last, compare);
+    TimSort<RandomAccessIterator, Compare>::sort(first, last, compare);
 }
 
-/*! \brief Timsort algorithm using random access iterators.
+/*! \brief Timsort algorithm using range.
 
   \details Timsort was designed to take advantage of partial orderings that already exist in most real-world data.
   Timsort operates by finding runs, subsequences of at least two elements that are either non-descending
@@ -804,7 +804,7 @@ void timsort(Range& range)
     timsort(boost::begin(range), boost::end(range));
 }
 
-/*! \brief Timsort algorithm using random access iterators.
+/*! \brief Timsort algorithm using range and a comparison functor.
 
   \details Timsort was designed to take advantage of partial orderings that already exist in most real-world data.
   Timsort operates by finding runs, subsequences of at least two elements that are either non-descending
@@ -834,8 +834,8 @@ void timsort(Range& range)
 
 */
 
-template<typename Range, typename LessFunction>
-void timsort(Range& range, LessFunction compare)
+template<typename Range, typename Compare>
+void timsort(Range& range, Compare compare)
 {
     timsort(boost::begin(range), boost::end(range), compare);
 }
