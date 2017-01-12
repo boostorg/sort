@@ -88,9 +88,11 @@ void random_test()
     BOOST_CHECK(test_vec == sorted_vec);
     //reverse order
     test_vec = base_vec;
+    sorted_vec = base_vec;
     std::sort(test_vec.begin(), test_vec.end(), greater<int>());
+    std::sort(sorted_vec.begin(), sorted_vec.end());
     timsort(test_vec.begin(), test_vec.end());
-    BOOST_CHECK(test_vec == base_vec);
+    BOOST_CHECK(test_vec == sorted_vec);
 }
 
 

@@ -21,6 +21,8 @@
 #include <boost/range/begin.hpp>
 #include <boost/range/end.hpp>
 
+#include <boost/move/move.hpp>
+
 namespace boost { namespace sort
 {
 
@@ -42,17 +44,17 @@ void timsort(const RandomAccessIterator first, const RandomAccessIterator last, 
 
 
 template<typename Value, typename Compare>
-class Compare
+class Comparator
 {
 public:
     typedef Value value_type;
     typedef Compare func_type;
 
-    Compare(Compare f) : less_(f)
+    Comparator(Compare f) : less_(f)
     {
     }
 
-    Compare(const Compare<value_type, func_type> &other) : less_(other.less_)
+    Comparator(const Comparator<value_type, func_type> &other) : less_(other.less_)
     {
     }
 
@@ -94,7 +96,7 @@ class TimSort
     typedef typename std::iterator_traits<iter_t>::value_type value_t;
     typedef typename std::iterator_traits<iter_t>::reference ref_t;
     typedef typename std::iterator_traits<iter_t>::difference_type diff_t;
-    typedef Compare<const value_t &, Compare> compare_t;
+    typedef Comparator<const value_t &, Compare> compare_t;
 
     static const int MIN_MERGE = 32;
 
@@ -167,14 +169,14 @@ class TimSort
         }
         for (; start < hi; ++start)
         {
-            /*const*/ value_t pivot = std::move(*start);
+            /*const*/ value_t pivot = boost::move(*start);
 
             const iter_t pos = std::upper_bound(lo, start, pivot, compare.less_function());
             for (iter_t p = start; p > pos; --p)
             {
-                *p = std::move(*(p - 1));
+                *p = boost::move(*(p - 1));
             }
-            *pos = std::move(pivot);
+            *pos = boost::move(pivot);
         }
     }
 
@@ -423,16 +425,16 @@ class TimSort
         iter_t cursor2 = base2;
         iter_t dest = base1;
 
-        *(dest++) = std::move(*(cursor2++));
+        *(dest++) = boost::move(*(cursor2++));
         if (--len2 == 0)
         {
-            std::move(cursor1, cursor1 + len1, dest);
+            boost::move(cursor1, cursor1 + len1, dest);
             return;
         }
         if (len1 == 1)
         {
-            std::move(cursor2, cursor2 + len2, dest);
-            *(dest + len2) = std::move(*cursor1);
+            boost::move(cursor2, cursor2 + len2, dest);
+            *(dest + len2) = boost::move(*cursor1);
             return;
         }
 
@@ -449,7 +451,7 @@ class TimSort
             {
                 if (comp_.lt(*cursor2, *cursor1))
                 {
-                    *(dest++) = std::move(*(cursor2++));
+                    *(dest++) = boost::move(*(cursor2++));
                     ++count2;
                     count1 = 0;
                     if (--len2 == 0)
@@ -460,7 +462,7 @@ class TimSort
                 }
                 else
                 {
-                    *(dest++) = std::move(*(cursor1++));
+                    *(dest++) = boost::move(*(cursor1++));
                     ++count1;
                     count2 = 0;
                     if (--len1 == 1)
@@ -481,7 +483,7 @@ class TimSort
                 count1 = gallopRight(*cursor2, cursor1, len1, 0);
                 if (count1 != 0)
                 {
-                    std::move_backward(cursor1, cursor1 + count1, dest + count1);
+                    boost::move_backward(cursor1, cursor1 + count1, dest + count1);
                     dest += count1;
                     cursor1 += count1;
                     len1 -= count1;
@@ -492,7 +494,7 @@ class TimSort
                         break;
                     }
                 }
-                *(dest++) = std::move(*(cursor2++));
+                *(dest++) = boost::move(*(cursor2++));
                 if (--len2 == 0)
                 {
                     break_outer = true;
@@ -502,7 +504,7 @@ class TimSort
                 count2 = gallopLeft(*cursor1, cursor2, len2, 0);
                 if (count2 != 0)
                 {
-                    std::move(cursor2, cursor2 + count2, dest);
+                    boost::move(cursor2, cursor2 + count2, dest);
                     dest += count2;
                     cursor2 += count2;
                     len2 -= count2;
@@ -512,7 +514,7 @@ class TimSort
                         break;
                     }
                 }
-                *(dest++) = std::move(*(cursor1++));
+                *(dest++) = boost::move(*(cursor1++));
                 if (--len1 == 1)
                 {
                     break_outer = true;
@@ -538,12 +540,12 @@ class TimSort
 
         if (len1 == 1)
         {
-            std::move(cursor2, cursor2 + len2, dest);
-            *(dest + len2) = std::move(*cursor1);
+            boost::move(cursor2, cursor2 + len2, dest);
+            *(dest + len2) = boost::move(*cursor1);
         }
         else
         {
-            std::move(cursor1, cursor1 + len1, dest);
+            boost::move(cursor1, cursor1 + len1, dest);
         }
     }
 
@@ -555,18 +557,18 @@ class TimSort
         tmp_iter_t cursor2 = tmp_.begin() + (len2 - 1);
         iter_t dest = base2 + (len2 - 1);
 
-        *(dest--) = std::move(*(cursor1--));
+        *(dest--) = boost::move(*(cursor1--));
         if (--len1 == 0)
         {
-            std::move(tmp_.begin(), tmp_.begin() + len2, dest - (len2 - 1));
+            boost::move(tmp_.begin(), tmp_.begin() + len2, dest - (len2 - 1));
             return;
         }
         if (len2 == 1)
         {
             dest -= len1;
             cursor1 -= len1;
-            std::move_backward(cursor1 + 1, cursor1 + (1 + len1), dest + (1 + len1));
-            *dest = std::move(*cursor2);
+            boost::move_backward(cursor1 + 1, cursor1 + (1 + len1), dest + (1 + len1));
+            *dest = boost::move(*cursor2);
             return;
         }
 
@@ -583,7 +585,7 @@ class TimSort
             {
                 if (comp_.lt(*cursor2, *cursor1))
                 {
-                    *(dest--) = std::move(*(cursor1--));
+                    *(dest--) = boost::move(*(cursor1--));
                     ++count1;
                     count2 = 0;
                     if (--len1 == 0)
@@ -594,7 +596,7 @@ class TimSort
                 }
                 else
                 {
-                    *(dest--) = std::move(*(cursor2--));
+                    *(dest--) = boost::move(*(cursor2--));
                     ++count2;
                     count1 = 0;
                     if (--len2 == 1)
@@ -618,7 +620,7 @@ class TimSort
                     dest -= count1;
                     cursor1 -= count1;
                     len1 -= count1;
-                    std::move_backward(cursor1 + 1, cursor1 + (1 + count1), dest + (1 + count1));
+                    boost::move_backward(cursor1 + 1, cursor1 + (1 + count1), dest + (1 + count1));
 
                     if (len1 == 0)
                     {
@@ -626,7 +628,7 @@ class TimSort
                         break;
                     }
                 }
-                *(dest--) = std::move(*(cursor2--));
+                *(dest--) = boost::move(*(cursor2--));
                 if (--len2 == 1)
                 {
                     break_outer = true;
@@ -639,14 +641,14 @@ class TimSort
                     dest -= count2;
                     cursor2 -= count2;
                     len2 -= count2;
-                    std::move(cursor2 + 1, cursor2 + (1 + count2), dest + 1);
+                    boost::move(cursor2 + 1, cursor2 + (1 + count2), dest + 1);
                     if (len2 <= 1)
                     {
                         break_outer = true;
                         break;
                     }
                 }
-                *(dest--) = std::move(*(cursor1--));
+                *(dest--) = boost::move(*(cursor1--));
                 if (--len1 == 0)
                 {
                     break_outer = true;
@@ -673,12 +675,12 @@ class TimSort
         if (len2 == 1)
         {
             dest -= len1;
-            std::move_backward(cursor1 + (1 - len1), cursor1 + 1, dest + (1 + len1));
-            *dest = std::move(*cursor2);
+            boost::move_backward(cursor1 + (1 - len1), cursor1 + 1, dest + (1 + len1));
+            *dest = boost::move(*cursor2);
         }
         else
         {
-            std::move(tmp_.begin(), tmp_.begin() + len2, dest - (len2 - 1));
+            boost::move(tmp_.begin(), tmp_.begin() + len2, dest - (len2 - 1));
         }
     }
 
@@ -686,7 +688,7 @@ class TimSort
     {
         tmp_.clear();
         tmp_.reserve(len);
-        std::move(begin, begin + len, std::back_inserter(tmp_));
+        boost::move(begin, begin + len, std::back_inserter(tmp_));
     }
 
     // the only interface is the friend timsort() function
