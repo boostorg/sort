@@ -1,8 +1,8 @@
 [library Boost.Sort
   [quickbook 1.7]
   [id sort]
-  [copyright 2014 Steven Ross]
-  [authors [Ross, Steven]]
+  [copyright 2014-2017 Steven Ross and Francisco Tapia]
+  [authors [Ross, Steven] [Tapia, Francisco]]
   [dirname sort]
   [license Distributed under the
     [@http://boost.org/LICENSE_1_0.txt Boost Software License,  Version 1.0].
@@ -50,9 +50,21 @@
 [def __spreadsort [^[funcref boost::sort::spreadsort::spreadsort  spreadsort]]] [/Note diff from Wiki link __spreadsort]
 [def __std_sort [@http://en.cppreference.com/w/cpp/algorithm/sort std::sort]]
 
-[section:overview Overview]
+[section:introduction Introduction]
 
-[section:intro Introduction]
+TODO(Francisco): Insert overall library description here.
+
+[endsect] [/section:introduction Introduction]
+
+[section:single_threaded Single Threaded Algorithms]
+
+TODO(Francisco): Add other single-threaded algorithms here.
+
+[section:sort_hpp Spreadsort]
+
+[section:spreadsort_overview Spreadsort Overview]
+
+[section:spreadsort_intro Spreadsort Introduction]
 
 The Boost.Sort library provides a generic implementation of high-speed sorting algorithms
 that outperform those in the C++ standard in both average and worst case performance
@@ -105,7 +117,7 @@ so performance is identical for small amounts of data in practice.
 
 These functions are defined in `namespace boost::sort::spreadsort`.
 
-[endsect] [/section Introduction]
+[endsect] [/section:spreadsort_intro Spreadsort Introduction]
 
 [section:overloading Overloading]
 
@@ -429,9 +441,7 @@ Including the zipped `input.txt` that was being used is also helpful.
 
 [endsect] [/section:tuning Tuning]
 
-[endsect] [/section Overview]
-
-[section:sort_hpp Spreadsort]
+[endsect] [/section:spreadsort_overview Spreadsort Overview]
 
 [section:header_spreadsort Header `<boost/sort/spreadsort/spreadsort.hpp>`]
 
@@ -811,6 +821,14 @@ and flexibility.
 [endsect] [/section:rationale Rationale]
 
 [endsect] [/section:sort_hpp Spreadsort]
+
+[endsect] [/section:single_threaded Single Threaded Algorithms]
+
+[section:parallel Parallel Algorithms]
+
+TODO(Francisco): Insert parallel libraries documentation here.
+
+[endsect] [/section:parallel Parallel Algorithms]
 
 [section:definitions Definitions]
 
