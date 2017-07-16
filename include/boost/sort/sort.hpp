@@ -13,7 +13,10 @@
 /*
 Cumulative include for the Boost Sort library
 */
-
 #include <boost/sort/spreadsort/spreadsort.hpp>
+#include <boost/sort/spinsort/spinsort.hpp>
+#include <boost/sort/flat_stable_sort/flat_stable_sort.hpp>
+#include <boost/sort/pdqsort/pdqsort.h>
+#include <boost/sort/parallel/sort.hpp>
 
 #endif
