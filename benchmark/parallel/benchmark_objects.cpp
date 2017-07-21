@@ -27,14 +27,14 @@
 #include <boost/sort/common/file_vector.hpp>
 #include "boost/sort/common/int_array.hpp"
 
-#include <boost/sort/parallel/sort.hpp>
+#include <boost/sort/sort.hpp>
 
 #define NELEM 100000000
 #define NMAXSTRING 10000000
 
 using namespace std;
 namespace bsc = boost::sort::common;
-namespace bsp = boost::sort::parallel;
+namespace bsp = boost::sort;
 
 using bsc::time_point;
 using bsc::now;
@@ -90,7 +90,7 @@ void Test_size ( uint64_t N);
 void Print_vectors ( std::vector<double> & V1, std::vector<double> & V2);
 
 int main(int argc, char *argv[])
-{ 
+{
     cout << "\n\n";
     cout << "************************************************************\n";
     cout << "**                                                        **\n";
@@ -244,7 +244,7 @@ void Print_vectors ( std::vector<double> & V1, std::vector<double> & V2)
 
 template <class IA>
 void Generator_random(uint64_t N)
-{ 
+{
     bsc::uint64_file_generator gen("input.bin");
     vector<IA> A;
     A.reserve(N);
@@ -290,7 +290,7 @@ void Generator_sorted_end(uint64_t N, size_t n_last )
     gen.reset();
     A.clear();
     for (uint32_t i = 0; i < (N + n_last); i++)
-    	A.emplace_back(IA::generate(gen));
+        A.emplace_back(IA::generate(gen));
     std::sort ( A.begin() , A.begin() + N ,H_comp<IA>());
 
     Test(A, H_rightshift<IA>(), H_comp<IA>(),V1);
@@ -398,15 +398,15 @@ void Generator_reverse_sorted_end(uint64_t N, size_t n_last )
     gen.reset();
     A.clear();
     for (uint32_t i = 0; i < (N + n_last); i++)
-    	A.emplace_back(IA::generate(gen));
+        A.emplace_back(IA::generate(gen));
     std::sort ( A.begin() , A.begin() + N ,H_comp<IA>());
     for ( size_t i =0 ; i < (N>>1); ++i)
-    	std::swap ( A[i], A[N-1-i]);
+        std::swap ( A[i], A[N-1-i]);
 
     Test(A, H_rightshift<IA>(), H_comp<IA>(), V1);
     std::sort ( A.begin() , A.begin() + N ,L_comp<IA>());
     for ( size_t i =0 ; i < (N>>1); ++i)
-    	std::swap ( A[i], A[N-1-i]);
+        std::swap ( A[i], A[N-1-i]);
 
     Test(A, L_rightshift<IA>(), L_comp<IA>(), V2);
     Print_vectors ( V1, V2 ) ;
@@ -536,10 +536,10 @@ int Test (std::vector<IA> &B, rightshift shift, compare comp,std::vector<double>
     int sorted_count = 0;
     for (unsigned i = 0; i + 1 < A.size(); ++i)
     {
-    	if (comp(A[i], A[i+1]))
-    	{
-    		sorted_count++;
-    	};
+        if (comp(A[i], A[i+1]))
+        {
+            sorted_count++;
+        };
     };
     start = now ();
     boost::sort::spreadsort::integer_sort (A.begin (), A.end (), shift, comp);
@@ -548,14 +548,14 @@ int Test (std::vector<IA> &B, rightshift shift, compare comp,std::vector<double>
     int identical = 0;
     for (unsigned i = 0; i + 1 < A.size(); ++i)
     {
-    	if (A[i].counter() != sorted[i].counter())
-    	{
-    		cout << "incorrect!" << std::endl;
-    	}
-    	if (!comp(A[i], A[i+1]) && !comp(A[i+1], A[i]))
-    	{
-    		identical++;
-    	};
+        if (A[i].counter() != sorted[i].counter())
+        {
+            cout << "incorrect!" << std::endl;
+        }
+        if (!comp(A[i], A[i+1]) && !comp(A[i+1], A[i]))
+        {
+            identical++;
+        };
     };
     //    cout << "identical: " << identical << " pre-sorted: " << sorted_count << std::endl;
     V.push_back (duration);

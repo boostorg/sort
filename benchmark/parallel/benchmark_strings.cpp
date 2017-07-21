@@ -26,14 +26,14 @@
 #include <boost/sort/common/file_vector.hpp>
 #include <boost/sort/common/int_array.hpp>
 
-#include <boost/sort/parallel/sort.hpp>
+#include <boost/sort/sort.hpp>
 
 
 #define NMAXSTRING 10000000
 
 using namespace std;
 namespace bsc = boost::sort::common;
-namespace bsp = boost::sort::parallel;
+namespace bsp = boost::sort;
 using bsc::time_point;
 using bsc::now;
 using bsc::subtract_time;
@@ -52,7 +52,7 @@ int Test(std::vector<IA> &B, compare comp = compare());
 
 
 int main(int argc, char *argv[])
-{ 
+{
     cout << "\n\n";
     cout << "************************************************************\n";
     cout << "**                                                        **\n";
@@ -127,7 +127,7 @@ int main(int argc, char *argv[])
 }
 
 void Generator_random(void)
-{ 
+{
     std::vector<std::string> A;
     A.reserve(NMAXSTRING);
     A.clear();
@@ -140,7 +140,7 @@ void Generator_random(void)
 
 };
 void Generator_sorted(void)
-{ 
+{
     std::vector<std::string> A;
     A.reserve(NMAXSTRING);
     A.clear();
@@ -177,16 +177,16 @@ void Generator_sorted_middle(size_t n_last)
         return;
     };
     for ( size_t i = NMAXSTRING ; i < A.size() ; ++i)
-    	B.push_back ( std::move ( A[i]));
+        B.push_back ( std::move ( A[i]));
     A.resize ( NMAXSTRING);
     std::sort (A.begin() , A.end() );
     size_t step = NMAXSTRING /n_last +1 ;
     size_t pos = 0 ;
 
     for ( size_t i =0 ; i < B.size() ; ++i, pos += step)
-    {	C.push_back ( B[i]);
-    	for ( size_t k = 0 ; k < step ; ++k )
-    		C.push_back ( A[pos + k] );
+    {   C.push_back ( B[i]);
+        for ( size_t k = 0 ; k < step ; ++k )
+            C.push_back ( A[pos + k] );
     };
     while ( pos < A.size() ) C.push_back ( A[pos++]);
     A = C ;
@@ -224,7 +224,7 @@ void Generator_reverse_sorted_end(size_t n_last)
     };
     std::sort (A.begin() , A.begin() + NMAXSTRING );
     for ( size_t i =0 ; i< (NMAXSTRING >>1); ++i)
-    	std::swap ( A[i], A[NMAXSTRING - 1 - i]);
+        std::swap ( A[i], A[NMAXSTRING - 1 - i]);
 
     Test<std::string, std::less<std::string>>(A);
 
@@ -240,23 +240,23 @@ void Generator_reverse_sorted_middle(size_t n_last)
         return;
     };
     for ( size_t i = NMAXSTRING ; i < A.size() ; ++i)
-    	B.push_back ( std::move ( A[i]));
+        B.push_back ( std::move ( A[i]));
     A.resize ( NMAXSTRING);
 
     std::sort (A.begin() , A.end() );
     for ( size_t i =0 ; i< (NMAXSTRING >>1); ++i)
-    	std::swap ( A[i], A[NMAXSTRING - 1 - i]);
+        std::swap ( A[i], A[NMAXSTRING - 1 - i]);
 
     size_t step = NMAXSTRING /n_last +1 ;
     size_t pos = 0 ;
 
     for ( size_t i =0 ; i < B.size() ; ++i, pos += step)
-    {	C.push_back ( B[i]);
-    	for ( size_t k = 0 ; k < step ; ++k )
-    		C.push_back ( A[pos + k] );
+    {   C.push_back ( B[i]);
+        for ( size_t k = 0 ; k < step ; ++k )
+            C.push_back ( A[pos + k] );
     };
     while ( pos < A.size() )
-    	C.push_back ( A[pos++]);
+        C.push_back ( A[pos++]);
     A = C ;
 
     Test<std::string, std::less<std::string>>(A);
