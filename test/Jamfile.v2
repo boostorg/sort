@@ -19,7 +19,8 @@ import testing ;
        : : : : string_sort ]  
   [ run sort_detail_test.cpp
        : : : : sort_detail ] 
-  
+  [ run timsort_test.cpp
+       : : : : timsort ] 
   
    ;
 }

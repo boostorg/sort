@@ -36,6 +36,7 @@ exe alrbreaker : alrbreaker.cpp ;
 exe binaryalrbreaker : binaryalrbreaker.cpp ;
 exe caseinsensitive : caseinsensitive.cpp ;
 exe generalizedstruct : generalizedstruct.cpp ;
+exe timsort : timsortsample.cpp ;
 
 # benchmarks need to be built with linkflags="-lboost_system -lboost_thread"
 #exe parallelint : parallelint.cpp boost_system ;
