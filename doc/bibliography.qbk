@@ -1,0 +1,31 @@
+[/===========================================================================
+ Copyright (c) 2017 Steven Ross, Francisco Tapia, Orson Peters
+
+
+ Distributed under the Boost Software License, Version 1.0
+ See accompanying file LICENSE_1_0.txt or copy at
+ http://www.boost.org/LICENSE_1_0.txt
+=============================================================================/]
+
+
+[section:bibliography 4.- Bibliography]
+
+[*Steven Ross]
+
+[*Francisco Tapia]
+
+[01] Introduction to Algorithms, 3rd Edition (Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, Clifford Stein)
+
+[02] C++ STL Sort Algorithms
+
+[03] Algorithm + Data Structures = Programs ( Nicklaus Wirth) Prentice Hall Series in Automatic Computation
+
+[4] Structured Parallel Programming: Patterns for Efficient Computation (Michael McCool, James Reinders, Arch Robison)
+
+
+[*Orson Peters]
+
+[endsect]
+
+
+
