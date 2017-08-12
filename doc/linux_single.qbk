@@ -12,11 +12,10 @@
 
 [*LINUX x64 GCC 6.3 BENCHMARK]
 
+This library contains a benchmark folder with programs to measure the speed of the algorithms on your machine and operating system.
+These are short benchmarks to test speed with different kinds of data ( random, sorted, sorted plus unsorted append at end ...)
 
-In the library you can find in the folder benchmark, programs to measure the speed of the algorithms in your machine and operating system.
-These are brief benchmarks for to see the speed with different kind of data ( random, sorted, sorted plus unsorted append at end ...)
-
-The computer used is a Intel(R) Core(TM) i7-5820K CPU @ 3.30GHz, with 6 cores and 2 threads by core, and 15M of cache
+This was run on a Intel(R) Core(TM) i7-5820K CPU @ 3.30GHz, with 6 cores and 2 threads by core, and 15M of cache
 
 The results obtained with GCC 6.3 on Linux, in the benchmark_numbers with integers are:
 
@@ -60,15 +59,15 @@ The results obtained with GCC 6.3 on Linux, in the benchmark_numbers with intege
 
 ``
 
-The next results  are obtained from more complex benchmarks, not include in the library because use non free SW.
-(If you are interested in them , contact with fjtapia@gmail.com)
+The following results are from more complex benchmarks, not include in the library because they use non free software.
+(If you are interested in them, contact fjtapia@gmail.com)
 
 There are 3 types of benchmarks,
 * 64 bits integers
 * strings
 * objects of several sizes.
 
-The objects are arrays of integers. With the heavy comparison sum all the elements in each, in the light comparison use only the first number of the array.
+The objects are arrays of integers.  The heavy comparison sums all the elements in each, and the light comparison uses only the first number of the array.
 
 
 
@@ -124,12 +123,9 @@ The objects are arrays of integers. With the heavy comparison sum all the elemen
     =                                                           =
     = They are compared in two ways :                           =
     =                                                           =
-    = (H) Heavy : The comparison is the sum of all the numbers  =
-    =             of the array. In each comparison, sum all     =
-    =             the numbers of the array                      =
+    = (H) Heavy : Compares the sum of all numbers in the array. =
     =                                                           =
-    = (L) Light : The comparison is with the first element of   =
-    =             the array, as a key                           =
+    = (L) Light : Compares the first number in the array.       =
     =                                                           =
     =============================================================
 

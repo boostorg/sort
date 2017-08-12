@@ -9,7 +9,7 @@
 
 [section:linux_parallel 3.4- Linux Benchmarks]
 
-The following results are from more complex benchmarks, not include in the library because they use licensed software.
+The following results are from more complex benchmarks, not include in the library because they use non free software.
 (If you are interested in them, contact fjtapia@gmail.com)
 
 There are 3 types of benchmarks,
@@ -18,9 +18,9 @@ There are 3 types of benchmarks,
 # strings
 # objects of several sizes.
 
-The objects are arrays of integers.  The heavy comparison sums all the elements in each, and the light comparison uses only the first number of the array.
+The objects are arrays of integers.  The heavy comparison sums all the elements in each, and the light comparison uses only the first number in the array.
 
-The computer used is a Intel(R) Core(TM) i7-5820K CPU @ 3.30GHz, with 6 cores and 2 threads by core, and 15M of cache.
+These were run on an Intel(R) Core(TM) i7-5820K CPU @ 3.30GHz, with 6 cores and 2 threads by core, and 15M of cache.
 
 
 
@@ -78,11 +78,9 @@ The computer used is a Intel(R) Core(TM) i7-5820K CPU @ 3.30GHz, with 6 cores an
     =                                                           =
     = They are compared in two ways :                           =
     =                                                           =
-    = (H) Heavy : The comparison sums all the numbers  in the   =
-    =             array.                                        =
+    = (H) Heavy : Compares the sum of all numbers in the array. =
     =                                                           =
-    = (L) Light : Uses the first element of the array as a key  =
-    =              for comparison.                              =
+    = (L) Light : Compares the first number in the array.       =
     =                                                           =
     =============================================================
 

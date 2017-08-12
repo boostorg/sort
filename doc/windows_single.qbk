@@ -12,11 +12,11 @@
 [*WINDOWS x64 VC++ 2017]
 
 
-In the library you can find in the folder benchmark, programs to measure the speed of the algorithms in your machine and operating system.
-These are brief benchmarks for to see the speed with different kind of data ( random, sorted, sorted plus unsorted append at end ...)
+In the library there is a benchmark folder containing programs to measure the speed of the algorithms on your machine and operating system.
+These are brief benchmarks for to see the speed with different kinds of data ( random, sorted, sorted plus unsorted append at end ...)
 
 The benchmark runs over a VirtualBox virtual machine with 8 threads and 16 GB of RAM,
-running over aIntel(R) Core(TM) i7-5820K CPU @ 3.30GHz with 6 cores and 2 threads by core, and 15M of cache.
+running over a Intel(R) Core(TM) i7-5820K CPU @ 3.30GHz with 6 cores and 2 threads by core, and 15M of cache.
 
 In the benchmark_numbers with integers are:
 
@@ -61,16 +61,15 @@ In the benchmark_numbers with integers are:
 
 ``
 
-The next results  are obtained from more complex benchmarks, not include in the library because use non free SW.
-(If you are interested, contact with fjtapia@gmail.com)
+The next results  are obtained from more complex benchmarks, not include in the library because they use non free software.
+(If you are interested in the details, contact fjtapia@gmail.com)
 
 There are 3 types of benchmarks,
 * 64 bits integers
 * strings
 * objects of several sizes.
 
-The objects are arrays of integers. With the heavy comparison sum all the elements in each, in the light comparison
-use only the first number of the array.
+The objects are arrays of integers.  The heavy comparison sums all the elements in each; the light comparison uses only the first number of the array.
 
 
 [teletype]

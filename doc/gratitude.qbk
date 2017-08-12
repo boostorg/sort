@@ -11,6 +11,18 @@
 
 [*Steven Ross]
 
+To Steve's wife Mary for her patience and support during the long process of converting spreadsort from a piece of C code to a template library.
+
+To Phil Endecott and Frank Gennari for the improvements they've suggested and for testing.
+Without them this would have taken longer to develop or performed worse.
+
+To Scott McMurray for the fast and safe `float_mem_cast`.
+That fix was critical for a high-performance cross-platform __float_sort.
+
+To Paul A. Bristow for refactoring the initial documentation to use Quickbooks.
+
+To Steven Watanabe, Edouard Alligand, and others in the boost community for their helpful suggestions.
+
 [*Francisco Tapia]
 
 To [@http://www.cesvima.upm.es CESVIMA], Centro de Cálculo de la Universidad Politécnica de Madrid.

@@ -912,23 +912,3 @@ Parallel and Distributed Processing Techniques and Applications, Volume 3, pp.11
 [endsect] [/section:history]
 
 [xinclude autodoc.xml] [/ Using Doxygen reference documentation.]
-
-
-[/Include the indexes (class, function and everything) ]
-'''
-    <index type="function_name">
-     <title>Function Index</title>
-    </index>
-
-   <index/>
-
-'''
-
-[endsect]
-
-[/
-  Copyright (c) 2014 Steven Ross
-  Distributed under the Boost Software License,
-  Version 1.0. (See accompanying file LICENSE_1_0.txt
-  or copy at http://boost.org/LICENSE_1_0.txt)
-]
