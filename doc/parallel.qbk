@@ -28,11 +28,11 @@ This table provides a brief description of the parallel algorithms of the librar
 ``
 ]
 
-*Sample_sort is a implementation of the [*[@ https://en.wikipedia.org/wiki/Samplesort Samplesort algorithm]] done by Francisco Tapia.
+* *Sample_sort* is a implementation of the [*[@ https://en.wikipedia.org/wiki/Samplesort Samplesort algorithm]] done by Francisco Tapia.
 
-*Parallel_stable_sort is based on the samplesort algorithm, but using a half of the memory used by sample_sort, conceived and implemented by Francisco Tapia.
+* *Parallel_stable_sort* is based on the samplesort algorithm, but using a half of the memory used by sample_sort, conceived and implemented by Francisco Tapia.
 
-*Block_indirect_sort is a novel parallel sort algorithm, conceived and implemented by Francisco Tapia.
+* *Block_indirect_sort* is a novel parallel sort algorithm, very fast, with low additional memory consumption, conceived and implemented by Francisco Tapia.
 
 The *block_size* is an internal parameter of the algorithm, which in order to achieve the
 highest speed, changes according to the size of the objects to sort according to the next table. The strings use a block_size of 128.

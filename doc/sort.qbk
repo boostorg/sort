@@ -1,7 +1,7 @@
 [library Boost.Sort
   [quickbook 1.7]
   [id sort]
-  [copyright 2014-2017 Steven Ross Francisco Tapia Orson Peters]
+  [copyright 2014-2017 Steven Ross, Francisco Tapia, Orson Peters]
   [authors [Ross, Steven] [Tapia, Francisco] [Peters, Orson]]
   [dirname sort]
   [license Distributed under the
