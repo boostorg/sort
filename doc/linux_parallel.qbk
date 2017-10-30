@@ -9,7 +9,7 @@
 
 [section:linux_parallel 3.4- Linux Benchmarks]
 [:
-The following results are from more complex benchmarks, not include in the library because they use non free software.
+The following results are from complex benchmarks, not include in the library because they use non free software.
 (If you are interested in them, contact fjtapia@gmail.com)
 
 There are 3 types of benchmarks,

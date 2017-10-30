@@ -65,7 +65,7 @@ than the number of hardware threads on the machine. We can pass 100 threads in a
 
 [h4[_Programming]]
 [:
-Only need to include the file boost/sort/sort.hpp to use these algorithms.
+You only need to include the file boost/sort/sort.hpp to use these algorithms.
 
 All the algorithms run in the namespace boost::sort
 
@@ -84,7 +84,7 @@ The parallel algorithms have 4 invocation formats:
     algorithm ( first iterator, last iterator, number of threads )
     algorithm ( first iterator, last iterator )
 ``
-These algorithms need a *C++11 compliant compiler*. Don't need any other code or library. With older compilers it is not guarantee, the correct operation.
+These algorithms need a *C++11 compliant compiler*, but don't need any other code or library. With older compilers correct operation isn't guaranteed.
 
 If the number of threads is unspecified, use the result of std::thread::hardware_concurrency()
 

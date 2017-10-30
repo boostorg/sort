@@ -66,8 +66,8 @@ There are 3 types of benchmarks,
 
 *objects of several sizes.
 
-The objects are arrays of integers. With the heavy comparison sum all the elements in each, in the light comparison
-use only the first number of the array.
+The objects are arrays of integers.  The heavy comparison sums all the elements in each, and the light comparison uses only the first number of the array.
+
 ]
 [h4[_100 000 000 NUMBERS OF 64 BITS  RANDOMLY FILLED]]
 

@@ -419,7 +419,7 @@ Some performance plots of runtime vs. n and log(range) are provided:\n
 
    \param[in] first Iterator pointer to first element.
    \param[in] last Iterator pointing to one beyond the end of data.
-   \param[in] getchar Bracket functor equivalent to @c operator[], taking a number corresponding to the character offset.
+   \param[in] get_character Bracket functor equivalent to @c operator[], taking a number corresponding to the character offset.
    \param[in] length Functor to get the length of the string in characters.
 
    \pre [@c first, @c last) is a valid range.
@@ -448,7 +448,7 @@ Some performance plots of runtime vs. n and log(range) are provided:\n
 */
   template <class RandomAccessIter, class Get_char, class Get_length>
   inline void string_sort(RandomAccessIter first, RandomAccessIter last,
-                          Get_char getchar, Get_length length)
+                          Get_char get_character, Get_length length)
   {
     //Don't sort if it's too small to optimize
     if (last - first < detail::min_sort_size)
@@ -460,7 +460,7 @@ Some performance plots of runtime vs. n and log(range) are provided:\n
         if (++first == last)
           return;
       }
-      detail::string_sort(first, last, getchar, length, getchar((*first), 0));
+      detail::string_sort(first, last, get_character, length, get_character((*first), 0));
     }
   }
 
@@ -479,7 +479,7 @@ Some performance plots of runtime vs. n and log(range) are provided:\n
 <a href="../../doc/graph/osx_string_sort.htm"> osx_string_sort</a>
 
    \param[in] range Range [first, last) for sorting.
-   \param[in] getchar Bracket functor equivalent to @c operator[], taking a number corresponding to the character offset.
+   \param[in] get_character Bracket functor equivalent to @c operator[], taking a number corresponding to the character offset.
    \param[in] length Functor to get the length of the string in characters.
 
    \pre [@c first, @c last) is a valid range.
@@ -503,9 +503,9 @@ Some performance plots of runtime vs. n and log(range) are provided:\n
 
 */
 template <class Range, class Get_char, class Get_length>
-inline void string_sort(Range& range, Get_char getchar, Get_length length)
+inline void string_sort(Range& range, Get_char get_character, Get_length length)
 {
-  string_sort(boost::begin(range), boost::end(range), getchar, length);
+  string_sort(boost::begin(range), boost::end(range), get_character, length);
 }
 
 
@@ -526,7 +526,7 @@ Some performance plots of runtime vs. n and log(range) are provided:\n
 
    \param[in] first Iterator pointer to first element.
    \param[in] last Iterator pointing to one beyond the end of data.
-   \param[in] getchar Bracket functor equivalent to @c operator[], taking a number corresponding to the character offset.
+   \param[in] get_character Bracket functor equivalent to @c operator[], taking a number corresponding to the character offset.
    \param[in] length Functor to get the length of the string in characters.
    \param[in] comp A binary functor that returns whether the first element passed to it should go before the second in order.
 
@@ -556,7 +556,7 @@ Some performance plots of runtime vs. n and log(range) are provided:\n
   template <class RandomAccessIter, class Get_char, class Get_length,
             class Compare>
   inline void string_sort(RandomAccessIter first, RandomAccessIter last,
-                          Get_char getchar, Get_length length, Compare comp)
+                          Get_char get_character, Get_length length, Compare comp)
   {
     //Don't sort if it's too small to optimize
     if (last - first < detail::min_sort_size)
@@ -568,8 +568,8 @@ Some performance plots of runtime vs. n and log(range) are provided:\n
         if (++first == last)
           return;
       }
-      detail::string_sort(first, last, getchar, length, comp,
-                          getchar((*first), 0));
+      detail::string_sort(first, last, get_character, length, comp,
+                          get_character((*first), 0));
     }
   }
 
@@ -589,7 +589,7 @@ Some performance plots of runtime vs. n and log(range) are provided:\n
 
 
    \param[in] range Range [first, last) for sorting.
-   \param[in] getchar Bracket functor equivalent to @c operator[], taking a number corresponding to the character offset.
+   \param[in] get_character Bracket functor equivalent to @c operator[], taking a number corresponding to the character offset.
    \param[in] length Functor to get the length of the string in characters.
    \param[in] comp A binary functor that returns whether the first element passed to it should go before the second in order.
 
@@ -616,9 +616,9 @@ Some performance plots of runtime vs. n and log(range) are provided:\n
 */
 template <class Range, class Get_char, class Get_length, class Compare>
 inline void string_sort(Range& range,
-                        Get_char getchar, Get_length length, Compare comp)
+                        Get_char get_character, Get_length length, Compare comp)
 {
-  string_sort(boost::begin(range), boost::end(range), getchar, length, comp);
+  string_sort(boost::begin(range), boost::end(range), get_character, length, comp);
 }
 
 /*! \brief Reverse String sort algorithm using random access iterators.
@@ -638,7 +638,7 @@ Some performance plots of runtime vs. n and log(range) are provided:\n
 
    \param[in] first Iterator pointer to first element.
    \param[in] last Iterator pointing to one beyond the end of data.
-   \param[in] getchar Bracket functor equivalent to @c operator[], taking a number corresponding to the character offset.
+   \param[in] get_character Bracket functor equivalent to @c operator[], taking a number corresponding to the character offset.
    \param[in] length Functor to get the length of the string in characters.
    \param[in] comp A binary functor that returns whether the first element passed to it should go before the second in order.
 
@@ -668,7 +668,7 @@ Some performance plots of runtime vs. n and log(range) are provided:\n
   template <class RandomAccessIter, class Get_char, class Get_length,
             class Compare>
   inline void reverse_string_sort(RandomAccessIter first,
-    RandomAccessIter last, Get_char getchar, Get_length length, Compare comp)
+    RandomAccessIter last, Get_char get_character, Get_length length, Compare comp)
   {
     //Don't sort if it's too small to optimize
     if (last - first < detail::min_sort_size)
@@ -682,8 +682,8 @@ Some performance plots of runtime vs. n and log(range) are provided:\n
           return;
       }
       //making last just after the end of the non-empty part of the array
-      detail::reverse_string_sort(first, last + 1, getchar, length, comp,
-                                  getchar((*last), 0));
+      detail::reverse_string_sort(first, last + 1, get_character, length, comp,
+                                  get_character((*last), 0));
     }
   }
 
@@ -703,7 +703,7 @@ Some performance plots of runtime vs. n and log(range) are provided:\n
 
 
    \param[in] range Range [first, last) for sorting.
-   \param[in] getchar Bracket functor equivalent to @c operator[], taking a number corresponding to the character offset.
+   \param[in] get_character Bracket functor equivalent to @c operator[], taking a number corresponding to the character offset.
    \param[in] length Functor to get the length of the string in characters.
    \param[in] comp A binary functor that returns whether the first element passed to it should go before the second in order.
 
@@ -730,9 +730,9 @@ Some performance plots of runtime vs. n and log(range) are provided:\n
 */
 template <class Range, class Get_char, class Get_length,
         class Compare>
-inline void reverse_string_sort(Range& range, Get_char getchar, Get_length length, Compare comp)
+inline void reverse_string_sort(Range& range, Get_char get_character, Get_length length, Compare comp)
 {
-    reverse_string_sort(boost::begin(range), boost::end(range), getchar, length, comp);
+    reverse_string_sort(boost::begin(range), boost::end(range), get_character, length, comp);
 }
 }
 }

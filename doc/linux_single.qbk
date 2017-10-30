@@ -57,8 +57,8 @@ The benchmarks with strings and objects of different sizes are not showed here, 
 ``
 ]
 
-The next results  are obtained from more complex benchmarks, not include in the library because use non free SW
-(If you are interested in their code, contact with fjtapia@gmail.com)
+The next results  are obtained from more complex benchmarks, not include in the library because they use non free software
+(If you are interested in their code, contact fjtapia@gmail.com)
 
 There are 3 types of benchmarks,
 [:

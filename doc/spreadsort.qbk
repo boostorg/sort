@@ -912,3 +912,5 @@ Parallel and Distributed Processing Techniques and Applications, Volume 3, pp.11
 [endsect] [/section:history]
 
 [xinclude autodoc.xml] [/ Using Doxygen reference documentation.]
+
+[endsect] [/section:spreadsort]
