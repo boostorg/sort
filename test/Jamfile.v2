@@ -21,18 +21,18 @@ import testing ;
        : : : : sort_detail ] 
 
   [ run test_flat_stable_sort.cpp
-       : : : <optimization>speed  : test_flat_stable_sort ]
+       : : : <optimization>speed <cxxflags>-std=c++11  : test_flat_stable_sort ]
   [ run test_spinsort.cpp
-       : : : <optimization>speed  : test_spinsort ]
+       : : : <optimization>speed <cxxflags>-std=c++11  : test_spinsort ]
   [ run test_insert_sort.cpp
-       : : : <optimization>speed  : test_insert_sort ]
+       : : : <optimization>speed <cxxflags>-std=c++11  : test_insert_sort ]
 
 
   [ run test_block_indirect_sort.cpp
-       : : : <optimization>speed <threading>multi : test_block_indirect_sort ]
+       : : : <optimization>speed <threading>multi <cxxflags>-std=c++11 : test_block_indirect_sort ]
   [ run test_sample_sort.cpp
-       : : : <optimization>speed <threading>multi : test_sample_sort ]
+       : : : <optimization>speed <threading>multi <cxxflags>-std=c++11 : test_sample_sort ]
   [ run test_parallel_stable_sort.cpp
-       : : : <optimization>speed <threading>multi : test_parallel_stable_sort ]
+       : : : <optimization>speed <threading>multi <cxxflags>-std=c++11 : test_parallel_stable_sort ]
    ;
 }

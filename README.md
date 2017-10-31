@@ -14,10 +14,10 @@ These algorithms do not use any other library or utility. The parallel algorithm
                       |       |                            |                              |                     |
     Algorithm         |Stable |   Additional memory        |Best, average, and worst case | Comparison method   |
     ------------------|-------|----------------------------|------------------------------|---------------------|
-    spreadsort        |  no   |      Log N                 | N, N LogN , N LogN           | Hybrid radix sort   |
-    pdqsort           |  no   |      Log N                 | N, N LogN , N LogN           | Comparison operator |
-    spinsort          |  yes  |      N / 2                 | N, N LogN , N LogN           | Comparison operator |
-    flat_stable_sort  |  yes  |size of the data / 256 + 8K | N, N LogN , N LogN           | Comparison operator |
+    spreadsort        |  no   |      key_length            | N, N sqrt(LogN), min(N logN, N key_length) | Hybrid radix sort   |
+    pdqsort           |  no   |      Log N                 | N, N LogN, N LogN                          | Comparison operator |
+    spinsort          |  yes  |      N / 2                 | N, N LogN, N LogN                          | Comparison operator |
+    flat_stable_sort  |  yes  |size of the data / 256 + 8K | N, N LogN, N LogN                          | Comparison operator |
                       |       |                            |                              |                     |
 
 
