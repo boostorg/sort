@@ -156,8 +156,11 @@ struct merge_block
     range_it get_group_range(size_t pos, size_t nrange) const
     {
         Iter_t it1 = global_range.first + (pos << LOG_BLOCK);
-        Iter_t it2 = global_range.first + ((pos + nrange) << LOG_BLOCK);
-        if ((pos + nrange) == nblock) it2 = global_range.last;
+
+		Iter_t it2 = ((pos + nrange) == nblock)?global_range.last: global_range.first + ((pos + nrange) << LOG_BLOCK);
+        //Iter_t it2 = global_range.first + ((pos + nrange) << LOG_BLOCK);
+        //if ((pos + nrange) == nblock) it2 = global_range.last;
+
         return range_it(it1, it2);
     };
     //-------------------------------------------------------------------------
@@ -238,7 +241,7 @@ void merge_block<Iter_t, Compare, Power2>
     it_index itx_out = itx_first;
     it_index itxA = indexA.begin(), itxB = indexB.begin();
     range_it rngA, rngB;
-    Iter_t itA, itB;
+    Iter_t itA = global_range.first, itB = global_range.first;
     bool validA = false, validB = false;
 
     while (itxA != indexA.end() and itxB != indexB.end())
