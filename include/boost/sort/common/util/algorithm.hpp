@@ -194,8 +194,8 @@ inline void initialize (Iter_t first, Iter_t last, Value_t & val)
 /// @param it_dest : iterator to the final place of the objects
 /// @param first : iterator to the first element to move
 /// @param last : iterator to the last element to move
-/// @return Output iterator to the element past the last element 
-///         moved (it_dest + (last - first)) 
+/// @return Output iterator to the element past the last element
+///         moved (it_dest + (last - first))
 //-----------------------------------------------------------------------------
 template <class Iter1_t, class Iter2_t>
 inline Iter2_t move_forward (Iter2_t it_dest, Iter1_t first, Iter1_t last)
@@ -211,9 +211,12 @@ inline Iter2_t move_forward (Iter2_t it_dest, Iter1_t first, Iter1_t last)
     //------------------------------------------------------------------------
     //                 Code
     //------------------------------------------------------------------------
-    return std::move(first, last, it_dest);
-}
-;
+    while (first != last)
+    {   *it_dest++ = std::move(*first++);
+    }
+    return it_dest;
+
+};
 //
 //-----------------------------------------------------------------------------
 //  function : move_backard
@@ -223,7 +226,7 @@ inline Iter2_t move_forward (Iter2_t it_dest, Iter1_t first, Iter1_t last)
 /// @param last : iterator to the last element to move
 //-----------------------------------------------------------------------------
 template<class Iter1_t, class Iter2_t>
-inline Iter2_t move_backward(Iter2_t it_dest, Iter1_t first, Iter1_t last)
+inline Iter2_t move_backward(Iter2_t it_dest, Iter1_t  first, Iter1_t last)
 {
     //------------------------------------------------------------------------
     //                  Metaprogramming
@@ -236,7 +239,10 @@ inline Iter2_t move_backward(Iter2_t it_dest, Iter1_t first, Iter1_t last)
     //------------------------------------------------------------------------
     //                 Code
     //------------------------------------------------------------------------
-    return std::move_backward(first, last, it_dest);
+    while (first != last)
+    {   *(--it_dest) = std::move (*(--last));
+    }
+    return it_dest;
 };
 
 //
@@ -290,16 +296,7 @@ inline void destroy(Iter_t first, const Iter_t last)
 template<class Iter_t>
 inline void reverse(Iter_t first, Iter_t last)
 {
-/*
-    size_t num = (size_t(last - first)+1) >> 1;
-    Iter_t it_left = first, it_right = last - 1;
-    for (size_t i = 0; i < num; ++i)
-        std::swap(*(it_left++), *(it_right--));
-
-    while ( last > first)
-        std::swap ( *( first++), *(last--));
-*/
-	std::reverse ( first, last);
+    std::reverse ( first, last);
 };
 //
 //****************************************************************************
