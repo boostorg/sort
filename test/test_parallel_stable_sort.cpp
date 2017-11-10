@@ -21,12 +21,8 @@
 #include <boost/test/included/test_exec_monitor.hpp>
 #include <boost/test/test_tools.hpp>
 
-using namespace std;
-namespace bsort = boost::sort::stable_detail;
+namespace bss = boost::sort;
 
-typedef typename std::vector<uint64_t>::iterator iter_t;
-
-std::mt19937_64 my_rand(0);
 
 struct xk
 {
@@ -35,21 +31,19 @@ struct xk
     xk ( uint32_t n =0 , uint32_t t =0): tail (t), num(n){};
     bool operator< (xk A) const { return (num < A.num); };
 };
-
-void test3()
+void test1()
 {
-    typedef typename std::vector<xk>::iterator iter_t;
-    typedef std::less<xk> compare;
 
-    const uint32_t NMAX = 500000;
+    std::mt19937_64 my_rand(0);
+
+    const uint32_t NMAX = 100000;
+
     std::vector<xk> V1, V2, V3;
     V1.reserve(NMAX);
-
     for (uint32_t i = 0; i < 8; ++i)
     {
         for (uint32_t k = 0; k < NMAX; ++k)
-        {
-            uint32_t NM = my_rand();
+        {   uint32_t NM = my_rand();
             xk G;
             G.num = NM >> 3;
             G.tail = i;
@@ -57,150 +51,107 @@ void test3()
         };
     };
     V3 = V2 = V1;
-
-    bsort::parallel_stable_sort<iter_t, compare>(V1.begin(), V1.end());
+    bss::parallel_stable_sort(V1.begin(), V1.end());
     std::stable_sort(V2.begin(), V2.end());
-    bsort::parallel_stable_sort<iter_t, compare>(V3.begin(), V3.end(), 0);
+    bss::parallel_stable_sort(V3.begin(), V3.end(), 0);
 
     BOOST_CHECK(V1.size() == V2.size());
     for (uint32_t i = 0; i < V1.size(); ++i)
-    {
-        BOOST_CHECK(V1[i].num == V2[i].num and V1[i].tail == V2[i].tail);
+    {   BOOST_CHECK(V1[i].num == V2[i].num and V1[i].tail == V2[i].tail);
     };
 
     BOOST_CHECK(V3.size() == V2.size());
     for (uint32_t i = 0; i < V3.size(); ++i)
-    {
-        BOOST_CHECK(V3[i].num == V2[i].num and V3[i].tail == V2[i].tail);
+    {   BOOST_CHECK(V3[i].num == V2[i].num and V3[i].tail == V2[i].tail);
     };
+};
+
+void test2(void)
+{
+    const uint32_t NElem = 2000000;
+    std::vector<uint64_t> V1;
+    
+    // ----------------- sorted elements ------------------------------------
+    V1.clear();
+    for (uint32_t i = 0; i < NElem; ++i)  V1.push_back(i);
+    bss::parallel_stable_sort(V1.begin(), V1.end());
+    for (unsigned i = 1; i < NElem; i++)
+    {   BOOST_CHECK(V1[i - 1] <= V1[i]);
+    };
+    
+    // ------------- reverse sorted elements --------------------------------
+    V1.clear();
+    for (uint32_t i = 0; i < NElem; ++i)   V1.push_back(NElem - i);
+    bss::parallel_stable_sort(V1.begin(), V1.end());
+    for (unsigned i = 1; i < NElem; i++)
+    {   BOOST_CHECK(V1[i - 1] <= V1[i]);
+    };
+    
+    // -------------------- equals elements -----------------------------------
+    V1.clear();
+    for (uint32_t i = 0; i < NElem; ++i) V1.push_back(1000);
+    bss::parallel_stable_sort(V1.begin(), V1.end());
+    for (unsigned i = 1; i < NElem; i++)
+    {   BOOST_CHECK(V1[i - 1] == V1[i]);
+    };
+};
+void test3(void)
+{
+    const uint32_t NElem = 2000000;
+    std::vector<uint64_t> V1,V2,V3;
+    std::mt19937_64 my_rand(0);
+
+    for (uint32_t i = 0; i < NElem; ++i) V1.push_back(my_rand() % NElem);
+    V3 = V2 = V1;
+    std::stable_sort (V2.begin(), V2.end());
+    
+    
+    // --------------- unsorted elements 0 threads ----------------------------
+    V3 = V1;
+    bss::parallel_stable_sort(V3.begin(), V3.end(), 0);
+    for (unsigned i = 0; i < NElem; i++)
+    {   BOOST_CHECK(V3[i] == V2[i]);
+    };
+    
+    // --------------- unsorted elements -------------------------------------
+    V3 = V1;
+    bss::parallel_stable_sort(V3.begin(), V3.end());
+    for (unsigned i = 0; i < NElem; i++)
+    {   BOOST_CHECK(V3[i] == V2[i]);
+    };    
+    
+    // --------------- unsorted elements 100 threads ----------------------------
+    V3 = V1;
+    bss::parallel_stable_sort(V3.begin(), V3.end(), 100);
+    for (unsigned i = 0; i < NElem; i++)
+    {   BOOST_CHECK(V3[i] == V2[i]);
+    };     
 };
 
 void test4(void)
 {
-    typedef typename std::vector<uint64_t>::iterator iter_t;
-    typedef std::less<uint64_t> compare;
+    const uint32_t KMax = 66000;
 
-    const uint32_t NElem = 500000;
-    std::vector<uint64_t> V1;
+    std::vector<uint64_t> K, M;
     std::mt19937_64 my_rand(0);
 
-    for (uint32_t i = 0; i < NElem; ++i)
-        V1.push_back(my_rand() % NElem);
+    for (uint32_t i = 0; i < KMax; ++i)
+        K.push_back(my_rand());
+    M = K;
 
-    // parallel_stable_sort unsorted
-    bsort::parallel_stable_sort<iter_t, compare>(V1.begin(), V1.end());
-    for (unsigned i = 1; i < NElem; i++)
-    {
-        BOOST_CHECK(V1[i - 1] <= V1[i]);
-    };
+    bss::parallel_stable_sort(K.begin(), K.end(), 300);
 
-    V1.clear();
-    for (uint32_t i = 0; i < NElem; ++i)
-        V1.push_back(i);
-
-    // parallel_stable_sort sorted
-    bsort::parallel_stable_sort<iter_t, compare>(V1.begin(), V1.end());
-    for (unsigned i = 1; i < NElem; i++)
-    {
-        BOOST_CHECK(V1[i - 1] <= V1[i]);
-    };
-
-    V1.clear();
-    for (uint32_t i = 0; i < NElem; ++i)
-        V1.push_back(NElem - i);
-
-    // parallel_stable_sort reverse sorted
-    bsort::parallel_stable_sort<iter_t, compare>(V1.begin(), V1.end());
-    for (unsigned i = 1; i < NElem; i++)
-    {
-        BOOST_CHECK(V1[i - 1] <= V1[i]);
-    };
-
-    V1.clear();
-    for (uint32_t i = 0; i < NElem; ++i)
-        V1.push_back(1000);
-    // parallel_stable_sort equals
-    bsort::parallel_stable_sort<iter_t, compare>(V1.begin(), V1.end());
-    for (unsigned i = 1; i < NElem; i++)
-    {
-        BOOST_CHECK(V1[i - 1] == V1[i]);
-    };
+    std::stable_sort(M.begin(), M.end());
+    for (unsigned i = 0; i < KMax; i++)
+        BOOST_CHECK(M[i] == K[i]);
 };
 
-void test5(void)
+void test5 (void)
 {
-    typedef typename std::vector<uint64_t>::iterator iter_t;
-    typedef std::less<uint64_t> compare;
-
-    const uint32_t NELEM = 500000;
-    std::vector<uint64_t> A, B;
-    A.reserve(NELEM);
-
-    for (unsigned i = 0; i < NELEM; i++)
-        A.push_back(my_rand());
-    B = A;
-
-    bsort::parallel_stable_sort<iter_t, compare>(A.begin(), A.end());
-    for (unsigned i = 0; i < (NELEM - 1); i++)
-    {
-        BOOST_CHECK(A[i] <= A[i + 1]);
-    };
-    std::stable_sort(B.begin(), B.end());
-    BOOST_CHECK(A.size() == B.size());
-
-    for (uint32_t i = 0; i < A.size(); ++i)
-        BOOST_CHECK(A[i] == B[i]);
-};
-
-void test6(void)
-{
-    typedef typename std::vector<uint64_t>::iterator iter_t;
-    typedef std::less<uint64_t> compare;
-
-    const uint32_t NELEM = 500000;
-    std::vector<uint64_t> A;
-    A.reserve(NELEM);
-
-    for (unsigned i = 0; i < NELEM; i++)
-        A.push_back(NELEM - i);
-
-    bsort::parallel_stable_sort<iter_t, compare>(A.begin(), A.end());
-    for (unsigned i = 1; i < NELEM; i++)
-    {
-        BOOST_CHECK(A[i - 1] <= A[i]);
-    };
-};
-void test7(void)
-{
-    typedef typename std::vector<uint64_t>::iterator iter_t;
-    typedef std::less<uint64_t> compare;
-
-    const uint32_t NELEM = 132000;
-    std::vector<uint64_t> A, B;
-    A.reserve(NELEM);
-
-    for (unsigned i = 0; i < NELEM; i++)
-        A.push_back(my_rand());
-    B = A;
-
-    bsort::parallel_stable_sort<iter_t, compare>(A.begin(), A.end(), 200);
-    for (unsigned i = 0; i < (NELEM - 1); i++)
-    {
-        BOOST_CHECK(A[i] <= A[i + 1]);
-    };
-    std::stable_sort(B.begin(), B.end());
-    BOOST_CHECK(A.size() == B.size());
-
-    for (uint32_t i = 0; i < A.size(); ++i)
-        BOOST_CHECK(A[i] == B[i]);
-};
-void test8 (void)
-{
-    typedef typename std::vector<xk>::iterator  iter_t;
-    typedef std::less<xk>                           compare_t;
+    typedef typename std::vector<xk>::iterator iter_t;
     std::mt19937 my_rand (0);
     std::vector<xk> V ;
-    const uint32_t NELEM = 500000;
+    const uint32_t NELEM = 100000;
     V.reserve(NELEM * 10);
 
 
@@ -212,19 +163,20 @@ void test8 (void)
         iter_t last = first + NELEM ;
         std::shuffle( first, last, my_rand);
     };
-    bsort::parallel_stable_sort<iter_t, compare_t>
-                            ( V.begin() , V.end(), compare_t());
+    bss::parallel_stable_sort( V.begin() , V.end());
     for ( uint32_t i =0 ; i < ( NELEM * 10); ++i)
     {   BOOST_CHECK ( V[i].num == (i / 10) and V[i].tail == (i %10) );
     };
 }
+
+
 int test_main(int, char *[])
 {
+    test1();
+    test2();  
     test3();
     test4();
     test5();
-    test6();
-    test7();
-    test8();
     return 0;
-}
+};
+
