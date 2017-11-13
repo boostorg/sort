@@ -7,32 +7,43 @@
 #
 #  See http://www.boost.org/libs/sort for library home page.
 
-import testing ;
+import path-to-config-lib/checks/config : requires ;
 
+import testing ;
 {
   test-suite "sort"
     : [ run integer_sort_test.cpp
-       : : : : integer_sort ]   
+       : : : : integer_sort ]
   [ run float_sort_test.cpp
-       : : : : float_sort ]   
+       : : : : float_sort ]
   [ run string_sort_test.cpp
-       : : : : string_sort ]  
+       : : : : string_sort ]
   [ run sort_detail_test.cpp
-       : : : : sort_detail ] 
+       : : : : sort_detail ]
 
   [ run test_flat_stable_sort.cpp
-       : : : <optimization>speed <cxxflags>-std=c++11  : test_flat_stable_sort ]
+       : : : [ requires
+                cxx11_constexpr
+                cxx11_noexcept ]  : test_flat_stable_sort ]
+
   [ run test_spinsort.cpp
-       : : : <optimization>speed <cxxflags>-std=c++11  : test_spinsort ]
+       : : : [ requires
+                cxx11_constexpr
+                cxx11_noexcept ]   : test_spinsort ]
+
   [ run test_insert_sort.cpp
-       : : : <optimization>speed <cxxflags>-std=c++11  : test_insert_sort ]
+       : : : [ requires
+                cxx11_constexpr
+                cxx11_noexcept ] : test_insert_sort ]
 
 
   [ run test_block_indirect_sort.cpp
-       : : : <optimization>speed <threading>multi <cxxflags>-std=c++11 : test_block_indirect_sort ]
+       : : :  [ requires                    cxx11_constexpr                    cxx11_noexcept                    cxx11_thread_local                    cxx11_lambdas ]  <threading>multi  : test_block_indirect_sort ]
+
   [ run test_sample_sort.cpp
-       : : : <optimization>speed <threading>multi <cxxflags>-std=c++11 : test_sample_sort ]
+       : : :  [ requires                    cxx11_constexpr                    cxx11_noexcept                    cxx11_thread_local                    cxx11_lambdas ] <threading>multi  : test_sample_sort ]
+
   [ run test_parallel_stable_sort.cpp
-       : : : <optimization>speed <threading>multi <cxxflags>-std=c++11 : test_parallel_stable_sort ]
+       : : : [ requires                    cxx11_constexpr                    cxx11_noexcept                    cxx11_thread_local                    cxx11_lambdas ] <threading>multi  : test_parallel_stable_sort ]
    ;
 }
