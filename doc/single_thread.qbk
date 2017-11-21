@@ -7,25 +7,26 @@
  http://www.boost.org/LICENSE_1_0.txt
 =============================================================================/]
 
-[section:parallel 2.- Single Thread Algorithms]
-
+[section:single_thread 2.- Single Thread Algorithms]
+[section:overview 2.0.- Overview]
 [:
 
 [h4[_Single Thread Algorithms]]
+
 [:
 This table provides a brief description of the single thread algorithms of the library.
 
 
 [*[teletype]
 ``
-                      |       |                            |                              | Comparison          |
-    Algorithm         |Stable |   Additional memory        |Best, average, and worst case | method              |
-    ------------------+-------+----------------------------+------------------------------+---------------------+
-    spreadsort        |  no   |      key_length            | N, N sqrt(LogN), min(N logN, N key_length) | Hybrid radix sort   |
-    pdqsort           |  no   |      Log N                 | N, N LogN, N LogN                          | Comparison operator |
-    spinsort          |  yes  |      N / 2                 | N, N LogN, N LogN                          | Comparison operator |
-    flat_stable_sort  |  yes  |size of the data / 256 + 8K | N, N LogN, N LogN                          | Comparison operator |
-                      |       |                            |                              |                     |
+                      |       |                            |                                         | Comparison          |
+    Algorithm         |Stable |   Additional memory        |  Best, average, and worst case          | method              |
+    ------------------+-------+----------------------------+-----------------------------------------+---------------------+
+    spreadsort        |  no   |      key_length            | N, Nsqrt(LogN), min(NlogN, Nkey_length) | Hybrid radix sort   |
+    pdqsort           |  no   |      Log N                 | N, NLogN, NLogN                         | Comparison operator |
+    spinsort          |  yes  |      N / 2                 | N, NLogN, NLogN                         | Comparison operator |
+    flat_stable_sort  |  yes  |size of the data / 256 + 8K | N, NLogN, NLogN                         | Comparison operator |
+                      |       |                            |                                         |                     |
 ``
 ]
 
@@ -41,7 +42,7 @@ This table provides a brief description of the single thread algorithms of the l
 ]
 
 ]
-
+[endsect]
 [include spreadsort.qbk]
 [include pdqsort.qbk]
 [include spinsort.qbk]

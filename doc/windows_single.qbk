@@ -17,8 +17,11 @@ The benchmark runs over a VirtualBox virtual machine with 8 threads and 16 GB of
 running over a Intel(R) Core(TM) i7-5820K CPU @ 3.30GHz with 6 cores and 2 threads by core, and 15M of cache.
 
 The Operating System is Windows 10 64 bits, and the compiler is VC2017
+]
 
-[h4[_NEAR SORTED DATA WITH 100 000 000 64 bits INTEGERS]]
+[section:near_sorted Near Sorted Data]
+[:
+[h4[_Near Sorted Data With 100 000 000 64 bits Integers]]
 
 benchmark/single/benchmark_numbers.cpp : This benchmark shows the results obtained with several kind of integers numbers (random, and near
 sorted).
@@ -54,7 +57,11 @@ The benchmarks with strings and objects of different sizes are not showed here, 
 
 ``
 ]
+]
+[endsect]
 
+[section:complex_benchmarks Complex (Several Types)]
+[:
 The next results  are obtained from more complex benchmarks, not include in the library because they use non free SW
 (If you are interested in the details, contact fjtapia@gmail.com)
 
@@ -69,7 +76,7 @@ There are 3 types of benchmarks,
 The objects are arrays of integers.  The heavy comparison sums all the elements in each, and the light comparison uses only the first number of the array.
 
 ]
-[h4[_100 000 000 NUMBERS OF 64 BITS  RANDOMLY FILLED]]
+[h4[_100 000 000 Numbers of 64 bits Randomly Filled]]
 
 [*[teletype]
 ``
@@ -89,7 +96,7 @@ The objects are arrays of integers.  The heavy comparison sums all the elements 
 ``
 ]
 
-[h4[_10 000 000   STRINGS  RANDOMLY FILLED]]
+[h4[_10 000 000  Strings Randomly Filled]]
 
 [*[teletype]
 ``
@@ -109,7 +116,7 @@ The objects are arrays of integers.  The heavy comparison sums all the elements 
 ``
 ]
 
-[h4[_OBJECTS RANDOMLY FILLED]]
+[h4[_Objects Randomly Filled]]
 [:
 The objects are arrays of 64 bits numbers
 
@@ -144,6 +151,7 @@ They are compared in two ways :
 ``
 ]
 ]
+[endsect]
 [endsect]
 
 

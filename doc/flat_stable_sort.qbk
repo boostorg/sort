@@ -9,8 +9,9 @@
 
 [section:flat_stable_sort 2.4.- flat_stable_sort]
 
-[:
-[h4[_Algorithm Description]]
+[section:flat_stable_sort_description Description]
+
+
 [:
 [*Flat_stable_sort] is a new stable sort algorithm, designed and implemented by Francisco Jose Tapia for the Boost Sort Library
 
@@ -35,8 +36,9 @@ or some elements are modified, breaking the order of the elements. In these case
 ]
 ]
 
-[h4[_Memory Used]]
+
 [:
+[h4[_Memory Used]]
 Memory used by the stable sort algorithms measured on Linux x64
 
 
@@ -47,17 +49,14 @@ Memory used by the stable sort algorithms measured on Linux x64
     std::stable_sort   |   1177 MB    |
     spinsort           |   1175 MB    |
     flat_stable_sort   |    788 MB    |
-    spreadsort         |    785 MB    |
     -------------------+--------------+
 
 ``
 ]
 ]
-
-[h4[_Benchmark]]
+[endsect]
+[section:flat_stable_sort_benchmark Benchmark]
 [:
-
-
 
 The benchmark with 100000000 64 bits integers,comparing with std::stable_sort of GCC 6.3 compiler and spinsort, running on a Intel i7-5820K CPU @ 3.30GH shows the mentioned characteristics.
 
@@ -93,8 +92,9 @@ The benchmark with 100000000 64 bits integers,comparing with std::stable_sort of
 If you want detailed information about this algorithm you can find it in the  [@../papers/flat_stable_sort_eng.pdf flat_stable_sort_en.pdf document]
 
 ]
+[endsect]
+[section:flat_stable_sort_programming Programming]
 
-[h4[_Programming]]
 [:
 You only need to include the file boost/sort/sort.hpp.
 
@@ -119,5 +119,5 @@ guarantee the integrity of the objects to sort, but not their relative order. If
 is generated inside the objects (in the move or copy constructors) the results are undefined.
 
 ]
-]
+[endsect]
 [endsect]

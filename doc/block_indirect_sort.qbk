@@ -10,11 +10,9 @@
 [section:block_indirect_sort 3.1- block_indirect_sort]
 
 
-[section:block_introduction 3.1.1- Introduction]
+[section:block_description Description]
 [:
 
-[h4[_Algorithm Description]]
-[:
 [*BLOCK_INDIRECT_SORT] is a new unstable parallel sort, conceived and implemented by Francisco Jose Tapia for the Boost Library.
 
 The most important characteristics of this algorithm are the *speed* and the *low memory consumption*.
@@ -42,23 +40,30 @@ block_size (number of elements) |  4096  |  2048   |   1024  |   768   |   512  
                                 |        |         |         |         |         |         |          |
 ``
 ]
-
+]
+[endsect]
+[br]
+[section:block_benchmark Benchmark]
+[:
 Sorting 100 000 000  64 bits numbers, the measured memory used was:
 [*[teletype]
 ``
-                                      |             |
-    Algorithm                         | Memory used |
-    ----------------------------------+-------------+
-    Open MP Parallel Sort             |  1564 MB    |
-    Threading Building Blocks (TBB)   |   789 MB    |
-    Block Indirect Sort               |   790 MB    |
-                                      |             |
+                                      |             |             |
+    Algorithm                         | Time (secs) | Memory used |
+    ----------------------------------+-------------+-------------+
+    Open MP Parallel Sort             |   1.1990    |  1564 MB    |
+    Threading Building Blocks (TBB)   |   1.6411    |   789 MB    |
+    Block Indirect Sort               |   0.9270    |   790 MB    |
+                                      |             |             |
 ``
 ]
 ]
+[endsect]
+[br]
 
+[section:block_programming Programming]
+[:
 [h4[_Thread specification]]
-
 [:
 This algorithm has an integer parameter indicating the *number of threads* to use in the sorting process,
 which always is the last value in the call. The default value (if left unspecified) is the number of HW threads of
@@ -70,10 +75,7 @@ The number of threads is not a fixed number, but is calculated in each execution
 than the number of hardware threads on the machine. We can pass 100 threads in a machine with 4 HW threads,
 and in the same mode we can pass a function as (std::thread::hardware_concurrency() / 4 ).
 If this value is 0, the program is executed with 1 thread.
-
 ]
-
-
 [h4[_Programming]]
 [:
 You only need to include the file boost/sort/sort.hpp to use this algorithm
@@ -114,9 +116,8 @@ unpredictable.
 ]
 ]
 [endsect]
-
-
-[section:block_internal 3.1.2- Internal Description]
+[br]
+[section:block_internal Internal Description]
 [:
 
 There are two primary categories of parallelization in sorting algorithms.
@@ -125,7 +126,7 @@ There are two primary categories of parallelization in sorting algorithms.
 [h4[_Subdivision Algorithms]]
 
 
-[:Filter the data and generate two or more parts. Each part obtained is
+[: Filter the data and generate two or more parts. Each part obtained is
 filtered and divided by other threads. This filter and division process is done
 until the size of the part is smaller than a predefined size, then is sorted by a single thread.
 
@@ -156,16 +157,12 @@ Examples of this category are
 
 *Microsoft PPL Parallel Buffered Sort
 
-]
-[br]
-
-
 This generates an *undesirable duality*. With a small number of threads the optimal algorithm is not the optimal for a big number of threads.
 
 For this reason, the SW designed for a *small machine* is *inadequate* for a *big machine* and vice versa.
 
 Using only *merging algorithms*, has the *problem of the additional memory* used, usually of the same size as the data.
-
+]
 
 [h4[_New Parallel Sort Algorithm (Block Indirect Sort)]]
 [:
@@ -183,12 +180,12 @@ When the program runs  with a *small number of threads* the algorithm
 internally uses a *subdivision algorithm* and has similar performance to  TBB, and when run with *many threads*,
 it internally uses the *new algorithm* and has the performance of GCC Parallel Sort, with the additional advantage of *reduced memory consumption*.
 
-
-]]
+]
+]
 [endsect]
+[br]
 
-
-[section:design_process 3.1.3- Design Process]
+[section:design_process Design Process]
 
 [:
 [h4[_Initial Idea]]
@@ -232,15 +229,9 @@ written to resolve and parallelize the internal problems.
 
 If you are interested in a detailed description of the algorithm, you can find it here : [* [@../papers/block_indirect_sort_en.pdf block_indirect_sort_en.pdf]].
 
-
 ]
-
-
 
 ]
 [endsect]
-
 [endsect]
-
-
 

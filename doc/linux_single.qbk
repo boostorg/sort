@@ -9,7 +9,7 @@
 
 [section:linux_single 2.5.- Linux Benchmarks]
 
-[:
+
 This library contains a benchmark folder with programs to measure the speed of the algorithms on your machine and operating system.
 These are short benchmarks to test speed with different kinds of data ( random, sorted, sorted plus unsorted append at end ...)
 
@@ -17,10 +17,10 @@ This was run on a Intel(R) Core(TM) i7-5820K CPU @ 3.30GHz, with 6 cores and 2 t
 
 The results obtained with GCC 6.3 on Linux, in the benchmark_numbers with integers are:
 
-
-
-[h4[_NEAR SORTED DATA WITH 100 000 000 64 bits INTEGERS]]
+[section:near_sorted Near Sorted Data]
 [:
+[h4[_Near Sorted Data With 100 000 000 64 bits Integers]]
+
 benchmark/single/benchmark_numbers.cpp : This benchmark shows the results obtained with several kind of integers numbers (random, and near
 sorted).
 
@@ -56,7 +56,11 @@ The benchmarks with strings and objects of different sizes are not showed here, 
 
 ``
 ]
+]
+[endsect]
 
+[section:complex_benchmarks Complex (Several Types)]
+[:
 The next results  are obtained from more complex benchmarks, not include in the library because they use non free software
 (If you are interested in their code, contact fjtapia@gmail.com)
 
@@ -71,10 +75,10 @@ There are 3 types of benchmarks,
 The objects are arrays of integers.  The heavy comparison sums all the elements in each, and the light comparison uses only the first number of the array.
 
 ]
-]
 
 
-[h4[_100 000 000 NUMBERS OF 64 BITS  RANDOMLY FILLED]]
+
+[h4[_100 000 000 Numbers of 64 bits Randomly Filled]]
 
 
 [*[teletype]
@@ -94,7 +98,7 @@ The objects are arrays of integers.  The heavy comparison sums all the elements 
 
 ``
 ]
-[h4[_10 000 000   STRINGS  RANDOMLY FILLED]]
+[h4[_10 000 000  Strings Randomly Filled]]
 
 [*[teletype]
 ``
@@ -112,7 +116,7 @@ The objects are arrays of integers.  The heavy comparison sums all the elements 
                         |         |             |
 ``
 ]
-[h4[_OBJECTS RANDOMLY FILLED]]
+[h4[_Objects Randomly Filled]]
 [:
 The objects are arrays of 64 bits numbers
 
@@ -145,6 +149,7 @@ They are compared in two ways :
 
 
 ``
-]]
-
+]
+]
+[endsect]
 [endsect]

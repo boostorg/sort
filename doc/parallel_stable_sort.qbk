@@ -8,14 +8,16 @@
 =============================================================================/]
 
 [section:parallel_stable_sort 3.3.- Parallel_stable_sort]
-
+[section:parallel_description Description]
 [:
-This algorithm is based on the [*[@ https://en.wikipedia.org/wiki/Samplesort Samplesort]] algorithm, but uses half of the memory used by samplesort.
+This is an adaptation of the [*[@https://en.wikipedia.org/wiki/Samplesort Samplesort]] algorithm, 
+using an additional memory a half of the memory used by the data 
+(the original algorithm uses an additional memory as the used by the data).
 
-The design and implementation were done by Francisco Tapia for the Boost Library.
+It is a highly efficient [*parallel stable sort], optimized for use with many threads.
 
-[h4[_Algorithm Description]]
-[:
+
+
 [*[teletype]
 ``
                           |       |                        |                              |
@@ -28,7 +30,10 @@ The design and implementation were done by Francisco Tapia for the Boost Library
 
 You can see their performance in the [*[link sort.parallel.linux_parallel Benchmarks]] chapter
 ]
+[endsect]
 
+[section:parallel_programming Programming]
+[:
 [h4[_Thread specification]]
 
 [:
@@ -87,7 +92,7 @@ unpredictable.
 
 ]
 ]
-
+[endsect]
 [endsect]
 
 

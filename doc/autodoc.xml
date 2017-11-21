@@ -3,20 +3,6 @@
 <namespace name="boost">
 <namespace name="sort">
 <namespace name="spreadsort">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <function name="float_mem_cast"><type>Cast_type</type><template>
           <template-type-parameter name="Data_type"><purpose><para>Floating-point IEEE 754/IEC559 type. </para></purpose></template-type-parameter>
           <template-type-parameter name="Cast_type"><purpose><para>Integer type (same size) to which to cast.</para></purpose></template-type-parameter>
@@ -78,6 +64,20 @@ spreadsort(vec.begin(), vec.end());
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </namespace>
 </namespace>
 </namespace>
@@ -86,25 +86,6 @@ spreadsort(vec.begin(), vec.end());
 <namespace name="boost">
 <namespace name="sort">
 <namespace name="spreadsort">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -242,6 +223,25 @@ Some performance plots of runtime vs. n and log(range) are provided:<sbr/>
 <para>* K is the log of the range in bits (32 for 32-bit integers using their full range), </para>
 <para>* S is a constant called max_splits, defaulting to 11 (except for strings where it is the log of the character size). </para>
 </para></description><requires><para>[<computeroutput>first</computeroutput>, <computeroutput>last</computeroutput>) is a valid range. </para></requires><postconditions><para>The elements in the range [<computeroutput>first</computeroutput>, <computeroutput>last</computeroutput>) are sorted in ascending order.</para></postconditions><throws><simpara><classname>std::exception</classname> Propagates exceptions if any of the element comparisons, the element swaps (or moves), the right shift, subtraction of right-shifted elements, functors, or any operations on iterators throw.</simpara></throws></function>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </namespace>
 </namespace>
 </namespace>
@@ -250,14 +250,6 @@ Some performance plots of runtime vs. n and log(range) are provided:<sbr/>
 <namespace name="boost">
 <namespace name="sort">
 <namespace name="spreadsort">
-
-
-
-
-
-
-
-
 
 
 
@@ -324,6 +316,14 @@ Some performance plots of runtime vs. n and log(range) are provided:<sbr/>
 
 
 
+
+
+
+
+
+
+
+
 </namespace>
 </namespace>
 </namespace>
@@ -332,6 +332,24 @@ Some performance plots of runtime vs. n and log(range) are provided:<sbr/>
 <namespace name="boost">
 <namespace name="sort">
 <namespace name="spreadsort">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <function name="string_sort"><type>void</type><template>
           <template-type-parameter name="RandomAccessIter"><purpose><para><ulink url="http://www.cplusplus.com/reference/iterator/RandomAccessIterator/">Random access iterator</ulink> </para></purpose></template-type-parameter>
           <template-type-parameter name="Unsigned_char_type"><purpose><para>Unsigned character type used for string. </para></purpose></template-type-parameter>
@@ -668,24 +686,6 @@ Some performance plots of runtime vs. n and log(range) are provided:<sbr/>
 <para>* K is the log of the range in bits (32 for 32-bit integers using their full range), </para>
 <para>* S is a constant called max_splits, defaulting to 11 (except for strings where it is the log of the character size). </para>
 </para></description><requires><para>[<computeroutput>first</computeroutput>, <computeroutput>last</computeroutput>) is a valid range. </para></requires><postconditions><para>The elements in the range [<computeroutput>first</computeroutput>, <computeroutput>last</computeroutput>) are sorted in ascending order.</para></postconditions><returns><para><computeroutput>void</computeroutput>.</para></returns><throws><simpara><classname>std::exception</classname> Propagates exceptions if any of the element comparisons, the element swaps (or moves), the right shift, subtraction of right-shifted elements, functors, or any operations on iterators throw.</simpara></throws></function>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </namespace>
 </namespace>
 </namespace>

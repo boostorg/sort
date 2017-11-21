@@ -4,7 +4,7 @@
 
 The goal of the Boost Sort Library is provide to the users, the most modern and fast sorting algorithms.
 
-This library provide stable and not stable sorting algorithms, in single thread and parallel versions.
+This library provides stable and not stable sorting algorithms, in single thread and parallel versions.
 
 These algorithms do not use any other library or utility. The parallel algorithms need a C++11 compliant compiler.
 
@@ -62,7 +62,7 @@ highest speed, changes according to the size of the objects to sort according to
 <h2>Installation </h2>
 - This library is **include only**.
 - Don't need to link with any static or dynamic library. Only need a C++11 compiler
-- Only need a to include the file boost/sort/sort.hpp
+- Only need to include the file boost/sort/sort.hpp
 
 
 <h2>Author and Copyright</h2>
