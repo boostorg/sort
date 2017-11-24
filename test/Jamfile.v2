@@ -21,6 +21,9 @@ import testing ;
   [ run sort_detail_test.cpp
        : : : : sort_detail ]
 
+  [ run test_pdqsort.cpp
+       : : : <optimization>speed : test_pdqsort ]
+
   [ run test_flat_stable_sort.cpp
        : : : [ requires
                 cxx11_constexpr
