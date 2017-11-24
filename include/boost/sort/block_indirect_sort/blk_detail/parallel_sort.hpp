@@ -15,7 +15,7 @@
 #define __BOOST_SORT_PARALLEL_DETAIL_PARALLEL_SORT_HPP
 
 #include <boost/sort/block_indirect_sort/blk_detail/backbone.hpp>
-#include <boost/sort/pdqsort/pdqsort.h>
+#include <boost/sort/pdqsort/pdqsort.hpp>
 #include <boost/sort/common/pivot.hpp>
 
 namespace boost

@@ -17,7 +17,7 @@
 #include <boost/sort/block_indirect_sort/blk_detail/merge_blocks.hpp>
 #include <boost/sort/block_indirect_sort/blk_detail/move_blocks.hpp>
 #include <boost/sort/block_indirect_sort/blk_detail/parallel_sort.hpp>
-#include <boost/sort/pdqsort/pdqsort.h>
+#include <boost/sort/pdqsort/pdqsort.hpp>
 #include <boost/sort/common/util/traits.hpp>
 #include <boost/sort/common/util/algorithm.hpp>
 #include <future>

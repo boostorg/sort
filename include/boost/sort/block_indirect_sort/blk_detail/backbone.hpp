@@ -15,7 +15,7 @@
 #define __BOOST_SORT_PARALLEL_DETAIL_BACKBONE_HPP
 
 #include <atomic>
-#include <boost/sort/pdqsort/pdqsort.h>
+#include <boost/sort/pdqsort/pdqsort.hpp>
 #include <boost/sort/common/util/atomic.hpp>
 #include <boost/sort/common/util/algorithm.hpp>
 #include <boost/sort/common/stack_cnc.hpp>
