@@ -25,5 +25,3 @@
 [include parallel.qbk]
 [include bibliography.qbk]
 [include gratitude.qbk]
-
-[xinclude autodoc.xml] [/ Using Doxygen reference documentation.]
