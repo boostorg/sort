@@ -37,7 +37,7 @@ using common::util::value_iter;
 //-----------------------------------------------------------------------------
 template < class Iter_t, typename Compare = compare_iter < Iter_t > >
 static void insert_sort (Iter_t first, Iter_t last,
-		                   Compare comp = Compare())
+                         Compare comp = Compare())
 {
     //--------------------------------------------------------------------
     //                   DEFINITIONS
@@ -70,11 +70,11 @@ static void insert_sort (Iter_t first, Iter_t last,
 ///               elements to insert
 /// @param last : iterator to the next element of the last in the range
 /// @param comp : object for to do the comparison between the elements
-/// @remarks This algorithm is O(N²)
+/// @remarks This algorithm is O(N^2)
 //-----------------------------------------------------------------------------
 template < class Iter_t, typename Compare = compare_iter < Iter_t > >
 void insert_partial_sort (Iter_t first, Iter_t mid, Iter_t last,
-		                  Compare comp = Compare())
+                          Compare comp = Compare())
 {
     //--------------------------------------------------------------------
     //                   DEFINITIONS
