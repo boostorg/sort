@@ -138,36 +138,37 @@ void test2 (void)
 
 template<uint32_t NN>
 struct int_array
-{   uint64_t M[NN];
+{
+    uint64_t M[NN];
 
-	int_array(uint64_t number = 0)
-	{   for (uint32_t i = 0; i < NN; ++i) 	M[i] = number;
-	};
+    int_array(uint64_t number = 0)
+    {   for (uint32_t i = 0; i < NN; ++i) M[i] = number;
+    };
 
-	bool operator<(const int_array<NN> &A) const
-	{   return M[0] < A.M[0];
-	};
+    bool operator<(const int_array<NN> &A) const
+    {   return M[0] < A.M[0];
+    };
 };
 
 template<class IA>
 void test_int_array(uint32_t NELEM)
 {
-	std::vector<IA> V1;
-	V1.reserve(NELEM);
+    std::vector<IA> V1;
+    V1.reserve(NELEM);
     
-	for (uint32_t i = 0; i < NELEM; ++i)
-		V1.emplace_back(Vrandom[i]);
+    for (uint32_t i = 0; i < NELEM; ++i)
+        V1.emplace_back(Vrandom[i]);
 
-	bsp::block_indirect_sort(V1.begin(), V1.end());
-	for (unsigned i = 1; i < NELEM; i++)
-	{   BOOST_CHECK(not (V1[i] < V1[i-1]));
-	};
+    bsp::block_indirect_sort(V1.begin(), V1.end());
+    for (unsigned i = 1; i < NELEM; i++)
+    {   BOOST_CHECK(not (V1[i] < V1[i-1]));
+    };
 };    
 void test3 (void)
 {
-	test_int_array<int_array<1> >(1u << 20);
-	test_int_array<int_array<2> >(1u << 19);
-	test_int_array<int_array<8> >(1u << 17);
+    test_int_array<int_array<1> >(1u << 20);
+    test_int_array<int_array<2> >(1u << 19);
+    test_int_array<int_array<8> >(1u << 17);
 }
 
 int test_main (int, char *[])
