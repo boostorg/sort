@@ -25,9 +25,9 @@ These algorithms do not use any other library or utility. The parallel algorithm
 
 - **pdqsort** is a improvement of the quick sort algorithm, designed and developed by Orson Peters.
 
-- **spinsort** is a stable sort, fast with random and whith near sorted data, designed and developed by Francisco Tapia.
+- **spinsort** is a stable sort, fast with random and with near sorted data, designed and developed by Francisco Tapia.
 
-- **flat_stable_sort** stable sort with a small additional memory (around 1% of the size of the data),provide the 80% - 90% of the speed of spinsort, being fast with random and with near sorted data, designed and developed by Francisco Tapia.
+- **flat_stable_sort** stable sort with a small additional memory (around 1% of the size of the data), provide the 80% - 90% of the speed of spinsort, being fast with random and with near sorted data, designed and developed by Francisco Tapia.
 
 
 <h2>Parallel Algorithms</h2>
