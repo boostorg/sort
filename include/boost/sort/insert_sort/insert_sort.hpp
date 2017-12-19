@@ -33,7 +33,7 @@ using common::util::value_iter;
 /// @param first: iterator to the first element of the range
 /// @param last : iterator to the next element of the last in the range
 /// @param comp : object for to do the comparison between the elements
-/// @remarks This algorithm is O(N²)
+/// @remarks This algorithm is O(N^2)
 //-----------------------------------------------------------------------------
 template < class Iter_t, typename Compare = compare_iter < Iter_t > >
 static void insert_sort (Iter_t first, Iter_t last,
