@@ -96,9 +96,9 @@ struct merge_block
     ///               iterators
     //------------------------------------------------------------------------
     merge_block (Iter_t first, Iter_t last, Compare comp,
-    		     circular_t *pcirc_buffer)
+                 circular_t *pcirc_buffer)
     : global_range(first, last), cmp(comp), ptr_circ(pcirc_buffer),
-	  owned(pcirc_buffer == nullptr)
+      owned(pcirc_buffer == nullptr)
     {
         assert((last - first) >= 0);
         if (first == last) return; // nothing to do
@@ -127,7 +127,6 @@ struct merge_block
     {
         if (ptr_circ != nullptr and owned)
         {
-            ptr_circ->destroy_all();
             delete ptr_circ;
             ptr_circ = nullptr;
         };
@@ -157,7 +156,7 @@ struct merge_block
     {
         Iter_t it1 = global_range.first + (pos << LOG_BLOCK);
 
-		Iter_t it2 = ((pos + nrange) == nblock)?global_range.last: global_range.first + ((pos + nrange) << LOG_BLOCK);
+        Iter_t it2 = ((pos + nrange) == nblock)?global_range.last: global_range.first + ((pos + nrange) << LOG_BLOCK);
         //Iter_t it2 = global_range.first + ((pos + nrange) << LOG_BLOCK);
         //if ((pos + nrange) == nblock) it2 = global_range.last;
 
@@ -245,7 +244,7 @@ void merge_block<Iter_t, Compare, Power2>
     bool validA = false, validB = false;
 
     while (itxA != indexA.end() and itxB != indexB.end())
-    {	//----------------------------------------------------------------
+    {   //----------------------------------------------------------------
         // Load valid ranges from the itxA and ItxB positions
         //----------------------------------------------------------------
         if (not validA)
@@ -288,13 +287,13 @@ void merge_block<Iter_t, Compare, Power2>
         bool side = util::merge_circular(itA, rngA.last, itB, rngB.last,
                         *ptr_circ, cmp, itA, itB);
         if (side)
-        {	// rngA is finished
+        {   // rngA is finished
             ptr_circ->pop_move_front(rngA.first, rngA.size());
             *(itx_out++) = *(itxA++);
             validA = false;
         }
         else
-        {	// rngB is finished
+        {   // rngB is finished
             if (not is_tail(*itxB))
             {
                 ptr_circ->pop_move_front(rngB.first, rngB.size());
@@ -306,17 +305,17 @@ void merge_block<Iter_t, Compare, Power2>
     }; // end while
 
     if (itxA == indexA.end())
-    {	// the index A is finished
+    {   // the index A is finished
         rngB = get_range(*itxB);
         ptr_circ->pop_move_front(rngB.first, ptr_circ->size());
         while (itxB != indexB.end())
             *(itx_out++) = *(itxB++);
     }
     else
-    {	// The list B is finished
+    {   // The list B is finished
         rngA = get_range(*itxA);
         if (ntail != 0 and indexB.back() == (nblock - 1)) // exist tail
-        {	// add the tail block to indexA, and shift the element
+        {   // add the tail block to indexA, and shift the element
             indexA.push_back(indexB.back());
             size_t numA = size_t(itA - rngA.first);
             ptr_circ->pop_move_back(rngA.first, numA);
@@ -378,7 +377,7 @@ void merge_block<Iter_t, Compare, Power2>
 template<class Iter_t, class Compare, uint32_t Power2>
 void merge_block<Iter_t, Compare, Power2>
 ::rearrange_with_index(void)
-{	//--------------------------------------------------------------------
+{   //--------------------------------------------------------------------
     //                     Code
     //--------------------------------------------------------------------
     size_t pos_dest, pos_src, pos_ini;
