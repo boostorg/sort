@@ -75,7 +75,7 @@ int main(int argc, char *argv[])
     cout<<"[ 1 ] std::sort   [ 2 ] pdqsort          [ 3 ] std::stable_sort \n";
     cout<<"[ 4 ] spinsort    [ 5 ] flat_stable_sort [ 6 ] spreadsort\n\n";
     cout<<"                    |      |      |      |      |      |      |\n";
-    cout<<"                    | [ 1 ]| [ 2 ]| [ 3 ]| [ 4 ]| [ 5 ]| [ 6 ]\n";
+    cout<<"                    | [ 1 ]| [ 2 ]| [ 3 ]| [ 4 ]| [ 5 ]| [ 6 ]|\n";
     cout<<"--------------------+------+------+------+------+------+------+\n";
     std::string empty_line =
            "                    |      |      |      |      |      |      |\n";
