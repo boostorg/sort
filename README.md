@@ -11,14 +11,15 @@ These algorithms do not use any other library or utility. The parallel algorithm
 <h2>Single Thread Algorithms</h2>
 
 
-                      |       |                            |                              |                     |
-    Algorithm         |Stable |   Additional memory        |Best, average, and worst case | Comparison method   |
-    ------------------|-------|----------------------------|------------------------------|---------------------|
-    spreadsort        |  no   |      key_length            | N, N sqrt(LogN), min(N logN, N key_length) | Hybrid radix sort   |
-    pdqsort           |  no   |      Log N                 | N, N LogN, N LogN                          | Comparison operator |
-    spinsort          |  yes  |      N / 2                 | N, N LogN, N LogN                          | Comparison operator |
-    flat_stable_sort  |  yes  |size of the data / 256 + 8K | N, N LogN, N LogN                          | Comparison operator |
-                      |       |                            |                              |                     |
+                      |       |                            |                               |                     |
+    Algorithm         |Stable |   Additional memory        |Best, average, and worst case  | Comparison method   |
+    ------------------|-------|----------------------------|-------------------------------|---------------------|
+    spreadsort        |  no   |      key_length            | N, N sqrt(LogN),              | Hybrid radix sort   |
+                      |       |                            | min(N logN, N key_length)     |                     |
+    pdqsort           |  no   |      Log N                 | N, N LogN, N LogN             | Comparison operator |
+    spinsort          |  yes  |      N / 2                 | N, N LogN, N LogN             | Comparison operator |
+    flat_stable_sort  |  yes  |size of the data / 256 + 8K | N, N LogN, N LogN             | Comparison operator |
+                      |       |                            |                               |                     |
 
 
 - **spreadsort** is a novel hybrid radix sort algorithm, extremely fast, designed and developed by Steven Ross.
