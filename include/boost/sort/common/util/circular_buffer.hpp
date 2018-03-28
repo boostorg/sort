@@ -60,13 +60,15 @@ struct circular_buffer
     // always are in the range [0, NMAX - 1]
     //------------------------------------------------------------------------
     size_t nelem, first_pos;
+    bool initialized;
 
     //
     //------------------------------------------------------------------------
     //  function : circular_buffer
     /// @brief  constructor of the class
     //-----------------------------------------------------------------------
-    circular_buffer(void): ptr(nullptr), nelem(0), first_pos(0)
+    circular_buffer(void)
+    : ptr(nullptr), nelem(0), first_pos(0), initialized(false)
     {
         ptr = std::get_temporary_buffer < Value_t > (NMAX).first;
         if (ptr == nullptr) throw std::bad_alloc();
@@ -78,7 +80,10 @@ struct circular_buffer
     //-----------------------------------------------------------------------
     ~circular_buffer()
     {
-        for (size_t i = 0; i < NMAX; ++i) (ptr + i)->~Value_t();
+        if (initialized)
+        {   for (size_t i = 0; i < NMAX; ++i) (ptr + i)->~Value_t();
+            initialized = false;
+        };
         std::return_temporary_buffer(ptr);
     }
     ;
@@ -91,10 +96,12 @@ struct circular_buffer
     //-----------------------------------------------------------------------
     void initialize(Value_t & val)
     {
+        assert (initialized == false);
         ::new (static_cast<void*>(ptr)) Value_t(std::move(val));
         for (size_t i = 1; i < NMAX; ++i)
             ::new (static_cast<void*>(ptr + i)) Value_t(std::move(ptr[i - 1]));
         val = std::move(ptr[NMAX - 1]);
+        initialized = true;
     };
     //
     //------------------------------------------------------------------------
