@@ -96,6 +96,7 @@ void test2(void)
 };
 void test3(void)
 {
+    typedef std::less<uint64_t> compare;
     const uint32_t NElem = 2000000;
     std::vector<uint64_t> V1,V2,V3;
     std::mt19937_64 my_rand(0);
@@ -107,21 +108,21 @@ void test3(void)
     
     // --------------- unsorted elements 0 threads ----------------------------
     V3 = V1;
-    bss::sample_sort(V3.begin(), V3.end(), 0);
+    bss::sample_sort(V3.begin(), V3.end(), compare(), 0);
     for (unsigned i = 0; i < NElem; i++)
     {   BOOST_CHECK(V3[i] == V2[i]);
     };
     
     // --------------- unsorted elements -------------------------------------
     V3 = V1;
-    bss::sample_sort(V3.begin(), V3.end());
+    bss::sample_sort(V3.begin(), V3.end(), compare());
     for (unsigned i = 0; i < NElem; i++)
     {   BOOST_CHECK(V3[i] == V2[i]);
     };    
     
     // --------------- unsorted elements 100 threads ----------------------------
     V3 = V1;
-    bss::sample_sort(V3.begin(), V3.end(), 100);
+    bss::sample_sort(V3.begin(), V3.end(), compare(), 100);
     for (unsigned i = 0; i < NElem; i++)
     {   BOOST_CHECK(V3[i] == V2[i]);
     };     
