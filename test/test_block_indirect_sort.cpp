@@ -94,6 +94,7 @@ void test1 (void)
 
 void test2 (void)
 {
+    typedef std::less<uint64_t> compare;
     std::vector< uint64_t > V1, V2;
     V1.reserve ( NELEM ) ;
 
@@ -102,35 +103,35 @@ void test2 (void)
     
     //------------------- random elements 0 threads ---------------------------
     V1 = Vrandom;
-    block_indirect_sort (V1.begin ( ), V1.end ( ), 0);
+    block_indirect_sort (V1.begin ( ), V1.end ( ), compare(), 0);
     for (unsigned i = 0; i < V1.size(); i++)
     {   BOOST_CHECK (V1[i] == V2[i]);
     };
 
     //------------------- random elements 4 threads ---------------------------
     V1 = Vrandom;
-    block_indirect_sort (V1.begin ( ), V1.end ( ), 4);
+    block_indirect_sort (V1.begin ( ), V1.end ( ), compare(), 4);
     for (unsigned i = 0; i < V1.size(); i++)
     {   BOOST_CHECK (V1[i] == V2[i]);
     };
 
     //------------------- random elements 8 threads ---------------------------
     V1 = Vrandom;
-    block_indirect_sort (V1.begin ( ), V1.end ( ), 8);
+    block_indirect_sort (V1.begin ( ), V1.end ( ), compare(), 8);
     for (unsigned i = 0; i < V1.size(); i++)
     {   BOOST_CHECK (V1[i] == V2[i]);
     };
 
     //------------------- random elements 16 threads ---------------------------
     V1 = Vrandom;
-    block_indirect_sort ( V1.begin ( ), V1.end ( ), 16);
+    block_indirect_sort ( V1.begin ( ), V1.end ( ), compare(), 16);
     for (unsigned i = 0; i < V1.size(); i++)
     {   BOOST_CHECK (V1[i] == V2[i]);
     };
 
     //------------------- random elements 100 threads ---------------------------
     V1 = Vrandom;
-    block_indirect_sort ( V1.begin ( ), V1.end ( ), 100);
+    block_indirect_sort ( V1.begin ( ), V1.end ( ), compare(), 100);
     for (unsigned i = 1; i < V1.size(); i++)
     {   BOOST_CHECK (V1[i] == V2[i]);
     };

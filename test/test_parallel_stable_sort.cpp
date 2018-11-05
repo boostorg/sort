@@ -130,6 +130,7 @@ void test3(void)
 
 void test4(void)
 {
+    typedef std::less<uint64_t> compare;
     const uint32_t KMax = 66000;
 
     std::vector<uint64_t> K, M;
@@ -139,9 +140,9 @@ void test4(void)
         K.push_back(my_rand());
     M = K;
 
-    bss::parallel_stable_sort(K.begin(), K.end(), 300);
+    bss::parallel_stable_sort(K.begin(), K.end(), compare(), 300);
 
-    std::stable_sort(M.begin(), M.end());
+    std::stable_sort(M.begin(), M.end(), compare());
     for (unsigned i = 0; i < KMax; i++)
         BOOST_CHECK(M[i] == K[i]);
 };
