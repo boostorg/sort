@@ -21,9 +21,32 @@
 
 using namespace boost::sort;
 
+void test_small ( );
 void test1 ( );
 void test2 ( );
 void test3 ( );
+
+void test_small ( )
+{
+    std::vector< int > v, expected;
+    flat_stable_sort (v.begin ( ), v.end ( ));
+    BOOST_CHECK (v.empty ( ));
+
+    v.push_back (0);
+    expected = v;
+    flat_stable_sort (v.begin ( ), v.end ( ));
+    BOOST_CHECK (v == expected);
+
+    v.push_back (1);
+    expected = v;
+    flat_stable_sort (v.begin ( ), v.end ( ));
+    BOOST_CHECK (v == expected);
+
+    v.back ( ) = -1;
+    expected = { -1, 0 };
+    flat_stable_sort (v.begin ( ), v.end ( ));
+    BOOST_CHECK (v == expected);
+}
 
 //---------------- stability test -----------------------------------
 struct xk
@@ -133,6 +156,7 @@ void test3 (void)
 }
 int test_main (int, char *[])
 {
+    test_small ( );
     test1 ( );
     test2 ( );
     test3 ( );

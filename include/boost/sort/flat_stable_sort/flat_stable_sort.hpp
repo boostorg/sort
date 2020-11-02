@@ -264,6 +264,7 @@ template <class Iter_t, class Compare = bscu::compare_iter<Iter_t>,
 inline void flat_stable_sort (Iter_t first, Iter_t last,
                                  Compare cmp = Compare())
 {
+    if (last - first < 2) return;
     flat::flat_stable_sort<Iter_t, Compare, 6> (first, last, cmp);
 };
 
@@ -289,6 +290,7 @@ template <class Iter_t, class Compare = bscu::compare_iter<Iter_t>,
 inline void flat_stable_sort (Iter_t first, Iter_t last,
                                  Compare cmp = Compare())
 {
+    if (last - first < 2) return;
     flat::flat_stable_sort<Iter_t, Compare,
                            block_size_fss<sizeof(value_iter<Iter_t> )>::data>
         (first, last, cmp);
