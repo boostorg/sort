@@ -129,7 +129,7 @@ static void sort_index(Iter_t global_first, std::vector<Iter_t> &index)
     };
 };
 
-template<class func, class Iter_t, class Compare = compare_iter<Iter_t> >
+template<class func, class Iter_t, class Compare = util::compare_iter<Iter_t> >
 static void indirect_sort(func method, Iter_t first, Iter_t last, Compare comp)
 {
     auto nelem = (last - first);
