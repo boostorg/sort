@@ -276,7 +276,7 @@ block_indirect_sort<Block_size, Group_size, Iter_t, Compare>
         // thread local buffer
         for (uint32_t i = 0; i < nthread; ++i)
         {
-            auto f1 = [=, &vbuf, this]( )
+            auto f1 = [&vbuf,i, this]( )
             {   bk.exec (vbuf[i], this->counter);};
             vfuture[i] = std::async(std::launch::async, f1);
         };
@@ -327,7 +327,8 @@ void block_indirect_sort<Block_size, Group_size, Iter_t, Compare>
     //-------------------------------------------------------------------------
     if (level_thread != 0)
     {
-        auto f1 = [=, &son_counter, this]( )
+        auto f1 = [this, &son_counter, pos_index_mid,
+                   pos_index2, level_thread]( )
         {
             split_range (pos_index_mid, pos_index2, level_thread - 1);
             bscu::atomic_sub (son_counter, 1);
@@ -339,9 +340,9 @@ void block_indirect_sort<Block_size, Group_size, Iter_t, Compare>
     else
     {
         Iter_t mid = first + ((nblock >> 1) * Block_size);
-        auto f1 = [=, &son_counter, this]( )
+        auto f1 = [this, &son_counter, mid, last]( )
         {
-            parallel_sort_t (bk, mid, last);
+            parallel_sort_t (this->bk, mid, last);
             bscu::atomic_sub (son_counter, 1);
         };
         bk.works.emplace_back(f1);

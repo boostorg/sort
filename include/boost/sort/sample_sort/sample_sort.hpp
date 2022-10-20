@@ -373,10 +373,10 @@ void sample_sort<Iter_t, Compare>::initial_configuration(void)
 
     for (uint32_t i = 0; i < nthread; ++i)
     {
-        auto func = [=, this]()
+        auto func = [this, &vmem_thread, i,  &vbuf_thread]()
         {
             bss::spinsort<Iter_t, Compare> (vmem_thread[i].first,
-                            vmem_thread[i].last, comp,
+                            vmem_thread[i].last, this->comp,
                             vbuf_thread[i]);
         };
         vfuture[i] = std::async(std::launch::async, func);
