@@ -52,6 +52,7 @@ doxygen autodoc
   :
     [ glob $(here)/../include/boost/sort.hpp ]
     [ glob $(here)/../include/boost/sort/spreadsort/*.hpp ]
+    [ glob $(here)/../include/boost/sort/pdqsort/pdqsort.hpp ]
     # [ glob $(here)/../include/boost/sort/detail/spreadsort/*.hpp ] # Hide implementation/detail for now.
     # but could also include this and switch Boost.Sort C++ reference info to include implementation/detail or not using Doxygen macro DETAIL.
     # See http://www.stack.nl/~dimitri/doxygen/manual/commands.html#cmdcond

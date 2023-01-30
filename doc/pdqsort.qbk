@@ -32,7 +32,8 @@ introsort. It is identical in usage to __std_sort.
 
 Pattern-defeating quicksort is available through two calls, __pdqsort and __pdqsort_branchless. Both
 have identical guarantees, behavior and overloads as __std_sort, with the exception of the C++17
-parallel execution policy argument. Thus you can simply replace a call to __std_sort with __pdqsort,
+parallel execution policy argument. Thus you can replace a call to __std_sort with
+boost::sort::pdqsort, available from boost/sort/pdqsort/pdqsort.hpp,
 it is simply a faster implementation. It is almost always appropriate to simply call __pdqsort and
 ignore __pdqsort_branchless.
 
