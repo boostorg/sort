@@ -51,6 +51,10 @@ void test1()
         };
     };
     V3 = V2 = V1;
+    
+    // check to sort with 0 elements
+    bss::parallel_stable_sort(V1.end(), V1.end());
+    
     bss::parallel_stable_sort(V1.begin(), V1.end());
     std::stable_sort(V2.begin(), V2.end());
     bss::parallel_stable_sort(V3.begin(), V3.end(), 0);

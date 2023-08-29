@@ -37,8 +37,11 @@ void test1 (void)
     std::vector< uint64_t > V1;
     V1.reserve (NElem);
     
+    //------------------- sort 0 elements ------------------------------------
+    block_indirect_sort ( V1.end (), V1.end ( ), 4);
+    
     //------------------ sorted elements  4 threads --------------------------
-    V1.clear ( );
+    V1.clear ();
     for (uint32_t i = 0; i < NElem; ++i) V1.push_back (i);
 
     block_indirect_sort ( V1.begin ( ), V1.end ( ), 4);

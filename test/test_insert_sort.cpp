@@ -31,6 +31,10 @@ void test01 (void)
                     16, 6, 14, 21, 5,  1, 12, 19, 22, 25, 8};
 
     std::less< unsigned > comp;
+    
+    // Insertion Sort  sort an empty range
+    insert_sort (&A[ 0 ], &A[ 0 ], comp);
+    
     // Insertion Sort  Unordered, not repeated
     insert_sort (&A[ 0 ], &A[ 22 ], comp);
     for (unsigned i = 0; i < 21; i++) {
