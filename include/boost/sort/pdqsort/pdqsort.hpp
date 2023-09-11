@@ -243,7 +243,7 @@ namespace pdqsort_detail {
                         offsets_l[num_l] = i++; num_l += !comp(*first, pivot); ++first;
                     }
                 } else {
-                    for (size_t i = 0; i < left_split;) {
+                    for (unsigned char i = 0; i < static_cast<unsigned char>(left_split);) {
                         offsets_l[num_l] = i++; num_l += !comp(*first, pivot); ++first;
                     }
                 }
