@@ -53,6 +53,8 @@ void test1 ( )
             V1.push_back (G);
         };
     };
+    //check sort 0 elements
+    flat_stable_sort< iter_t, compare_t > (V1.begin ( ), V1.begin ( ), compare_t ( ));
     V2 = V1;
     flat_stable_sort< iter_t, compare_t > (V1.begin ( ), V1.end ( ), compare_t ( ));
     std::stable_sort (V2.begin ( ), V2.end ( ));

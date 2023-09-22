@@ -61,6 +61,10 @@ void test1 ( )
         };
     };
     V2 = V1;
+    // test with 0 elements
+    spinsort (V1.end ( ), V1.end ( ), compare_t ( ));
+    
+    
     spinsort (V1.begin ( ), V1.end ( ), compare_t ( ));
     std::stable_sort (V2.begin ( ), V2.end ( ));
 

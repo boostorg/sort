@@ -8,6 +8,7 @@
 #!scan-path "/boost/sort/" ".*\.*pp" true
 !scan-path "../include/boost/sort" ".*\.hpp" false
 !scan-path "../include/boost/sort/spreadsort" ".*\.hpp" false
+!scan-path "../include/boost/sort/pdqsort" ".*\.hpp" false
 
 # All example source files, assuming no sub-folders.
 # sort example files.

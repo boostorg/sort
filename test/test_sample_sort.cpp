@@ -50,6 +50,9 @@ void test1()
         };
     };
     V3 = V2 = V1;
+    // sort 0 elements
+    bss::sample_sort(V1.end(), V1.end());
+    
     bss::sample_sort(V1.begin(), V1.end());
     std::stable_sort(V2.begin(), V2.end());
     bss::sample_sort(V3.begin(), V3.end(), 0);
