@@ -57,12 +57,12 @@ static void insert_sort (Iter_t first, Iter_t last,
         };
         *it_insertion = std::move (Aux);
     };
-};
+}
 
 //
 //****************************************************************************
-}; //    End namespace sort
-}; //    End namespace boost
+} //    End namespace sort
+} //    End namespace boost
 //****************************************************************************
 //
 #endif

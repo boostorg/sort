@@ -128,7 +128,7 @@ static Iter3_t merge(Iter1_t buf1, const Iter1_t end_buf1, Iter2_t buf2,
                     move_forward(buf_out, buf2, end_buf2) :
                     move_forward(buf_out, buf1, end_buf1);
 }
-;
+
 //
 //-----------------------------------------------------------------------------
 //  function : merge_construct
