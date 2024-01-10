@@ -203,7 +203,7 @@ move_blocks<Block_size, Group_size, Iter_t, Compare>
     }
     bk.exec(counter);
 }
-;
+
 //
 //-------------------------------------------------------------------------
 //  function : move_sequence

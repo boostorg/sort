@@ -326,7 +326,7 @@ void merge_block<Iter_t, Compare, Power2>
         while (itxA != indexA.end())
             *(itx_out++) = *(itxA++);
     };
-};
+}
 
 //-------------------------------------------------------------------------
 //  function : move_range_pos_backward
@@ -365,7 +365,7 @@ void merge_block<Iter_t, Compare, Power2>
         util::move_backward(it_mid2, it_mid1, rng1.last);
         util::move_backward(rng1.last, rng1.first, it_mid1);
     };
-};
+}
 //-------------------------------------------------------------------------
 //  function : rearrange_with_index
 /// @brief rearrange the blocks with the relative positions of the index
@@ -408,11 +408,11 @@ void merge_block<Iter_t, Compare, Power2>
         index[pos_dest] = pos_dest;
         ++pos_ini;
     };
-};
+}
 
 //****************************************************************************
-};//    End namespace common
-};//    End namespace sort
-};//    End namespace boost
+}//    End namespace common
+}//    End namespace sort
+}//    End namespace boost
 //****************************************************************************
 #endif

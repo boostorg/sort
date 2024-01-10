@@ -132,7 +132,7 @@ void flat_stable_sort <Iter_t, Compare, Power2>
     divide(itx_first, itx_first + nblock1);
     divide(itx_first + nblock1, itx_last);
     merge_range_pos(itx_first, itx_first + nblock1, itx_last);
-};
+}
 //
 //------------------------------------------------------------------------
 //  @fn sort_small
@@ -168,7 +168,7 @@ void flat_stable_sort <Iter_t, Compare, Power2>
     range_sort_data(rng_data2, rng_aux2, cmp);
     range_sort_buffer(rng_data1, rng_aux1, cmp);
     merge_half(rng_data, rng_aux1, rng_data2, cmp);
-};
+}
 //
 //------------------------------------------------------------------------
 //  @fn is_sorted_forward
@@ -209,7 +209,7 @@ bool flat_stable_sort <Iter_t, Compare, Power2>
         merge_range_pos(itx_first, itx_first + nblock1, itx_last);
     };
     return true;
-};
+}
 //
 //------------------------------------------------------------------------
 //  @fn is_sorted_backward
@@ -250,9 +250,9 @@ bool flat_stable_sort <Iter_t, Compare, Power2>
         merge_range_pos(itx_first, itx_first + nblock1, itx_last);
     };
     return true;
-};
+}
 //****************************************************************************
-};// End namespace flat_internal
+}// End namespace flat_internal
 //****************************************************************************
 //
 namespace bscu = boost::sort::common::util;
@@ -270,7 +270,7 @@ inline void flat_stable_sort (Iter_t first, Iter_t last,
                                  Compare cmp = Compare())
 {
     flat::flat_stable_sort<Iter_t, Compare, 6> (first, last, cmp);
-};
+}
 
 template<size_t Size>
 struct block_size_fss
@@ -297,7 +297,7 @@ inline void flat_stable_sort (Iter_t first, Iter_t last,
     flat::flat_stable_sort<Iter_t, Compare,
                            block_size_fss<sizeof(value_iter<Iter_t> )>::data>
         (first, last, cmp);
-};
+}
 
 template<class Iter_t, class Compare = compare_iter<Iter_t> >
 inline void indirect_flat_stable_sort (Iter_t first, Iter_t last,
@@ -307,11 +307,11 @@ inline void indirect_flat_stable_sort (Iter_t first, Iter_t last,
     typedef common::less_ptr_no_null <Iter_t, Compare> itx_comp;
     common::indirect_sort ( flat_stable_sort<itx_iter, itx_comp>,
                             first, last, comp);
-};
+}
 
 //****************************************************************************
-};//    End namespace sort
-};//    End namepspace boost
+}//    End namespace sort
+}//    End namepspace boost
 //****************************************************************************
 //
 #endif
