@@ -175,33 +175,31 @@ void Generator_sorted_end (size_t n_last)
 void Generator_sorted_middle (size_t n_last)
 {
     vector<uint64_t> A, B, C;
-    A.reserve (NELEM);
-    A.clear ();
-    if (fill_vector_uint64 ("input.bin", A, NELEM + n_last) != 0)
+    A.reserve(NELEM);
+    A.clear();
+    if (fill_vector_uint64("input.bin", A, NELEM + n_last) != 0)
     {
         std::cout << "Error in the input file\n";
         return;
     };
-    for (size_t i = NELEM; i < A.size (); ++i)
-        B.push_back (std::move (A[i]));
-    A.resize ( NELEM);
-    for (size_t i = 0; i < (NELEM >> 1); ++i)
-        std::swap (A[i], A[NELEM - 1 - i]);
+    for (size_t i = NELEM; i < A.size(); ++i)
+        B.push_back(std::move(A[i]));
+    A.resize(NELEM);
 
-    std::sort (A.begin (), A.end ());
-    size_t step = NELEM / n_last + 1;
+    std::sort(A.begin(), A.end());
+    size_t step = NELEM / n_last;
     size_t pos = 0;
 
-    for (size_t i = 0; i < B.size (); ++i, pos += step)
+    for (size_t i = 0; i < B.size(); ++i, pos += step)
     {
-        C.push_back (B[i]);
+        C.push_back(B[i]);
         for (size_t k = 0; k < step; ++k)
-            C.push_back (A[pos + k]);
+            C.push_back(A.at(pos + k));
     };
-    while (pos < A.size ())
-        C.push_back (A[pos++]);
+    while (pos < A.size())
+        C.push_back(A[pos++]);
     A = C;
-    Test<uint64_t, std::less<uint64_t>> (A);
+    Test<uint64_t, std::less<uint64_t>>(A);
 }
 ;
 void Generator_reverse_sorted (void)
@@ -233,33 +231,33 @@ void Generator_reverse_sorted_end (size_t n_last)
 void Generator_reverse_sorted_middle (size_t n_last)
 {
     vector<uint64_t> A, B, C;
-    A.reserve (NELEM);
-    A.clear ();
-    if (fill_vector_uint64 ("input.bin", A, NELEM + n_last) != 0)
+    A.reserve(NELEM);
+    A.clear();
+    if (fill_vector_uint64("input.bin", A, NELEM + n_last) != 0)
     {
         std::cout << "Error in the input file\n";
         return;
     };
-    for (size_t i = NELEM; i < A.size (); ++i)
-        B.push_back (std::move (A[i]));
-    A.resize ( NELEM);
-    for (size_t i = 0; i < (NELEM >> 1); ++i)
-        std::swap (A[i], A[NELEM - 1 - i]);
+    for (size_t i = NELEM; i < A.size(); ++i)
+        B.push_back(std::move(A[i]));
+    A.resize(NELEM);
 
-    std::sort (A.begin (), A.end ());
-    size_t step = NELEM / n_last + 1;
+    std::sort(A.begin(), A.end());
+    size_t step = NELEM / n_last;
     size_t pos = 0;
+    for (size_t i = 0; i < (NELEM >> 1); ++i)
+        std::swap(A[i], A[NELEM - 1 - i]);
 
-    for (size_t i = 0; i < B.size (); ++i, pos += step)
+    for (size_t i = 0; i < B.size(); ++i, pos += step)
     {
-        C.push_back (B[i]);
+        C.push_back(B[i]); 
         for (size_t k = 0; k < step; ++k)
-            C.push_back (A[pos + k]);
+            C.push_back(A.at(pos + k)); 
     };
-    while (pos < A.size ())
-        C.push_back (A[pos++]);
+    while (pos < A.size())
+        C.push_back(A[pos++]);
     A = C;
-    Test<uint64_t, std::less<uint64_t>> (A);
+    Test<uint64_t, std::less<uint64_t>>(A);
 };
 
 
