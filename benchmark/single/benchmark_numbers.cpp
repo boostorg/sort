@@ -185,18 +185,16 @@ void Generator_sorted_middle (size_t n_last)
     for (size_t i = NELEM; i < A.size (); ++i)
         B.push_back (std::move (A[i]));
     A.resize ( NELEM);
-    for (size_t i = 0; i < (NELEM >> 1); ++i)
-        std::swap (A[i], A[NELEM - 1 - i]);
 
     std::sort (A.begin (), A.end ());
-    size_t step = NELEM / n_last + 1;
+    size_t step = NELEM / n_last;
     size_t pos = 0;
 
     for (size_t i = 0; i < B.size (); ++i, pos += step)
     {
         C.push_back (B[i]);
         for (size_t k = 0; k < step; ++k)
-            C.push_back (A[pos + k]);
+            C.push_back (A.at(pos + k));
     };
     while (pos < A.size ())
         C.push_back (A[pos++]);
@@ -243,18 +241,18 @@ void Generator_reverse_sorted_middle (size_t n_last)
     for (size_t i = NELEM; i < A.size (); ++i)
         B.push_back (std::move (A[i]));
     A.resize ( NELEM);
-    for (size_t i = 0; i < (NELEM >> 1); ++i)
-        std::swap (A[i], A[NELEM - 1 - i]);
 
     std::sort (A.begin (), A.end ());
-    size_t step = NELEM / n_last + 1;
+    size_t step = NELEM / n_last;
     size_t pos = 0;
+    for (size_t i = 0; i < (NELEM >> 1); ++i)
+        std::swap (A[i], A[NELEM - 1 - i]);
 
     for (size_t i = 0; i < B.size (); ++i, pos += step)
     {
         C.push_back (B[i]);
         for (size_t k = 0; k < step; ++k)
-            C.push_back (A[pos + k]);
+            C.push_back (A.at(pos + k));
     };
     while (pos < A.size ())
         C.push_back (A[pos++]);
