@@ -13,7 +13,6 @@
 #ifndef __BOOST_SORT_FLAT_STABLE_SORT_HPP
 #define __BOOST_SORT_FLAT_STABLE_SORT_HPP
 
-#include <ciso646>
 #include <cstdlib>
 #include <functional>
 #include <iterator>
@@ -110,9 +109,10 @@ public:
 //----------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------
-//  function :
-/// @brief :
-/// @param Pos :
+//  @fn divide
+/// @brief Divide a big list of blocks in two parts to be sorted and merged
+/// @param itx_first iterator to the first element in the index
+/// @param itx_last itarator to to the after the last element in the index
 /// @return
 //------------------------------------------------------------------------
 template <class Iter_t, typename Compare, uint32_t Power2>
@@ -135,18 +135,17 @@ void flat_stable_sort <Iter_t, Compare, Power2>
 };
 //
 //------------------------------------------------------------------------
-//  function : sort_small
-/// @brief :
-/// @param
-/// @param
-/// @param
+//  @fn sort_small
+/// @brief  sort an small number of blocks
+/// @param itx_first iterator to the first element in the index
+/// @param itx_last itarator to to the after the last element in the index
 //------------------------------------------------------------------------
 template <class Iter_t, typename Compare, uint32_t Power2>
 void flat_stable_sort <Iter_t, Compare, Power2>
 ::sort_small(it_index itx_first, it_index itx_last)
 {
     size_t nblock = size_t(itx_last - itx_first);
-    assert(nblock > 0 and nblock < 5);
+    assert(nblock > 0 && nblock < 5);
     value_t *paux = ptr_circ->get_buffer();
     range_it rng_data = get_group_range(*itx_first, nblock);
 
@@ -172,7 +171,7 @@ void flat_stable_sort <Iter_t, Compare, Power2>
 };
 //
 //------------------------------------------------------------------------
-//  function : is_sorted_forward
+//  @fn is_sorted_forward
 /// @brief : return if the data are ordered,
 /// @param itx_first : iterator to the first block in the index
 /// @param itx_last : iterator to the last block in the index
@@ -213,7 +212,7 @@ bool flat_stable_sort <Iter_t, Compare, Power2>
 };
 //
 //------------------------------------------------------------------------
-//  function : is_sorted_backward
+//  @fn is_sorted_backward
 /// @brief : return if the data are ordered,
 /// @param itx_first : iterator to the first block in the index
 /// @param itx_last : iterator to the last block in the index
@@ -260,7 +259,7 @@ namespace bscu = boost::sort::common::util;
 namespace flat = boost::sort::flat_internal;
 //
 ///---------------------------------------------------------------------------
-//  function flat_stable_sort
+//  @fn flat_stable_sort
 /// @brief This class is select the block size in the block_indirect_sort
 ///        algorithm depending of the type and size of the data to sort
 ///
@@ -285,7 +284,7 @@ struct block_size_fss
 
 //
 ///---------------------------------------------------------------------------
-//  function flat_stable_sort
+//  @fn flat_stable_sort
 /// @brief This class is select the block size in the flat_stable_sort
 ///        algorithm depending of the type and size of the data to sort
 ///
