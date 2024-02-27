@@ -13,7 +13,6 @@
 #ifndef __BOOST_SORT_PARALLEL_DETAIL_UTIL_RANGE_HPP
 #define __BOOST_SORT_PARALLEL_DETAIL_UTIL_RANGE_HPP
 
-#include <ciso646>
 #include <cassert>
 #include <functional>
 #include <memory>
@@ -235,7 +234,7 @@ inline bool is_mergeable_stable(const range<Iter1_t> &src1,
     //------------------------------------------------------------------------
     //                 Code
     //------------------------------------------------------------------------
-    return not comp(*(src1.back()), *(src2.front()));
+    return ! comp(*(src1.back()), *(src2.front()));
 };
 //
 //-----------------------------------------------------------------------------
@@ -380,7 +379,7 @@ static void merge_flow(range<Iter1_t> rng1, range<Iter2_t> rbuf,
     //-------------------------------------------------------------------------
     range<Iter2_t> rbx(rbuf);
     range<Iter1_t> rx1(rng1), rx2(rng2);
-    assert(rbx.size() == rx1.size() and rx1.size() == rx2.size());
+    assert(rbx.size() == rx1.size() && rx1.size() == rx2.size());
     while (rx1.first != rx1.last)
     {
         *(rx1.first++) = (cmp(*rbx.first, *rx2.first)) ?

@@ -102,7 +102,7 @@ void sort_index(Iter_t global_first, std::vector<Iter_t> &index)
 
     while (pos_in_vector < nelem)
     {
-        while (pos_in_vector < nelem and
+        while (pos_in_vector < nelem &&
                (size_t(index[pos_in_vector] - global_first)) == pos_in_vector)
         {
             ++pos_in_vector;

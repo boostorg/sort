@@ -13,7 +13,6 @@
 #ifndef __BOOST_SORT_COMMON_SORT_BASIC_HPP
 #define __BOOST_SORT_COMMON_SORT_BASIC_HPP
 
-#include <ciso646>
 #include <cstdlib>
 #include <functional>
 #include <iterator>
@@ -56,7 +55,7 @@ inline Iter_t is_stable_sorted_forward (Iter_t first, Iter_t last,
 #endif
     if ((last - first) < 2) return first;
     Iter_t it2 = first + 1;
-    for (Iter_t it1 = first; it2 != last and not comp(*it2, *it1); it1 = it2++);
+    for (Iter_t it1 = first; it2 != last && ! comp(*it2, *it1); it1 = it2++);
     return it2;
 }
 //-----------------------------------------------------------------------------
@@ -79,7 +78,7 @@ inline Iter_t is_reverse_stable_sorted_forward(Iter_t first, Iter_t last,
 #endif
     if ((last - first) < 2) return first;
     Iter_t it2 = first + 1;
-    for (Iter_t it1 = first; it2 != last and comp(*it2, *it1); it1 = it2++);
+    for (Iter_t it1 = first; it2 != last && comp(*it2, *it1); it1 = it2++);
     return it2;
 };
 //-----------------------------------------------------------------------------
@@ -105,14 +104,14 @@ size_t number_stable_sorted_forward (Iter_t first, Iter_t last,
 
     // sorted elements
     Iter_t it2 = first + 1;
-    for (Iter_t it1 = first; it2 != last and not comp(*it2, *it1); it1 = it2++);
+    for (Iter_t it1 = first; it2 != last && ! comp(*it2, *it1); it1 = it2++);
     size_t nsorted = size_t ( it2 - first);
     if ( nsorted != 1)
     	return (nsorted >= min_process) ? nsorted: 0;
 
     // reverse sorted elements
     it2 = first + 1;
-    for (Iter_t it1 = first; it2 != last and comp(*it2, *it1); it1 = it2++);
+    for (Iter_t it1 = first; it2 != last && comp(*it2, *it1); it1 = it2++);
     nsorted = size_t ( it2 - first);
 
     if ( nsorted < min_process) return 0 ;
@@ -140,7 +139,7 @@ inline Iter_t is_stable_sorted_backward(Iter_t first, Iter_t last,
 #endif
     if ((last - first) < 2) return first;
     Iter_t itaux = last - 1;
-    while (itaux != first and not comp(*itaux, *(itaux - 1))) {--itaux; };
+    while (itaux != first && ! comp(*itaux, *(itaux - 1))) {--itaux; };
     return itaux;
 }
 //-----------------------------------------------------------------------------
@@ -163,7 +162,7 @@ inline Iter_t is_reverse_stable_sorted_backward (Iter_t first, Iter_t last,
 #endif
     if ((last - first) < 2) return first;
     Iter_t itaux = last - 1;
-    for (; itaux != first and comp(*itaux, *(itaux - 1)); --itaux);
+    for (; itaux != first && comp(*itaux, *(itaux - 1)); --itaux);
     return itaux;
 }
 
@@ -188,13 +187,13 @@ size_t number_stable_sorted_backward (Iter_t first, Iter_t last,
 #endif
     if ((last - first) < 2) return 0;
     Iter_t itaux = last - 1;
-    while (itaux != first and not comp(*itaux, *(itaux - 1))) {--itaux; };
+    while (itaux != first && ! comp(*itaux, *(itaux - 1))) {--itaux; };
     size_t nsorted = size_t ( last - itaux);
     if ( nsorted != 1)
     	return ( nsorted >= min_process)?nsorted: 0 ;
 
     itaux = last - 1;
-    for (; itaux != first and comp(*itaux, *(itaux - 1)); --itaux);
+    for (; itaux != first && comp(*itaux, *(itaux - 1)); --itaux);
     nsorted = size_t ( last - itaux);
     if ( nsorted < min_process) return 0 ;
     util::reverse ( itaux, last );
@@ -238,7 +237,7 @@ inline void internal_sort (const range<Iter1_t> &rng1,
     range<Iter2_t> rng2_left(rng2.first, rng2.first + nelem), 
                    rng2_right(rng2.first + nelem, rng2.last);
 
-    if (nelem <= 32 and (level & 1) == even)
+    if (nelem <= 32 && (level & 1) == even)
     {
         insert_sort(rng1_left.first, rng1_left.last, comp);
         insert_sort(rng1_right.first, rng1_right.last, comp);
