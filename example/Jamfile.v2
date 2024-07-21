@@ -12,8 +12,8 @@ if --tune in [ modules.peek : ARGV ]
 }
 
 project : requirements $(properties)
-    <source>/boost/algorithm//boost_algorithm
-    <source>/boost/random//boost_random
+    <library>/boost/algorithm//boost_algorithm
+    <library>/boost/random//boost_random
     ;
 
 exe spreadsort : sample.cpp ;

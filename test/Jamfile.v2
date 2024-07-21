@@ -12,7 +12,7 @@ import config : requires ;
 import testing ;
 
 project : requirements
-    <source>/boost/test//boost_test_exec_monitor
+    <library>/boost/test//boost_test_exec_monitor
     ;
 
 {
