@@ -21,10 +21,10 @@ jobs:
             os: ubuntu-latest
             packages: "g++-13"
             toolset: "gcc-13"
-          - name: "clang-16"
+          - name: "clang-18"
             os: ubuntu-latest
-            packages: "clang-16"
-            toolset: "clang-16"
+            packages: "llvm-toolchain-18"
+            toolset: "clang-18"
           - name: "xcode"
             os: macos-latest
             toolset: "clang"
