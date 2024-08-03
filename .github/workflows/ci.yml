@@ -52,6 +52,7 @@ jobs:
           git clone -b "${BOOST_BRANCH}" --depth 1 "${BOOST_GIT}" boost-root
           cd boost-root
           git submodule update --init --jobs 3 tools/boostdep libs/assert libs/config libs/core libs/test libs/sort
+          python tools/boostdep/depinst/depinst.py -X test -g "--jobs 3" test
           python tools/boostdep/depinst/depinst.py -X test -g "--jobs 3" sort
           rm -rf libs/sort/*
           cp -r $GITHUB_WORKSPACE/* libs/sort
