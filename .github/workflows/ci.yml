@@ -17,7 +17,7 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - name: "g++13"
+          - name: "g++-13"
             os: ubuntu-latest
             packages: "g++-13"
             toolset: "gcc-13"
@@ -33,7 +33,10 @@ jobs:
       - uses: actions/checkout@main
       - name: Install
         if: matrix.packages
-        run: sudo apt install ${{matrix.packages}}
+        run: |
+          sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+          sudo apt-get -o Acquire::Retries=3 update -y
+          sudo apt-get -o Acquire::Retries=3 -y install ${{matrix.packages}}
       - name: Setup
         run: |
           echo GITHUB_BASE_REF: $GITHUB_BASE_REF
@@ -48,7 +51,7 @@ jobs:
           cd ..
           git clone -b "${BOOST_BRANCH}" --depth 1 "${BOOST_GIT}" boost-root
           cd boost-root
-          git submodule update --init --jobs 3 tools/boostdep libs/assert libs/config libs/core libs/sort
+          git submodule update --init --jobs 3 tools/boostdep libs/assert libs/config libs/core libs/test libs/sort
           python tools/boostdep/depinst/depinst.py -X test -g "--jobs 3" sort
           rm -rf libs/sort/*
           cp -r $GITHUB_WORKSPACE/* libs/sort
