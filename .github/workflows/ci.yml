@@ -23,7 +23,7 @@ jobs:
             toolset: "gcc-13"
           - name: "clang-18"
             os: ubuntu-latest
-            packages: "llvm-toolchain-18"
+            packages: "llvm-18"
             toolset: "clang-18"
           - name: "xcode"
             os: macos-latest
