@@ -11,7 +11,10 @@ if --tune in [ modules.peek : ARGV ]
     properties = <location>. <variant>release ;
 }
 
-project spreadsort : source-location example : requirements <include>../.. <include>../../.. $(properties) ;
+project : requirements $(properties)
+    <library>/boost/algorithm//boost_algorithm
+    <library>/boost/random//boost_random
+    ;
 
 exe spreadsort : sample.cpp ;
 exe alreadysorted : alreadysorted.cpp ;
