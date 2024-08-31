@@ -101,7 +101,7 @@ void rearrange(Iter_data global_first, Iter_index itx_first,
         index[pos_ini] = std::move(itx_src);
         ++pos_ini;
     };
-};
+}
 
 /*
  //
@@ -161,9 +161,9 @@ void rearrange(Iter_data global_first, Iter_index itx_first,
  */
 //
 //****************************************************************************
-};//    End namespace common
-};//    End namespace sort
-};//    End namespace boost
+}//    End namespace common
+}//    End namespace sort
+}//    End namespace boost
 //****************************************************************************
 //
 #endif

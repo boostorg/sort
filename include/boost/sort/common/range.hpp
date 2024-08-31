@@ -109,7 +109,7 @@ inline range<Iter_t> concat(const range<Iter_t> &it1, const range<Iter_t> &it2)
 {
     return range<Iter_t>(it1.first, it2.last);
 }
-;
+
 //
 //-----------------------------------------------------------------------------
 //  function : move_forward
@@ -125,7 +125,8 @@ inline range<Iter2_t> move_forward(const range<Iter2_t> &dest,
     assert(dest.size() >= src.size());
     Iter2_t it_aux = util::move_forward(dest.first, src.first, src.last);
     return range<Iter2_t>(dest.first, it_aux);
-};
+}
+
 //
 //-----------------------------------------------------------------------------
 //  function : move_backward
@@ -142,7 +143,7 @@ inline range<Iter2_t> move_backward(const range<Iter2_t> &dest,
     Iter2_t it_aux = util::move_backward(dest.first + src.size(), src.first,
                     src.last);
     return range<Iter2_t>(dest.first, dest.src.size());
-};
+}
 
 //-----------------------------------------------------------------------------
 //  function : uninit_move
@@ -158,7 +159,8 @@ inline range<Value_t*> move_construct(const range<Value_t*> &dest,
 {
     Value_t *ptr_aux = util::move_construct(dest.first, src.first, src.last);
     return range<Value_t*>(dest.first, ptr_aux);
-};
+}
+
 //
 //-----------------------------------------------------------------------------
 //  function : destroy
@@ -169,7 +171,8 @@ template<class Iter_t>
 inline void destroy(range<Iter_t> rng)
 {
     util::destroy(rng.first, rng.last);
-};
+}
+
 //
 //-----------------------------------------------------------------------------
 //  function : initialize
@@ -183,7 +186,8 @@ inline range<Iter_t> initialize(const range<Iter_t> &rng, Value_t &val)
 {
     util::initialize(rng.first, rng.last, val);
     return rng;
-};
+}
+
 //
 //-----------------------------------------------------------------------------
 //  function : is_mergeable
@@ -209,7 +213,8 @@ inline bool is_mergeable(const range<Iter1_t> &src1, const range<Iter2_t> &src2,
     //                 Code
     //------------------------------------------------------------------------
     return comp(*(src2.front()), *(src1.back()));
-};
+}
+
 //
 //-----------------------------------------------------------------------------
 //  function : is_mergeable_stable
@@ -235,7 +240,8 @@ inline bool is_mergeable_stable(const range<Iter1_t> &src1,
     //                 Code
     //------------------------------------------------------------------------
     return ! comp(*(src1.back()), *(src2.front()));
-};
+}
+
 //
 //-----------------------------------------------------------------------------
 //  function : merge
@@ -258,7 +264,7 @@ inline range<Iter3_t> merge(const range<Iter3_t> &dest,
     Iter3_t it_aux = util::merge(src1.first, src1.last, src2.first, src2.last,
                     dest.first, comp);
     return range<Iter3_t>(dest.first, it_aux);
-};
+}
 
 //-----------------------------------------------------------------------------
 //  function : merge_construct
@@ -283,7 +289,8 @@ inline range<Value_t *> merge_construct(const range<Value_t *> &dest,
     Value_t * ptr_aux = util::merge_construct(src1.first, src1.last, src2.first,
                     src2.last, dest.first, comp);
     return range<Value_t*>(dest.first, ptr_aux);
-};
+}
+
 //
 //---------------------------------------------------------------------------
 //  function : half_merge
@@ -306,7 +313,8 @@ inline range<Iter2_t> merge_half(const range<Iter2_t> &dest,
     Iter2_t it_aux = util::merge_half(src1.first, src1.last, src2.first,
                     src2.last, dest.first, comp);
     return range<Iter2_t>(dest.first, it_aux);
-};
+}
+
 //
 //-----------------------------------------------------------------------------
 //  function : merge_uncontiguous
@@ -326,7 +334,8 @@ inline bool merge_uncontiguous(const range<Iter1_t> &src1,
 {
     return util::merge_uncontiguous(src1.first, src1.last, src2.first,
                     src2.last, aux.first, comp);
-};
+}
+
 //
 //-----------------------------------------------------------------------------
 //  function : merge_contiguous
@@ -345,7 +354,8 @@ inline range<Iter1_t> merge_contiguous(const range<Iter1_t> &src1,
 {
     util::merge_contiguous(src1.first, src1.last, src2.last, buf.first, comp);
     return concat(src1, src2);
-};
+}
+
 //
 //-----------------------------------------------------------------------------
 //  function : merge_flow
@@ -389,12 +399,12 @@ static void merge_flow(range<Iter1_t> rng1, range<Iter2_t> rbuf,
     if (rx2.first == rx2.last) return;
     if (rbx.first == rbx.last) move_forward(rbuf, rng2);
     else                       merge_half(rbuf, rx2, rbx, cmp);
-};
+}
 
 //****************************************************************************
-};//    End namespace common
-};//    End namespace sort
-};//    End namespace boost
+}//    End namespace common
+}//    End namespace sort
+}//    End namespace boost
 //****************************************************************************
 //
 #endif

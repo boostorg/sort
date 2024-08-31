@@ -80,7 +80,7 @@ inline Iter_t is_reverse_stable_sorted_forward(Iter_t first, Iter_t last,
     Iter_t it2 = first + 1;
     for (Iter_t it1 = first; it2 != last && comp(*it2, *it1); it1 = it2++);
     return it2;
-};
+}
 //-----------------------------------------------------------------------------
 //  function : number_stable_sorted_forward
 /// @brief examine the elements in the range first, last if they are stable
@@ -117,7 +117,7 @@ size_t number_stable_sorted_forward (Iter_t first, Iter_t last,
     if ( nsorted < min_process) return 0 ;
     util::reverse ( first , it2);
     return nsorted;
-};
+}
 
 //-----------------------------------------------------------------------------
 //  function : is_stable_sorted_backward
@@ -248,7 +248,7 @@ inline void internal_sort (const range<Iter1_t> &rng1,
         internal_sort(rng2_right, rng1_right, comp, level + 1, even);
     };
     merge(rng2, rng1_left, rng1_right, comp);
-};
+}
 //-----------------------------------------------------------------------------
 //  function : range_sort_data
 /// @brief this sort elements using the range_sort function and receiving a
@@ -285,7 +285,7 @@ static void range_sort_data (const range<Iter1_t> & rng_data,
     };
 
     internal_sort(rng_aux, rng_data, comp, 0, true);
-};
+}
 //-----------------------------------------------------------------------------
 //  function : range_sort_buffer
 /// @brief this sort elements using the range_sort function and receiving a
@@ -323,11 +323,11 @@ static void range_sort_buffer(const range<Iter1_t> & rng_data,
     };
 
     internal_sort(rng_data, rng_aux, comp, 0, false);
-};
+}
 //****************************************************************************
-};//    End namespace common
-};//    End namespace sort
-};//    End namepspace boost
+}//    End namespace common
+}//    End namespace sort
+}//    End namepspace boost
 //****************************************************************************
 //
 #endif
