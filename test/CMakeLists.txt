@@ -1,13 +1,3 @@
-# Set CMake policies to handle warnings
-cmake_policy(SET CMP0144 NEW)  # Use upper-case <PACKAGENAME>_ROOT variables
-cmake_policy(SET CMP0167 NEW)  # Use BoostConfig.cmake instead of FindBoost.cmake
-
-# Add robust Boost header resolution
-find_package(Boost REQUIRED)
-if(Boost_FOUND)
-    include_directories(${Boost_INCLUDE_DIRS})
-endif()
-
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
@@ -68,18 +58,3 @@ add_test(NAME test_sample_sort COMMAND $<TARGET_FILE:test_sample_sort>)
 add_executable(test_spinsort test_spinsort.cpp)
 target_include_directories(test_spinsort PRIVATE ../include)
 add_test(NAME test_spinsort COMMAND $<TARGET_FILE:test_spinsort>)
-
-add_custom_target(tests
-    DEPENDS
-        float_sort_test
-        integer_sort_test
-        sort_detail_test
-        string_sort_test
-        test_block_indirect_sort
-        test_flat_stable_sort
-        test_insert_sort
-        test_parallel_stable_sort
-        test_pdqsort
-        test_sample_sort
-        test_spinsort
-)
