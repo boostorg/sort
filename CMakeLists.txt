@@ -15,16 +15,9 @@ else()
 endif()
 
 # Test coverage in stand-alone mode requires boost dependencies
-
-if(NOT BOOST_SUPERPROJECT_VERSION)
-  if(BUILD_TESTING)
-    set(Boost_DEBUG ON)
-    find_package(Boost 1.85 REQUIRED COMPONENTS core range included_test_exec_monitor)
-    if(NOT Boost_FOUND)
-      message(STATUS "Boost 1.85 (or later) is required")
-      return()
-    endif()
-  endif()
+if(BUILD_TESTING AND NOT BOOST_SUPERPROJECT_VERSION)
+  set(Boost_DEBUG ON)
+  find_package(Boost 1.85 REQUIRED COMPONENTS core range included_test_exec_monitor)
 endif()
 
 add_library(boost_sort INTERFACE)
@@ -42,7 +35,6 @@ target_link_libraries(boost_sort
 )
 
 # Testing
-
 if(BUILD_TESTING AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/test/CMakeLists.txt")
 
   if(NOT BOOST_SUPERPROJECT_VERSION)
@@ -52,5 +44,7 @@ if(BUILD_TESTING AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/test/CMakeLists.txt")
     add_dependencies(check tests)
   endif()
 
-  add_subdirectory(test)
+  # Follow the Boost convention: don't build test targets by default,
+  # and only when explicitly requested by building target tests
+  add_subdirectory(test EXCLUDE_FROM_ALL)
 endif()
