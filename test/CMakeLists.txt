@@ -26,6 +26,11 @@ function(boost_sort_add_test name source)
   set(pname "${PREFIX}${name}")
   add_executable(${pname} ${source})
   target_link_libraries(${pname} ${LINK_LIBRARIES})
+
+  # Follow the Boost convention: don't build test targets by default,
+  # and only when explicitly requested by building target tests
+  set_target_properties(${pname} PROPERTIES EXCLUDE_FROM_ALL ON)
+
   add_test(NAME ${pname} COMMAND ${pname})
   add_dependencies(tests ${pname})
 endfunction()
