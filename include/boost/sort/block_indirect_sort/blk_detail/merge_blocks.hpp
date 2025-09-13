@@ -177,8 +177,8 @@ struct merge_blocks
 //-------------------------------------------------------------------------
 template<uint32_t Block_size, uint32_t Group_size, class Iter_t, class Compare>
 merge_blocks<Block_size, Group_size, Iter_t, Compare>
-::merge_blocks( backbone_t &bkb, size_t pos_index1, size_t pos_index2,
-                size_t pos_index3) : bk(bkb)
+::merge_blocks( backbone_t &bkb, const size_t pos_index1, const size_t pos_index2,
+                const size_t pos_index3) : bk(bkb)
 {
     size_t nblock1 = pos_index2 - pos_index1;
     size_t nblock2 = pos_index3 - pos_index2;

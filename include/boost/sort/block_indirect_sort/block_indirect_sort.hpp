@@ -258,10 +258,10 @@ block_indirect_sort<Block_size, Group_size, Iter_t, Compare>
 
         // Insert the first work in the stack
         bscu::atomic_write(counter, 1);
-        function_t f1 = [&]( )
+        function_t f1 = [this]( )
         {
             start_function ( );
-            bscu::atomic_sub (counter, 1);
+            bscu::atomic_sub (this->counter, 1);
         };
         bk.works.emplace_back(f1);
 
