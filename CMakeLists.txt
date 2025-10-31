@@ -4,7 +4,7 @@
 # Distributed under the Boost Software License, Version 1.0.
 # https://www.boost.org/LICENSE_1_0.txt
 
-cmake_minimum_required(VERSION 3.8...3.31)
+cmake_minimum_required(VERSION 3.10...3.31)
 
 project(boost_sort VERSION "${BOOST_SUPERPROJECT_VERSION}" LANGUAGES CXX)
 
