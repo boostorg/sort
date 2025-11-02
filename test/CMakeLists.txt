@@ -1,7 +1,3 @@
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
-
 if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   # warning level 4
   add_compile_options(/W4)
@@ -21,11 +17,13 @@ endif()
 
 set(PREFIX "boost_sort_")
 set(LINK_LIBRARIES Boost::sort Boost::included_test_exec_monitor)
+set(COMPILE_FEATURES cxx_std_11)
 
 function(boost_sort_add_test name source)
   set(pname "${PREFIX}${name}")
   add_executable(${pname} ${source})
-  target_link_libraries(${pname} ${LINK_LIBRARIES})
+  target_link_libraries(${pname} PRIVATE ${LINK_LIBRARIES})
+  target_compile_features(${pname} PRIVATE ${COMPILE_FEATURES})
   add_test(NAME ${pname} COMMAND ${pname})
   add_dependencies(tests ${pname})
 endfunction()

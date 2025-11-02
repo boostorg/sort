@@ -78,10 +78,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install packages
-        if: matrix.install
-        run: sudo apt install ${{matrix.install}}
-
       - name: Setup Boost
         run: |
           echo GITHUB_REPOSITORY: $GITHUB_REPOSITORY
@@ -122,10 +118,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-
-      - name: Install packages
-        if: matrix.install
-        run: sudo apt install ${{matrix.install}}
 
       - name: Setup Boost
         run: |
@@ -178,10 +170,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install packages
-        if: matrix.install
-        run: sudo apt install ${{matrix.install}}
-
       - name: Setup Boost
         run: |
           echo GITHUB_REPOSITORY: $GITHUB_REPOSITORY
@@ -216,4 +204,64 @@ jobs:
       - name: Run tests
         run: |
           cd ../boost-root/__build__
+          ctest --output-on-failure --no-tests=error
+
+  posix-standalone-cmake-test:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+          - os: macos-latest
+
+    runs-on: ${{matrix.os}}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Boost
+        run: |
+          echo GITHUB_REPOSITORY: $GITHUB_REPOSITORY
+          LIBRARY=${GITHUB_REPOSITORY#*/}
+          echo LIBRARY: $LIBRARY
+          echo "LIBRARY=$LIBRARY" >> $GITHUB_ENV
+          echo GITHUB_BASE_REF: $GITHUB_BASE_REF
+          echo GITHUB_REF: $GITHUB_REF
+          REF=${GITHUB_BASE_REF:-$GITHUB_REF}
+          REF=${REF#refs/heads/}
+          echo REF: $REF
+          BOOST_BRANCH=develop && [ "$REF" == "master" ] && BOOST_BRANCH=master || true
+          echo BOOST_BRANCH: $BOOST_BRANCH
+          cd ..
+          git clone -b $BOOST_BRANCH --depth 1 https://github.com/boostorg/boost.git boost-root
+          cd boost-root
+          cp -r $GITHUB_WORKSPACE/* libs/$LIBRARY
+          git submodule update --init tools/boostdep
+          python tools/boostdep/depinst/depinst.py --git_args "--jobs 3" $LIBRARY
+
+      - name: Configure Boost
+        run: |
+          cd ../boost-root
+          mkdir __build__ && cd __build__
+          cmake -DCMAKE_INSTALL_PREFIX=~/.local ..
+
+      - name: Install Boost
+        run: |
+          cd ../boost-root/__build__
+          cmake --build . --target install
+
+      - name: Configure
+        run: |
+          mkdir __build__
+          cd __build__
+          cmake -DBUILD_TESTING=ON -DCMAKE_INSTALL_PREFIX=~/.local ..
+
+      - name: Build tests
+        run: |
+          cd __build__
+          cmake --build . --target tests
+
+      - name: Run tests
+        run: |
+          cd __build__
           ctest --output-on-failure --no-tests=error
