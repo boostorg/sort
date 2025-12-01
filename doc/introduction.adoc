@@ -1,0 +1,61 @@
+////
+ Copyright (c) 2017 Steven Ross, Francisco Tapia, Orson Peters
+ Distributed under the Boost Software License, Version 1.0
+ See accompanying file LICENSE_1_0.txt or copy at
+ http://www.boost.org/LICENSE_1_0.txt
+////
+
+:stem: latexmath
+
+== Introduction
+
+The goal of the Boost Sort Library is provide to the users, the most modern, fast, and memory-efficient sorting algorithms.
+
+This library provides stable and unstable sorting algorithms, in single threaded and parallel versions.
+
+These algorithms do not use any other library or utility, you only need to include ``boost/sort/sort.hpp``
+or one of the more specific headers.  The parallel algorithms need a C++11 compliant compiler.
+
+=== Single Thread Algorithms
+
+[cols="1,1,1,1,1,1,1"]
+|===
+| Algorithm         | Stable |   Additional memory         | Best case | Average case            | Worst case                         | Method
+
+| spreadsort        |  no    |      key_length             | stem:[n]  | stem:[n \sqrt {\log n}] | min(stem:[n \log n], N key_length) | Hybrid radix sort
+| pdqsort           |  no    |      stem:[\log n]          | stem:[n]  | stem:[n \log n]         | stem:[n \log n]                    | Comparison operator
+| spinsort          |  yes   |      stem:[n/2]             | stem:[n]  | stem:[n \log n]         | stem:[n \log n]                    | Comparison operator
+| flat_stable_sort  |  yes   | size of the data / 256 + 8K | stem:[n]  | stem:[n \log n]         | stem:[n \log n]                    | Comparison operator
+|===
+
+* _spreadsort_ is an extremely fast hybrid https://en.wikipedia.org/wiki/Radix_sort[Radix Sort] algorithm, designed and developed by Steven Ross.
+* _pdqsort_ is a improvement of https://en.wikipedia.org/wiki/Quicksort[Quicksort] algorithm, designed and developed by Orson Peters.
+* _spinsort_ is a https://en.wikipedia.org/wiki/Sorting_algorithm#Stability[stable] sort that is fast with random or nearly sorted data,
+  designed and developed by Francisco Tapia.
+* _flat_stable_sort_ is a stable sort that uses very little additional memory (around 1% of the size of the data), providing 80% - 90% of the speed of
+ spinsort, designed and developed by Francisco Tapia.
+
+=== Parallel Algorithms
+
+[cols="1,1,1,1,1,1"]
+|===
+| Algorithm             | Stable |   Additional memory      | Best case | Average case | Worst case
+
+| sample_sort           |   yes  |        stem:[n]          | stem:[n]  | stem:[n \log n] | stem:[n \log n]
+| parallel_stable_sort  |   yes  |      stem:[n/2]          | stem:[n]  | stem:[n \log n] | stem:[n \log n]
+| block_indirect_sort   |   no   | block_size * num_threads | stem:[n]  | stem:[n \log n] | stem:[n \log n]
+|===
+
+* _Sample_sort_ is a implementation of the https://en.wikipedia.org/wiki/Samplesort[Samplesort] algorithm done by Francisco Tapia.
+* _Parallel_stable_sort_ is based on the samplesort algorithm, but using a half of the memory used by sample_sort, conceived and implemented by Francisco Tapia.
+* _Block_indirect_sort_ is a novel high-speed parallel sort algorithm with low additional memory consumption, conceived and implemented by Francisco Tapia.
+
+The *block_size* is an internal parameter of the algorithm, which in order to achieve the
+highest speed, changes according to the size of the objects to sort according to the next table. The strings use a block_size of 128.
+
+[cols="1,1,1,1,1,1,1,1"]
+|===
+
+| *object size (bytes)*             | 1 - 15 | 16 - 31 | 32 - 63 | 64 - 127|128 - 255|256 - 511| 512 -
+| *block_size (number of elements)* |  4096  |  2048   |   1024  |   768   |   512   |   256   |  128
+|===
