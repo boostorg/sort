@@ -5,7 +5,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
-<title>Introduction</title>
+<meta name="author" content="Steven Ross, Francisco Tapia, Orson Peters">
+<title>Boost.Sort</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -433,12 +434,52 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 @media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
 </style>
 </head>
-<body class="article">
+<body class="article toc2 toc-left">
 <div id="header">
+<h1>Boost.Sort</h1>
+<div class="details">
+<span id="author" class="author">Steven Ross, Francisco Tapia, Orson Peters</span><br>
+</div>
+<div id="toc" class="toc2">
+<div id="toctitle">Boost.Sort</div>
+<ul class="sectlevel1">
+<li><a href="#_introduction">1. Introduction</a>
+<ul class="sectlevel2">
+<li><a href="#_single_thread_algorithms">1.1. Single Thread Algorithms</a></li>
+<li><a href="#_parallel_algorithms">1.2. Parallel Algorithms</a></li>
+</ul>
+</li>
+<li><a href="#_single_thread_algorithms_2">2. Single Thread Algorithms</a>
+<ul class="sectlevel2">
+<li><a href="#_overview">2.1. Overview</a></li>
+<li><a href="#spreadsort">2.2. Spreadsort</a>
+<ul class="sectlevel3">
+<li><a href="#_introduction_2">2.2.1. Introduction</a></li>
+<li><a href="#_overloading">2.2.2. Overloading</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_bibliography">3. Bibliography</a>
+<ul class="sectlevel2">
+<li><a href="#_steven_ross">3.1. Steven Ross</a></li>
+<li><a href="#_francisco_tapia">3.2. Francisco Tapia</a></li>
+<li><a href="#_orson_peters">3.3. Orson Peters</a></li>
+</ul>
+</li>
+<li><a href="#_gratitude">4. Gratitude</a>
+<ul class="sectlevel2">
+<li><a href="#_steven_ross_2">4.1. Steven Ross</a></li>
+<li><a href="#_francisco_tapia_2">4.2. Francisco Tapia</a></li>
+<li><a href="#_orson_peters_2">4.3. Orson Peters</a></li>
+</ul>
+</li>
+</ul>
+</div>
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_introduction">Introduction</h2>
+<h2 id="_introduction">1. Introduction</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The goal of the Boost Sort Library is provide to the users, the most modern, fast, and memory-efficient sorting algorithms.</p>
@@ -451,7 +492,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 or one of the more specific headers.  The parallel algorithms need a C++11 compliant compiler.</p>
 </div>
 <div class="sect2">
-<h3 id="_single_thread_algorithms">Single Thread Algorithms</h3>
+<h3 id="_single_thread_algorithms">1.1. Single Thread Algorithms</h3>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 14.2857%;">
@@ -475,7 +516,7 @@ or one of the more specific headers.  The parallel algorithms need a C++11 compl
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">spreadsort</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#spreadsort">Spreadsort</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">key_length</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">\(n\)</p></td>
@@ -515,7 +556,7 @@ or one of the more specific headers.  The parallel algorithms need a C++11 compl
 <div class="ulist">
 <ul>
 <li>
-<p><em>spreadsort</em> is an extremely fast hybrid <a href="https://en.wikipedia.org/wiki/Radix_sort">Radix Sort</a> algorithm, designed and developed by Steven Ross.</p>
+<p><a href="#spreadsort">Spreadsort</a> is an extremely fast hybrid <a href="https://en.wikipedia.org/wiki/Radix_sort">Radix Sort</a> algorithm, designed and developed by Steven Ross.</p>
 </li>
 <li>
 <p><em>pdqsort</em> is a improvement of <a href="https://en.wikipedia.org/wiki/Quicksort">Quicksort</a> algorithm, designed and developed by Orson Peters.</p>
@@ -532,7 +573,7 @@ spinsort, designed and developed by Francisco Tapia.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_parallel_algorithms">Parallel Algorithms</h3>
+<h3 id="_parallel_algorithms">1.2. Parallel Algorithms</h3>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 16.6666%;">
@@ -633,10 +674,381 @@ highest speed, changes according to the size of the objects to sort according to
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_single_thread_algorithms_2">2. Single Thread Algorithms</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_overview">2.1. Overview</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 14.2857%;">
+<col style="width: 14.2857%;">
+<col style="width: 14.2857%;">
+<col style="width: 14.2857%;">
+<col style="width: 14.2857%;">
+<col style="width: 14.2857%;">
+<col style="width: 14.2858%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Algorithm</th>
+<th class="tableblock halign-left valign-top">Stable</th>
+<th class="tableblock halign-left valign-top">Additional memory</th>
+<th class="tableblock halign-left valign-top">Best case</th>
+<th class="tableblock halign-left valign-top">Average case</th>
+<th class="tableblock halign-left valign-top">Worst case</th>
+<th class="tableblock halign-left valign-top">Method</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#spreadsort">Spreadsort</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">key_length</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(n\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(n \sqrt {\log n}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">min(\(n \log n\), N key_length)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hybrid radix sort</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">pdqsort</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\log n\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(n\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(n \log n\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(n \log n\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Comparison operator</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spinsort</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(n/2\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(n\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(n \log n\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(n \log n\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Comparison operator</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">flat_stable_sort</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">size of the data / 256 + 8K</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(n\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(n \log n\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(n \log n\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Comparison operator</p></td>
+</tr>
+</tbody>
+</table>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#spreadsort">Spreadsort</a> is an extremely fast hybrid <a href="https://en.wikipedia.org/wiki/Radix_sort">Radix Sort</a> algorithm, designed and developed by Steven Ross.</p>
+</li>
+<li>
+<p><em>pdqsort</em> is a improvement of <a href="https://en.wikipedia.org/wiki/Quicksort">Quicksort</a> algorithm, designed and developed by Orson Peters.</p>
+</li>
+<li>
+<p><em>spinsort</em> is a <a href="https://en.wikipedia.org/wiki/Sorting_algorithm#Stability">stable</a> sort that is fast with random or nearly sorted data,
+designed and developed by Francisco Tapia.</p>
+</li>
+<li>
+<p><em>flat_stable_sort</em> is a stable sort that uses very little additional memory (around 1% of the size of the data), providing 80% - 90% of the speed of
+spinsort, designed and developed by Francisco Tapia.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="spreadsort">2.2. Spreadsort</h3>
+<div class="sect3">
+<h4 id="_introduction_2">2.2.1. Introduction</h4>
+<div class="paragraph">
+<p>Spreadsort combines generic implementations of multiple high-speed sorting algorithms
+that outperform those in the C++ standard in both average and worst case performance
+when there are over 1000 elements in the list to sort.</p>
+</div>
+<div class="paragraph">
+<p>They fall back to <code>std::sort</code> on small data sets.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Warning</div>
+</td>
+<td class="content">
+These algorithms all only work on
+<a href="https://en.cppreference.com/w/cpp/named_req/RandomAccessIterator.html">random access iterators</a>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>They are hybrids using both radix and comparison-based sorting,
+specialized to sorting common data types, such as integers, floats, and strings.</p>
+</div>
+<div class="paragraph">
+<p>These algorithms are encoded in a generic fashion and accept functors,
+enabling them to sort any object that can be processed like these basic data types.
+In the case of <code>string_sort</code>, this includes anything
+with a defined strict-weak-ordering that <code>std::sort</code> can sort,
+but writing efficient functors for some complex key types
+may not be worth the additional effort relative to just using <code>std::sort</code>,
+depending on how important speed is to your application.
+Sample usages are available in the example directory.</p>
+</div>
+<div class="paragraph">
+<p>Unlike many radix-based algorithms,
+the underlying spreadsort algorithm is designed around <strong>worst-case</strong> performance.
+It performs better on chunky data (where it is not widely distributed),
+so that on real data it can perform substantially better than on random data.
+Conceptually, spreadsort can sort any data for which an absolute ordering can be determined,
+and __string_sort is sufficiently flexible that this should be possible.</p>
+</div>
+<div class="paragraph">
+<p>Situations where __spreadsort is fastest relative to <code>std::sort</code>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Large number of elements to sort (['N] &gt;= 10000).</p>
+</li>
+<li>
+<p>Slow comparison function (such as floating-point numbers on x86 processors or strings).</p>
+</li>
+<li>
+<p>Large data elements (such as key + data sorted on a key).</p>
+</li>
+<li>
+<p>Completely sorted data when __spreadsort has an optimization to quit early in this case.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Situations where __spreadsort is slower than <code>std::sort</code>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Data sorted in reverse order. Both <code>std::sort</code> and __spreadsort are faster
+on reverse-ordered data than randomized data,
+but <code>std::sort</code> speeds up more in this special case.</p>
+</li>
+<li>
+<p>Very small amounts of data (&lt; 1000 elements).
+For this reason there is a fallback in __spreadsort to <code>std::sort</code>
+if the input size is less than 1000,
+so performance is identical for small amounts of data in practice.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>These functions are defined in <code>namespace boost::sort::spreadsort</code>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_overloading">2.2.2. Overloading</h4>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+In the Boost.Sort C++ Reference section, click on the appropriate overload, for example <code>float_sort(RandomAccessIter, RandomAccessIter, Right_shift, Compare);</code> to get full details of that overload.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Each of <em>integer_sort, </em>float_sort, and __string_sort have 3 main versions:
+The base version, which takes a first iterator and a last iterator, just like <code>std::sort</code>:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>integer_sort(array.begin(), array.end());
+float_sort(array.begin(), array.end());
+string_sort(array.begin(), array.end());</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The version with an overridden shift functor, providing flexibility
+in case the <code>operator&gt;&gt;</code> already does something other than a bitshift.
+The rightshift functor takes two args, first the data type,
+and second a natural number of bits to shift right.</p>
+</div>
+<div class="paragraph">
+<p>For __string_sort this variant is slightly different;
+it needs a bracket functor equivalent to <code>operator</code>\[\],
+taking a number corresponding to the character offset,
+along with a second <code>getlength</code> functor to get the length of the string in characters.
+In all cases, this operator must return an integer type that compares with the
+<code>operator&lt;</code> to provide the intended order
+(integers can be negated to reverse their order).</p>
+</div>
+<div class="paragraph">
+<p>In other words (aside from negative floats, which are inverted as ints):</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>rightshift(A, n) &lt; rightshift(B, n) -&gt; A &lt; B
+A &lt; B -&gt; rightshift(A, 0) &lt; rightshift(B, 0)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>See [@../../example/rightshiftsample.cpp  rightshiftsample.cpp] for a working example of integer sorting with a rightshift functor.</p>
+</div>
+<div class="paragraph">
+<p>And a version with a comparison functor for maximum flexibility.
+This functor must provide the same sorting order as the integers returned by the rightshift (aside from negative floats):</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>rightshift(A, n) &lt; rightshift(B, n) -&gt; compare(A, B)
+compare(A, B) -&gt; rightshift(A, 0) &lt; rightshift(B, 0)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples of functors are:</p>
+</div>
+<div class="paragraph">
+<p>and these functors are used thus:</p>
+</div>
+<div class="paragraph">
+<p>See [@../../example/stringfunctorsample.cpp  stringfunctorsample.cpp] for a working example of sorting strings with all functors.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_bibliography">3. Bibliography</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_steven_ross">3.1. Steven Ross</h3>
+<h4 id="_standard_template_library_sort_algorithms" class="discrete">Standard Template Library Sort Algorithms</h4>
+<div class="paragraph">
+<p><a href="https://en.cppreference.com/w/cpp/algorithm/sort.html">C++ STL sort algorithms</a>.</p>
+</div>
+<h4 id="_radix_sort" class="discrete">Radix Sort</h4>
+<div class="paragraph">
+<p>A type of algorithm that sorts based upon distribution instead of by comparison.
+Wikipedia has an article about Radix Sorting.
+A more detailed description of various Radix Sorting algorithms is provided here:</p>
+</div>
+<div class="paragraph">
+<p>Donald Knuth. The Art of Computer Programming,
+Volume 3: Sorting and Searching, Second Edition. Addison-Wesley, 1998.
+ISBN 0-201-89685-0. Section 5.2.5: Sorting by Distribution, pp.168-179.</p>
+</div>
+<h4 id="_introsort" class="discrete">Introsort</h4>
+<div class="paragraph">
+<p>A high-speed comparison-based sorting algorithm that takes ['[bigo](N * log(N))] time.
+See introsort and
+Musser, David R. (1997). "Introspective Sorting and Selection Algorithms",
+Software: Practice and Experience (Wiley) 27 (8), pp 983-993,
+available at <a href="http://www.cs.rpi.edu/~musser/gp/introsort.ps">Musser Introsort</a>.</p>
+</div>
+<h4 id="_american_flag_sort" class="discrete">American Flag Sort</h4>
+<div class="paragraph">
+<p>A high-speed hybrid string sorting algorithm that string_sort is partially based
+upon.  See american_flag and Peter M. McIlroy, Keith Bostic, M. Douglas McIlroy. Engineering Radix Sort,  Computing Systems 1993.</p>
+</div>
+<h4 id="_adaptive_left_radix_arl" class="discrete">Adaptive Left Radix (ARL)</h4>
+<div class="paragraph">
+<p>ARL (Adaptive Left Radix) is a hybrid cache-friendly integer sorting algorithm
+with comparable speed on random data to integer_sort,
+but does not have the optimizations for worst-case performance,
+causing it to perform poorly on certain types of unevenly distributed data.</p>
+</div>
+<div class="paragraph">
+<p>Arne Maus, <a href="http://www.nik.no/2002/Maus.pdf">ARL, a faster in-place, cache friendly sorting algorithm</a>,
+presented at NIK2002, Norwegian Informatics Conference, Kongsberg, 2002. Tapir, ISBN 82-91116-45-8.</p>
+</div>
+<h4 id="_original_spreadsort" class="discrete">Original Spreadsort</h4>
+<div class="paragraph">
+<p>The algorithm that <em>integer_sort was originally based on.
+</em>integer_sort uses a smaller number of key bits at a time for better cache efficiency
+than the method described in the paper.
+The importance of cache efficiency grew as CPU clock speeds increased
+while main memory latency stagnated.
+See Steven J. Ross,
+The Spreadsort High-performance General-case Sorting Algorithm,
+Parallel and Distributed Processing Techniques and Applications, Volume 3, pp.1100-1106. Las Vegas Nevada. 2002. See
+[@../../doc/papers/original_spreadsort06_2002.pdf Steven Ross spreadsort_2002].</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_francisco_tapia">3.2. Francisco Tapia</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Introduction to Algorithms, 3rd Edition (Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, Clifford Stein)</p>
+</li>
+<li>
+<p>C++ STL Sort Algorithms</p>
+</li>
+<li>
+<p>Algorithm + Data Structures = Programs ( Nicklaus Wirth) Prentice Hall Series in Automatic Computation</p>
+</li>
+<li>
+<p>Structured Parallel Programming: Patterns for Efficient Computation (Michael McCool, James Reinders, Arch Robison)</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_orson_peters">3.3. Orson Peters</h3>
+
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_gratitude">4. Gratitude</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_steven_ross_2">4.1. Steven Ross</h3>
+<div class="paragraph">
+<p>To Steve&#8217;s wife Mary for her patience and support during the long process of converting spreadsort from a piece of C code to a template library.</p>
+</div>
+<div class="paragraph">
+<p>To Phil Endecott and Frank Gennari for the improvements they&#8217;ve suggested and for testing.
+Without them this would have taken longer to develop or performed worse.</p>
+</div>
+<div class="paragraph">
+<p>To Scott McMurray for the fast and safe <code>float_mem_cast</code>.
+That fix was critical for a high-performance cross-platform <code>float_sort</code>.</p>
+</div>
+<div class="paragraph">
+<p>To Paul A. Bristow for refactoring the initial documentation to use Quickbooks.</p>
+</div>
+<div class="paragraph">
+<p>To Steven Watanabe, Edouard Alligand, and others in the boost community for their helpful suggestions.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_francisco_tapia_2">4.2. Francisco Tapia</h3>
+<div class="paragraph">
+<p>To <a href="http://www.cesvima.upm.es">CESVIMA</a>, Centro de Cálculo de la Universidad Politécnica de Madrid.
+When need machines for to tune this algorithm, I contacted with the investigation department of many Universities of Madrid. Only them, help me.</p>
+</div>
+<div class="paragraph">
+<p>To Hartmut Kaiser, Adjunct Professor of Computer Science at Louisiana State University. By their faith in my work,</p>
+</div>
+<div class="paragraph">
+<p>To Steven Ross, by their infinite patience in the long way in the develop of this algorithm, and their wise advises.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_orson_peters_2">4.3. Orson Peters</h3>
+
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-12-01 21:22:43 +1000
+Last updated 2025-12-02 21:40:36 +1000
 </div>
 </div>
 <script type="text/x-mathjax-config">

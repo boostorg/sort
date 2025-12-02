@@ -22,13 +22,13 @@ or one of the more specific headers.  The parallel algorithms need a C++11 compl
 |===
 | Algorithm         | Stable |   Additional memory         | Best case | Average case            | Worst case                         | Method
 
-| spreadsort        |  no    |      key_length             | stem:[n]  | stem:[n \sqrt {\log n}] | min(stem:[n \log n], N key_length) | Hybrid radix sort
+| <<spreadsort>>    |  no    |      key_length             | stem:[n]  | stem:[n \sqrt {\log n}] | min(stem:[n \log n], N key_length) | Hybrid radix sort
 | pdqsort           |  no    |      stem:[\log n]          | stem:[n]  | stem:[n \log n]         | stem:[n \log n]                    | Comparison operator
 | spinsort          |  yes   |      stem:[n/2]             | stem:[n]  | stem:[n \log n]         | stem:[n \log n]                    | Comparison operator
 | flat_stable_sort  |  yes   | size of the data / 256 + 8K | stem:[n]  | stem:[n \log n]         | stem:[n \log n]                    | Comparison operator
 |===
 
-* _spreadsort_ is an extremely fast hybrid https://en.wikipedia.org/wiki/Radix_sort[Radix Sort] algorithm, designed and developed by Steven Ross.
+* <<spreadsort>> is an extremely fast hybrid https://en.wikipedia.org/wiki/Radix_sort[Radix Sort] algorithm, designed and developed by Steven Ross.
 * _pdqsort_ is a improvement of https://en.wikipedia.org/wiki/Quicksort[Quicksort] algorithm, designed and developed by Orson Peters.
 * _spinsort_ is a https://en.wikipedia.org/wiki/Sorting_algorithm#Stability[stable] sort that is fast with random or nearly sorted data,
   designed and developed by Francisco Tapia.
