@@ -1,0 +1,34 @@
+////
+ Copyright (c) 2017 Steven Ross, Francisco Tapia, Orson Peters
+ Distributed under the Boost Software License, Version 1.0
+ See accompanying file LICENSE_1_0.txt or copy at
+ http://www.boost.org/LICENSE_1_0.txt
+////
+
+== Single Thread Algorithms
+
+=== Overview
+
+[cols="1,1,1,1,1,1,1"]
+|===
+| Algorithm         | Stable |   Additional memory         | Best case | Average case            | Worst case                         | Method
+
+| <<spreadsort>>    |  no    |      key_length             | stem:[n]  | stem:[n \sqrt {\log n}] | min(stem:[n \log n], N key_length) | Hybrid radix sort
+| pdqsort           |  no    |      stem:[\log n]          | stem:[n]  | stem:[n \log n]         | stem:[n \log n]                    | Comparison operator
+| spinsort          |  yes   |      stem:[n/2]             | stem:[n]  | stem:[n \log n]         | stem:[n \log n]                    | Comparison operator
+| flat_stable_sort  |  yes   | size of the data / 256 + 8K | stem:[n]  | stem:[n \log n]         | stem:[n \log n]                    | Comparison operator
+|===
+
+* <<spreadsort>> is an extremely fast hybrid https://en.wikipedia.org/wiki/Radix_sort[Radix Sort] algorithm, designed and developed by Steven Ross.
+* _pdqsort_ is a improvement of https://en.wikipedia.org/wiki/Quicksort[Quicksort] algorithm, designed and developed by Orson Peters.
+* _spinsort_ is a https://en.wikipedia.org/wiki/Sorting_algorithm#Stability[stable] sort that is fast with random or nearly sorted data,
+  designed and developed by Francisco Tapia.
+* _flat_stable_sort_ is a stable sort that uses very little additional memory (around 1% of the size of the data), providing 80% - 90% of the speed of
+ spinsort, designed and developed by Francisco Tapia.
+
+include::spreadsort.adoc[]
+// include::pdqsort.adoc[]
+// include::spinsort.adoc[]
+// include::flat_stable_sort.adoc[]
+// include::linux_single.adoc[]
+// include::windows_single.adoc[]
