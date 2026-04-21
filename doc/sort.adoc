@@ -1,0 +1,28 @@
+////
+[library Boost.Sort
+  [quickbook 1.7]
+  [id sort]
+  [copyright 2014-2017 Steven Ross, Francisco Tapia, Orson Peters]
+  [authors [Ross, Steven] [Tapia, Francisco] [Peters, Orson]]
+  [dirname sort]
+  [license Distributed under the
+    [@http://boost.org/LICENSE_1_0.txt Boost Software License,  Version 1.0].
+  ]
+]
+////
+
+= Boost.Sort
+Steven Ross, Francisco Tapia, Orson Peters
+:toc: left
+:toclevels: 5
+:toc-title: Boost.Sort
+:sectnums:
+:sectnumlevels: 4
+
+include::introduction.adoc[]
+include::single_thread.adoc[]
+
+// [include parallel.qbk]
+
+include::bibliography.adoc[]
+include::gratitude.adoc[]
