@@ -66,5 +66,12 @@ project : requirements
                     cxx11_noexcept
                     cxx11_thread_local
                     cxx11_lambdas ] <optimization>speed <threading>multi : test_parallel_stable_sort ]
+
+  [ run test_overloaded_address.cpp
+       : : : [ requires
+                    cxx11_constexpr
+                    cxx11_noexcept
+                    cxx11_thread_local
+                    cxx11_lambdas ] <optimization>speed <threading>multi : test_overloaded_address ]
    ;
 }

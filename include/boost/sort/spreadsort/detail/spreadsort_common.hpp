@@ -20,6 +20,7 @@ Phil Endecott and Frank Gennari
 #include <cstring>
 #include <limits>
 #include <functional>
+#include <boost/core/addressof.hpp>
 #include <boost/static_assert.hpp>
 #include <boost/sort/pdqsort/pdqsort.hpp>
 #include <boost/sort/spreadsort/detail/constants.hpp>
@@ -114,7 +115,7 @@ namespace spreadsort {
       cache_end = cache_offset + bin_count;
       if (cache_end > bin_cache.size())
         bin_cache.resize(cache_end);
-      return &(bin_cache[cache_offset]);
+      return boost::addressof(bin_cache[cache_offset]);
     }
   }
 }

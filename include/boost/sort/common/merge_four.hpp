@@ -19,6 +19,7 @@
 #include <vector>
 #include <boost/sort/common/util/traits.hpp>
 #include <boost/sort/common/range.hpp>
+#include <boost/core/addressof.hpp>
 
 
 namespace boost
@@ -275,7 +276,7 @@ range<Value_t *> uninit_full_merge4(const range<Value_t *> &dest,
     Value_t *it_dest = dest.first;
     while (npos > 2)
     {
-        util::construct_object(&(*(it_dest++)),
+        util::construct_object(boost::addressof(*(it_dest++)),
                         std::move(*(vrange_input[pos[0]].first++)));
         if (vrange_input[pos[0]].size() == 0)
         {

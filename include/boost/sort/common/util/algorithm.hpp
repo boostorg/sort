@@ -21,6 +21,7 @@
 #include <type_traits>
 #include <vector>
 #include <boost/sort/common/util/traits.hpp>
+#include <boost/core/addressof.hpp>
 
 namespace boost
 {
@@ -179,12 +180,12 @@ inline void initialize (Iter_t first, Iter_t last, Value_t & val)
     //                 Code
     //------------------------------------------------------------------------
     if (first == last) return;
-    construct_object(&(*first), std::move(val));
+    construct_object(boost::addressof(*first), std::move(val));
 
     Iter_t it1 = first, it2 = first + 1;
     while (it2 != last)
     {
-        construct_object(&(*(it2++)), std::move(*(it1++)));
+        construct_object(boost::addressof(*(it2++)), std::move(*(it1++)));
     }
     val = std::move(*(last - 1));
 }
@@ -285,7 +286,7 @@ template<class Iter_t>
 inline void destroy(Iter_t first, const Iter_t last)
 {
     while (first != last)
-        destroy_object(&(*(first++)));
+        destroy_object(boost::addressof(*(first++)));
 }
 //
 //-----------------------------------------------------------------------------
