@@ -20,6 +20,7 @@ Scott McMurray
 #include <vector>
 #include <limits>
 #include <functional>
+#include <boost/core/addressof.hpp>
 #include <boost/static_assert.hpp>
 #include <boost/utility/enable_if.hpp>
 #include <boost/sort/spreadsort/detail/constants.hpp>
@@ -43,7 +44,7 @@ namespace spreadsort {
       BOOST_STATIC_ASSERT(std::numeric_limits<Data_type>::is_iec559);
       BOOST_STATIC_ASSERT(std::numeric_limits<Cast_type>::is_integer);
       Cast_type result;
-      std::memcpy(&result, &(*floatiter), sizeof(Data_type));
+      std::memcpy(&result, boost::addressof(*floatiter), sizeof(Data_type));
       return result;
     }
 
