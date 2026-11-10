@@ -19,6 +19,7 @@ Phil Endecott and Frank Gennari
 #include <cstring>
 #include <limits>
 #include <functional>
+#include <boost/core/addressof.hpp>
 #include <boost/static_assert.hpp>
 #include <boost/utility/enable_if.hpp>
 #include <boost/sort/spreadsort/detail/constants.hpp>
@@ -207,7 +208,7 @@ namespace spreadsort {
       //Swap into place
       RandomAccessIter next_bin_start = first;
       //handling empty bins
-      RandomAccessIter * local_bin = &(bin_cache[cache_offset]);
+      RandomAccessIter * local_bin = boost::addressof(bin_cache[cache_offset]);
       next_bin_start +=  bin_sizes[0];
       RandomAccessIter * target_bin;
       //Iterating over each element in the bin of empties
@@ -296,7 +297,7 @@ namespace spreadsort {
       unsigned cache_end;
       RandomAccessIter * bins = size_bins(bin_sizes, bin_cache, cache_offset,
                                           cache_end, membin_count);
-      RandomAccessIter * end_bin = &(bin_cache[cache_offset + max_bin]);
+      RandomAccessIter * end_bin = boost::addressof(bin_cache[cache_offset + max_bin]);
 
       //Calculating the size of each bin; this takes roughly 10% of runtime
       for (RandomAccessIter current = first; current != last; ++current) {
@@ -316,7 +317,7 @@ namespace spreadsort {
       //Swap into place
       RandomAccessIter next_bin_start = last;
       //handling empty bins
-      RandomAccessIter * local_bin = &(bin_cache[cache_offset + bin_count]);
+      RandomAccessIter * local_bin = boost::addressof(bin_cache[cache_offset + bin_count]);
       RandomAccessIter lastFull = *local_bin;
       //Iterating over each element in the bin of empties
       for (RandomAccessIter current = *local_bin; current < next_bin_start;
@@ -420,7 +421,7 @@ namespace spreadsort {
       //Swap into place
       RandomAccessIter next_bin_start = first;
       //handling empty bins
-      RandomAccessIter * local_bin = &(bin_cache[cache_offset]);
+      RandomAccessIter * local_bin = boost::addressof(bin_cache[cache_offset]);
       next_bin_start +=  bin_sizes[0];
       RandomAccessIter * target_bin;
       //Iterating over each element in the bin of empties
@@ -521,7 +522,7 @@ namespace spreadsort {
       //Swap into place
       RandomAccessIter next_bin_start = first;
       //handling empty bins
-      RandomAccessIter * local_bin = &(bin_cache[cache_offset]);
+      RandomAccessIter * local_bin = boost::addressof(bin_cache[cache_offset]);
       next_bin_start +=  bin_sizes[0];
       RandomAccessIter * target_bin;
       //Iterating over each element in the bin of empties
@@ -607,7 +608,7 @@ namespace spreadsort {
       unsigned cache_end;
       RandomAccessIter * bins = size_bins(bin_sizes, bin_cache, cache_offset,
                                           cache_end, membin_count);
-      RandomAccessIter *end_bin = &(bin_cache[cache_offset + max_bin]);
+      RandomAccessIter *end_bin = boost::addressof(bin_cache[cache_offset + max_bin]);
 
       //Calculating the size of each bin; this takes roughly 10% of runtime
       for (RandomAccessIter current = first; current != last; ++current) {
@@ -626,7 +627,7 @@ namespace spreadsort {
       //Swap into place
       RandomAccessIter next_bin_start = last;
       //handling empty bins
-      RandomAccessIter * local_bin = &(bin_cache[cache_offset + bin_count]);
+      RandomAccessIter * local_bin = boost::addressof(bin_cache[cache_offset + bin_count]);
       RandomAccessIter lastFull = *local_bin;
       RandomAccessIter * target_bin;
       //Iterating over each element in the bin of empties
